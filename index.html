@@ -39,12 +39,12 @@ html.dark .brand img{filter:invert(1) brightness(1.15)}
 .wrap{width:min(1180px,calc(100% - 28px));margin:18px auto 88px}
 .page-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
 .page-head h1{margin:0;font-size:24px}
-.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.dash-card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px;box-shadow:var(--sh);text-align:right;transition:.2s transform,.2s border-color;aspect-ratio:1/1;width:100%;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.dash-card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:12px 10px 10px;box-shadow:var(--sh);text-align:center;transition:.2s transform,.2s border-color;aspect-ratio:1/1;width:100%;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;gap:6px}
 .dash-card:hover{transform:translateY(-3px);border-color:var(--p)}
-.dash-ico{width:36px;height:36px;border-radius:10px;background:var(--ps);color:var(--p2);display:grid;place-items:center;font-size:16px}
-.dash-card h3{margin:10px 0 4px;font-size:14px;line-height:1.35}
-.dash-card p{margin:0;color:var(--mu);font-size:11px;line-height:1.4}
+.dash-ico{width:58px;height:58px;border-radius:16px;background:var(--ps);color:var(--p2);display:grid;place-items:center;font-size:28px;flex:none}
+.dash-card h3{margin:2px 0 0;font-size:13px;line-height:1.3}
+.dash-card p{margin:0;color:var(--mu);font-size:11px;line-height:1.35}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 .stat{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:14px 16px}
 .stat b{display:block;font-size:20px;margin-top:4px}
@@ -111,11 +111,11 @@ html.dark .badge{color:#ecfdf5}
 .overlay.show,.modal-bg.show{display:grid}
 .modal{width:min(520px,100%);background:var(--sf);border:1px solid var(--ln);border-radius:20px;padding:22px}
 .lock{position:fixed;inset:0;background:color-mix(in srgb,var(--bg) 86%,transparent);display:grid;place-items:center;z-index:90;text-align:center}
-.lock.hide{display:none}
+.lock.hide{display:none;pointer-events:none}
 .spinner{width:42px;height:42px;border-radius:50%;border:4px solid var(--ln);border-top-color:var(--p);animation:sp .8s linear infinite;margin:0 auto 12px}
 @keyframes sp{to{transform:rotate(360deg)}}
-.toastbox{position:fixed;top:72px;inset-inline-start:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;gap:8px}
-.toast{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:10px 14px;box-shadow:var(--sh);min-width:220px;text-align:center}
+.toastbox{position:fixed;bottom:58px;left:14px;right:auto;z-index:100;display:flex;flex-direction:column-reverse;gap:8px;align-items:flex-start;max-width:min(360px,calc(100% - 28px))}
+.toast{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:10px 14px;box-shadow:var(--sh);min-width:200px;text-align:right}
 .empty{padding:28px;text-align:center;color:var(--mu)}
 .qty{width:84px}
 .a4-stage{background:#6b7280;padding:18px;border-radius:16px;overflow:auto}
@@ -169,7 +169,7 @@ hr.sep{border:0;border-top:1px solid var(--ln);margin:14px 0}
       <img src="logo.png" alt="PezeshkYar" id="brandLogo">
       <div class="brand-meta">
         <b>پزشک‌یار</b>
-        <span class="ver" id="appVer">v.1.1.14</span>
+        <span class="ver" id="appVer">v.1.1.18</span>
       </div>
     </div>
     <div class="top-mid">
@@ -194,7 +194,7 @@ hr.sep{border:0;border-top:1px solid var(--ln);margin:14px 0}
 const APP = {
   name: 'PezeshkYar',
   nameFa: 'پزشک‌یار',
-  version: 'v.1.1.15',
+  version: 'v.1.1.18',
   SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyUDYfULHdPXBdy_zESpCGCUnnNPpuog7db8CQL-ov1F97nZbbEOfQzTxI-punxopBoWQ/exec',
   SHEET_URL: 'https://docs.google.com/spreadsheets/d/1GGHSNreSBvbgYwhxfQuR8xDjIvGxRNUqynz1Cgytkfs/edit?usp=sharing',
   APP_TOKEN: 'PEZESHKYAR_BACKUP_2026',
@@ -354,6 +354,24 @@ function loadLocal(){
   }catch(e){}
 }
 function mark(col, id){ dirty[col].add(String(id)); persistLocal(); }
+function addCustomer(name, phone, address){
+  name=String(name||'').trim();
+  phone=String(phone||'').trim();
+  address=String(address||'').trim();
+  if(!name || !phone){ toast('نام و شماره تماس را وارد کنید', false); return null; }
+  const exist=alive(DB.customers).find(c=>c.phone===phone);
+  if(exist){
+    exist.name=name; exist.address=address||exist.address;
+    upsertLocal('customers', exist);
+    toast('مشتری به‌روز شد');
+    return exist;
+  }
+  const c={id:uid('cus'), name, phone, address, deleted:'0'};
+  upsertLocal('customers', c);
+  toast('مشتری ذخیره شد');
+  flush();
+  return c;
+}
 function upsertLocal(col, rec){
   rec.updatedAt = nowIso();
   if(!rec.createdAt) rec.createdAt = rec.updatedAt;
@@ -379,9 +397,15 @@ async function bootstrap(){
   $('#lockMsg').textContent='ارتباط با سرور بکاپ…';
   const data=await api('bootstrap');
   if(!data.ok) throw new Error(data.error||'بازیابی ناموفق');
-  KEYS.forEach(k=>{ if(Array.isArray(data.data[k])) DB[k]=data.data[k]; });
+  KEYS.forEach(k=>{
+    if(!Array.isArray(data.data[k])) return;
+    const map=new Map(data.data[k].map(r=>[String(r.id), r]));
+    (DB[k]||[]).forEach(r=>{
+      if(dirty[k] && dirty[k].has(String(r.id))) map.set(String(r.id), r);
+    });
+    DB[k]=[...map.values()];
+  });
   DB.settings = Object.assign({invoiceCounter:APP.INVOICE_START}, data.data.settings||{});
-  KEYS.forEach(k=>dirty[k].clear());
   lastSync=new Date(); lastError='';
   persistLocal();
 }
@@ -1038,11 +1062,15 @@ function viewCustomers(){
   }).join('') || `<tr><td colspan="5" class="empty">مشتری‌ای ثبت نشده.</td></tr>`;
   return `<div class="page-head"><h1>مشتریان</h1><button class="btn btn-g" data-go="dashboard">بازگشت</button></div>
   <div class="card">
-    <button class="btn" id="togCus">＋ افزودن مشتری</button>
-    <div class="coll" id="cusForm"><div class="grid-3" style="margin-top:12px">
-      <div class="field"><label>نام</label><input class="inp" id="nName"></div>
-      <div class="field"><label>شماره تماس</label><input class="inp" id="nPhone"></div>
-      <div class="fi"btn btn-p" id="saveCus">ذخیره مشتری</button></div>
+    <h3 style="margin:0 0 12px">افزودن مشتری جدید</h3>
+    <form id="cusAddForm">
+      <div class="grid-3">
+        <div class="field"><label>نام</label><input class="inp" id="nName" name="name" placeholder="نام مشتری" required></div>
+        <div class="field"><label>شماره تماس</label><input class="inp" id="nPhone" name="phone" placeholder="09xxxxxxxxx" required></div>
+        <div class="field"><label>آدرس</label><input class="inp" id="nAddr" name="address" placeholder="آدرس"></div>
+      </div>
+      <button type="submit" class="btn btn-p" id="saveCus">ذخیره مشتری</button>
+    </form>
   </div>
   <div class="card" style="margin-top:12px"><div class="table-wrap"><table><thead><tr><th>نام</th><th>تماس</th><th>آدرس</th><th>مانده بدهی</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
 }
@@ -1471,11 +1499,16 @@ function bindGlobal(){
   $$('[data-inv]').forEach(b=>b.onclick=()=>showInvoice(b.dataset.inv));
   $$('[data-op]').forEach(b=>b.onclick=()=>showOperator(b.dataset.op));
   const tog=$('#togCus'); if(tog) tog.onclick=()=>$('#cusForm').classList.toggle('open');
-  const sc=$('#saveCus'); if(sc) sc.onclick=()=>{
-    const name=$('#nName').value.trim(), phone=$('#nPhone').value.trim();
-    if(!name||!phone){ toast('نام و تماس لازم است',false); return; }
-    upsertLocal('customers',{id:uid('cus'),name,phone,address:$('#nAddr').value.trim(),deleted:'0'});
-    toast('مشتری ذخیره شد'); render();
+  const cf=$('#cusAddForm');
+  if(cf) cf.onsubmit=e=>{
+    e.preventDefault();
+    const c=addCustomer($('#nName')&&$('#nName').value, $('#nPhone')&&$('#nPhone').value, $('#nAddr')&&$('#nAddr').value);
+    if(c) render();
+  };
+  const sc=$('#saveCus'); if(sc) sc.onclick=e=>{
+    e.preventDefault();
+    const c=addCustomer($('#nName')&&$('#nName').value, $('#nPhone')&&$('#nPhone').value, $('#nAddr')&&$('#nAddr').value);
+    if(c) render();
   };
   $$('[data-open-cus]').forEach(tr=>tr.onclick=e=>{ if(e.target.closest('button')) return; go('customer', tr.dataset.openCus); });
   $$('[data-del-cus]').forEach(b=>b.onclick=async e=>{
@@ -1610,6 +1643,21 @@ async function boot(){
   setTheme(localStorage.getItem('py_theme')||'light');
   $('#btnTheme').onclick=()=>setTheme(document.documentElement.classList.contains('dark')?'light':'dark');
   $$('.topbar [data-go]').forEach(el=>el.addEventListener('click',e=>{ e.preventDefault(); go(el.dataset.go, el.dataset.id); }));
+  document.addEventListener('submit', ev=>{
+    if(ev.target && ev.target.id==='cusAddForm'){
+      ev.preventDefault();
+      const c=addCustomer($('#nName')&&$('#nName').value, $('#nPhone')&&$('#nPhone').value, $('#nAddr')&&$('#nAddr').value);
+      if(c) render();
+    }
+  });
+  document.addEventListener('click', ev=>{
+    const btn=ev.target.closest('#saveCus');
+    if(btn){
+      ev.preventDefault();
+      const c=addCustomer($('#nName')&&$('#nName').value, $('#nPhone')&&$('#nPhone').value, $('#nAddr')&&$('#nAddr').value);
+      if(c) render();
+    }
+  });
   document.addEventListener('click', ev=>{
     if(ev.target.closest('#cSearch') || ev.target.closest('#cSug')) return;
     if(ev.target.closest('#pSearch') || ev.target.closest('#pSug')) return;
@@ -1638,14 +1686,5 @@ async function boot(){
 }
 boot();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a14958fa4d9207',t:'MTc4NjU1NjY1MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
-</html>
-�د. صف اضطراری محلی فعال است.', false);
-  }
-  setInterval(()=>{ if(ready) flush(); }, 30000);
-  document.addEventListener('visibilitychange',()=>{ if(!document.hidden && ready) flush(); });
-}
-boot();
-</script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a1b4d4f9223686',t:'MTc4NjU2MTA1Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
