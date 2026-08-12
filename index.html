@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>پزشک‌یار | مدیریت سفارش</title>
+<link rel="icon" href="logo.png">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
+<style>
+:root{
+  --p:#22c55e;--p2:#16a34a;--p3:#4ade80;--ps:#dcfce7;--pd:#14532d;
+  --bg:#f3faf6;--sf:#fff;--sf2:#eef8f2;--tx:#0b1f16;--mu:#4d6558;--ln:#d5ebdd;
+  --dang:#dc2626;--warn:#d97706;--ok:#16a34a;--sh:0 10px 30px rgba(16,80,45,.08);
+  --inv:#fff;--invt:#111;--r:16px;
+}
+html.dark{
+  --p:#4ade80;--p2:#86efac;--p3:#86efac;--ps:#14532d;--pd:#052e16;
+  --bg:#070b09;--sf:#101614;--sf2:#0c1210;--tx:#ecfdf5;--mu:#9cb5a8;--ln:#1f2e26;
+  --dang:#f87171;--warn:#fbbf24;--ok:#4ade80;--sh:0 10px 30px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);font-family:Vazirmatn,Tahoma,Arial,sans-serif;min-height:100%}
+button,input,select,textarea{font-family:inherit}
+button{cursor:pointer}
+a{color:var(--p2)}
+.app{min-height:100vh;display:flex;flex-direction:column}
+.topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;background:color-mix(in srgb,var(--sf) 88%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--ln)}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand img{height:52px;width:auto;max-width:140px;object-fit:contain}
+html.dark .brand img{filter:invert(1) brightness(1.15)}
+.brand-meta b{display:block;font-size:18px;letter-spacing:-.02em}
+.ver{font-size:12px;color:var(--mu)}
+.top-mid{display:flex;flex-direction:column;align-items:center}
+.clock{font-variant-numeric:tabular-nums;font-size:22px;font-weight:800;letter-spacing:.06em;color:var(--p2)}
+.shamsi{font-size:13px;color:var(--mu)}
+.top-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{border:1px solid var(--ln);background:var(--sf);color:var(--tx);width:40px;height:40px;border-radius:12px;display:grid;place-items:center}
+.icon-btn:hover{border-color:var(--p)}
+.wrap{width:min(1180px,calc(100% - 28px));margin:18px auto 88px}
+.page-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.page-head h1{margin:0;font-size:24px}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.dash-card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:14px;box-shadow:var(--sh);text-align:right;transition:.2s transform,.2s border-color;aspect-ratio:1/1;width:100%;display:flex;flex-direction:column;justify-content:space-between;align-items:stretch}
+.dash-card:hover{transform:translateY(-3px);border-color:var(--p)}
+.dash-ico{width:36px;height:36px;border-radius:10px;background:var(--ps);color:var(--p2);display:grid;place-items:center;font-size:16px}
+.dash-card h3{margin:10px 0 4px;font-size:14px;line-height:1.35}
+.dash-card p{margin:0;color:var(--mu);font-size:11px;line-height:1.4}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.stat{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:14px 16px}
+.stat b{display:block;font-size:20px;margin-top:4px}
+.stat span{color:var(--mu);font-size:12px}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:var(--r);padding:16px;box-shadow:var(--sh)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.field label{font-size:12px;color:var(--mu)}
+.inp,select,textarea{width:100%;border:1px solid var(--ln);background:var(--sf2);color:var(--tx);border-radius:12px;padding:10px 12px;outline:none}
+.inp:focus,select:focus,textarea:focus{border-color:var(--p);box-shadow:0 0 0 3px color-mix(in srgb,var(--p) 20%,transparent)}
+.btn{border:0;border-radius:12px;padding:10px 14px;font-weight:700;background:var(--ps);color:var(--pd)}
+html.dark .btn{color:#ecfdf5}
+.btn-p{background:linear-gradient(135deg,var(--p),var(--p2));color:#052e16}
+.btn-d{background:color-mix(in srgb,var(--dang) 16%,var(--sf));color:var(--dang)}
+.btn-g{background:transparent;border:1px solid var(--ln);color:var(--tx)}
+.row-actions{display:flex;gap:8px;flex-wrap:wrap}
+.search{position:relative}
+.search .sug{position:absolute;inset-inline:0;top:100%;background:var(--sf);border:1px solid var(--ln);border-radius:12px;max-height:240px;overflow:auto;z-index:30;display:none;box-shadow:var(--sh)}
+.search .sug.open{display:block}
+.search .sug div{padding:8px 12px;cursor:pointer}
+.search .sug div:hover{background:var(--ps)}
+.order-bar{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.order-bar .grow{flex:1;min-width:200px}
+.cust-block{width:100%}
+.cust-ico{width:44px;height:44px;border-radius:12px;border:1px solid var(--ln);background:var(--sf2);color:var(--p2);display:grid;place-items:center;flex:none}
+.cust-ico.on,.cust-ico:hover{border-color:var(--p);background:var(--ps)}
+.cust-box{display:none;position:relative;margin:10px 0 4px;padding:14px;border:1px solid var(--p);border-radius:14px;background:var(--sf2)}
+.cust-box.open{display:block}
+.cust-box:before{content:"";position:absolute;top:-6px;inset-inline-start:16px;width:11px;height:11px;background:var(--sf2);border-inline-start:1px solid var(--p);border-top:1px solid var(--p);transform:rotate(45deg)}
+.sel-hint{font-size:11px;color:var(--mu);margin-top:4px}
+.hub{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:720px;margin:24px auto}
+.hub-ico{background:var(--sf);border:1px solid var(--ln);border-radius:20px;aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;box-shadow:var(--sh);color:var(--tx);padding:16px}
+.hub-ico:hover{border-color:var(--p);transform:translateY(-3px)}
+.hub-ico .mark{width:64px;height:64px;border-radius:18px;background:var(--ps);color:var(--p2);display:grid;place-items:center}
+.hub-ico b{font-size:15px}
+.hub-ico span{font-size:12px;color:var(--mu);text-align:center;line-height:1.5}
+@media (max-width:700px){.hub{grid-template-columns:1fr;max-width:280px}}
+.mat-list{border:1px solid var(--ln);border-radius:14px;max-height:320px;overflow:auto;background:var(--sf2)}
+.mat-row{display:grid;grid-template-columns:28px 1fr auto 90px;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--ln);margin:0;font-size:13px}
+.mat-row:last-child{border-bottom:0}
+.pmeta{margin-top:8px;font-size:13px;color:var(--mu)}
+.pmeta b{color:var(--tx)}
+.table-wrap{overflow:auto;border:1px solid var(--ln);border-radius:14px}
+table{width:100%;border-collapse:collapse;min-width:720px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--ln);text-align:right;font-size:13px}
+th{background:var(--sf2);color:var(--mu);font-weight:700}
+tr.clickable{cursor:pointer}
+tr.clickable:hover{background:color-mix(in srgb,var(--ps) 55%,transparent)}
+.badge{display:inline-flex;align-items:center;border-radius:999px;padding:3px 8px;font-size:11px;background:var(--ps);color:var(--pd);font-weight:700}
+html.dark .badge{color:#ecfdf5}
+.badge.w{background:color-mix(in srgb,var(--warn) 18%,transparent);color:var(--warn)}
+.badge.d{background:color-mix(in srgb,var(--dang) 16%,transparent);color:var(--dang)}
+.badge.n{background:var(--sf2);color:var(--mu)}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1px solid var(--ln);background:var(--sf);color:var(--tx);border-radius:999px;padding:7px 12px;font-weight:700}
+.chip.on{background:var(--p);color:#052e16;border-color:var(--p)}
+.statusbar{position:fixed;bottom:14px;inset-inline-end:14px;z-index:50;display:flex;gap:8px;flex-wrap:wrap}
+.pill{display:flex;align-items:center;gap:6px;background:var(--sf);border:1px solid var(--ln);border-radius:999px;padding:6px 10px;font-size:11px;box-shadow:var(--sh)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.dot.off{background:var(--dang)}
+.dot.warn{background:var(--warn)}
+.overlay,.modal-bg{position:fixed;inset:0;background:rgba(6,16,12,.55);display:none;place-items:center;z-index:80;padding:18px}
+.overlay.show,.modal-bg.show{display:grid}
+.modal{width:min(520px,100%);background:var(--sf);border:1px solid var(--ln);border-radius:20px;padding:22px}
+.lock{position:fixed;inset:0;background:color-mix(in srgb,var(--bg) 86%,transparent);display:grid;place-items:center;z-index:90;text-align:center}
+.lock.hide{display:none}
+.spinner{width:42px;height:42px;border-radius:50%;border:4px solid var(--ln);border-top-color:var(--p);animation:sp .8s linear infinite;margin:0 auto 12px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.toastbox{position:fixed;top:72px;inset-inline-start:50%;transform:translateX(-50%);z-index:100;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--sf);border:1px solid var(--ln);border-radius:12px;padding:10px 14px;box-shadow:var(--sh);min-width:220px;text-align:center}
+.empty{padding:28px;text-align:center;color:var(--mu)}
+.qty{width:84px}
+.a4-stage{background:#6b7280;padding:18px;border-radius:16px;overflow:auto}
+.a4{width:210mm;min-height:297mm;background:#fff;color:#111;margin:0 auto 16px;padding:12mm 12mm 14mm;position:relative;box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.a4.land{width:297mm;height:210mm;min-height:210mm;padding:7mm 9mm 8mm;overflow:hidden}
+.a4 *{color:#111}
+.a4 table{min-width:0}
+.a4 th{background:#f3f4f6;color:#333}
+.inv-head{display:grid;grid-template-columns:1.1fr 1fr 1.1fr;align-items:center;gap:8px;margin-bottom:6px}
+.inv-meta{font-size:13px;font-weight:800;line-height:1.85}
+.inv-title{font-size:26px;font-weight:900;text-align:center;letter-spacing:-.02em}
+.inv-logo-py{height:54px;width:auto;justify-self:end;object-fit:contain}
+.inv-sheet{width:100%;border-collapse:collapse;table-layout:fixed}
+.inv-sheet th,.inv-sheet td{border:1px solid #111 !important;padding:5px 6px !important;background:#fff !important;color:#111 !important;text-align:center;font-size:12px;font-weight:400}
+.inv-sheet th.sec{font-weight:800;font-size:13px}
+.inv-sheet td.start{text-align:right}
+.inv-sheet .name-col{width:28%}
+.inv-sheet .num-col{width:16%}
+.inv-sign{display:flex;justify-content:space-between;margin-top:16px;padding:0 8px;font-size:13px}
+.inv-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;border-bottom:2px solid #22c55e;padding-bottom:10px;margin-bottom:12px}
+.inv-logo{height:58px}
+.muted{color:var(--mu);font-size:12px}
+.hidden{display:none !important}
+.coll{overflow:hidden;max-height:0;transition:.25s}
+.coll.open{max-height:900px}
+hr.sep{border:0;border-top:1px solid var(--ln);margin:14px 0}
+@media (max-width:900px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .stats,.grid-2,.grid-3{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .cards{grid-template-columns:repeat(2,1fr)}
+  .clock{font-size:18px}
+  .brand img{height:42px}
+  .wrap{width:calc(100% - 16px)}
+}
+@media print{
+  body *{visibility:hidden}
+  #print-root,#print-root *{visibility:visible}
+  #print-root{position:absolute;inset:0}
+  .a4{box-shadow:none;margin:0;page-break-after:always}
+  .a4.land{page-break-after:always}
+}
+@page{size:A4 landscape;margin:0}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand" data-go="dashboard" style="cursor:pointer">
+      <img src="logo.png" alt="PezeshkYar" id="brandLogo">
+      <div class="brand-meta">
+        <b>پزشک‌یار</b>
+        <span class="ver" id="appVer">v.1.1.14</span>
+      </div>
+    </div>
+    <div class="top-mid">
+      <div class="clock" id="clock">00:00:00</div>
+      <div class="shamsi" id="shamsi">—</div>
+    </div>
+    <div class="top-actions">
+      <button class="icon-btn" id="btnTheme" title="حالت روز/شب">◐</button>
+      <button class="btn btn-g" data-go="dashboard">داشبورد</button>
+    </div>
+  </header>
+  <main class="wrap" id="view"></main>
+</div>
+<div class="statusbar" id="statusbar"></div>
+<div class="lock" id="lock"><div><div class="spinner"></div><div>در حال بازیابی اطلاعات از Google Sheets…</div><div class="muted" id="lockMsg">لطفاً صبر کنید</div></div></div>
+<div class="modal-bg" id="modal"></div>
+<div class="toastbox" id="toasts"></div>
+<div id="print-root" class="hidden"></div>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+<script>
+const APP = {
+  name: 'PezeshkYar',
+  nameFa: 'پزشک‌یار',
+  version: 'v.1.1.15',
+  SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyUDYfULHdPXBdy_zESpCGCUnnNPpuog7db8CQL-ov1F97nZbbEOfQzTxI-punxopBoWQ/exec',
+  SHEET_URL: 'https://docs.google.com/spreadsheets/d/1GGHSNreSBvbgYwhxfQuR8xDjIvGxRNUqynz1Cgytkfs/edit?usp=sharing',
+  APP_TOKEN: 'PEZESHKYAR_BACKUP_2026',
+  INVOICE_START: 965111,
+  SELLER_PHONE: '09358379693',
+  IBAN: 'IR260120010000009679321203',
+  CARD: '8703 7096 3389 6104',
+  ACCOUNT: 'علی پزشک مفرنقاه',
+  CATEGORY: 'محصولات'
+};
+
+const KEYS = ['customers','products','materials','productMaterials','orders','orderItems','payments','socialOrders'];
+const DB = { settings: { invoiceCounter: APP.INVOICE_START } };
+KEYS.forEach(k => DB[k] = []);
+const dirty = {};
+KEYS.forEach(k => dirty[k] = new Set());
+
+let route = { page: 'dashboard', id: null };
+let ready = false;
+let syncing = false;
+let lastSync = null;
+let lastError = '';
+let queueCount = 0;
+
+const $ = (s, r=document) => r.querySelector(s);
+const $$ = (s, r=document) => [...r.querySelectorAll(s)];
+const num = v => { const n = parseFloat(String(v??'').replace(/,/g,'')); return isNaN(n) ? 0 : n; };
+const money = v => num(v).toLocaleString('en-US') + ' تومان';
+const faDigits = s => String(s??'').replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+const faMoney = v => faDigits(Math.round(num(v)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '،'));
+const uid = p => p + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const nowIso = () => new Date().toISOString();
+const alive = arr => (arr||[]).filter(x => String(x.deleted) !== '1');
+const byId = (arr,id) => (arr||[]).find(x => String(x.id)===String(id));
+const esc = s => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function g2j(gy,gm,gd){
+  const g_d_m=[0,31,59,90,120,151,181,212,243,273,304,334];
+  let gy2 = gm>2 ? gy+1 : gy;
+  let days = 355666 + 365*gy + ~~((gy2+3)/4) - ~~((gy2+99)/100) + ~~((gy2+399)/400) + gd + g_d_m[gm-1];
+  let jy = -1595 + 33*~~(days/12053); days%=12053;
+  jy += 4*~~(days/1461); days%=1461;
+  if(days>365){ jy+=~~((days-1)/365); days=(days-1)%365; }
+  const jm = days<186 ? 1+~~(days/31) : 7+~~((days-186)/30);
+  const jd = 1 + (days<186 ? days%31 : (days-186)%30);
+  return {jy,jm,jd};
+}
+function j2g(jy,jm,jd){
+  jy+=1595;
+  let days = -355668 + 365*jy + ~~(jy/33)*8 + ~~((jy%33+3)/4) + jd + (jm<7?(jm-1)*31:(jm-7)*30+186);
+  let gy = 400*~~(days/146097); days%=146097;
+  if(days>36524){ gy+=100*~~(--days/36524); days%=36524; if(days>=365) days++; }
+  gy += 4*~~(days/1461); days%=1461;
+  if(days>365){ gy+=~~((days-1)/365); days=(days-1)%365; }
+  let gd=days+1, sal_a=[0,31,(gy%4===0&&gy%100!==0)||gy%400===0?29:28,31,30,31,30,31,31,30,31,30,31], gm=0;
+  for(gm=1;gm<=12&&gd>sal_a[gm];gm++) gd-=sal_a[gm];
+  return {gy,gm,gd};
+}
+const JM=['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+const JW=['یکشنبه','دوشنبه','سه‌شنبه','چهارشنبه','پنجشنبه','جمعه','شنبه'];
+function shamsiStr(d=new Date()){
+  const j=g2j(d.getFullYear(),d.getMonth()+1,d.getDate());
+  return `${JW[d.getDay()]} ${j.jd} ${JM[j.jm-1]} ${j.jy}`;
+}
+function shamsiShort(d=new Date()){
+  const j=g2j(d.getFullYear(),d.getMonth()+1,d.getDate());
+  return `${j.jy}/${String(j.jm).padStart(2,'0')}/${String(j.jd).padStart(2,'0')}`;
+}
+function parseShamsi(s){
+  const m=String(s||'').match(/(\d{3,4})[\/\-](\d{1,2})[\/\-](\d{1,2})/);
+  if(!m) return new Date();
+  const g=j2g(+m[1],+m[2],+m[3]);
+  return new Date(g.gy,g.gm-1,g.gd);
+}
+
+function toast(msg, ok=true){
+  const el=document.createElement('div');
+  el.className='toast';
+  el.style.borderColor = ok ? 'var(--p)' : 'var(--dang)';
+  el.textContent=msg;
+  $('#toasts').appendChild(el);
+  setTimeout(()=>el.remove(),3200);
+}
+function confirmBox(title, text){
+  return new Promise(res=>{
+    const m=$('#modal');
+    m.className='modal-bg show';
+    m.innerHTML=`<div class="modal"><h3 style="margin:0 0 8px">${esc(title)}</h3><p class="muted">${esc(text)}</p><div class="row-actions" style="justify-content:flex-end;margin-top:16px"><button class="btn btn-g" id="cNo">انصراف</button><button class="btn btn-d" id="cYes">تأیید</button></div></div>`;
+    $('#cNo').onclick=()=>{m.className='modal-bg';res(false)};
+    $('#cYes').onclick=()=>{m.className='modal-bg';res(true)};
+  });
+}
+function priceAlert(info){
+  return new Promise(res=>{
+    const m=$('#modal');
+    m.className='modal-bg show';
+    m.innerHTML=`<div class="modal" style="width:min(520px,100%)">
+      <h3 style="margin:0 0 8px">افزایش قیمت مواد اولیه</h3>
+      <p>هزینه تمام‌شده این کالا بالا رفته است.</p>
+      <div class="stats">
+        <div class="stat"><span>هزینه تمام‌شده قبلی</span><b>${money(info.oldCost)}</b></div>
+        <div class="stat"><span>هزینه تمام‌شده جدید</span><b>${money(info.newCost)}</b></div>
+        <div class="stat"><span>درصد سود سابق</span><b>${pctTxt(info.profitPct)}</b></div>
+        <div class="stat"><span>قیمت پیشنهادی</span><b>${money(info.suggested)}</b></div>
+      </div>
+      <div class="field" style="margin-top:12px"><label>قیمت جدید فروش</label><input class="inp" id="paPrice" type="number" value="${info.suggested}"></div>
+      <div class="row-actions" style="justify-content:flex-end;margin-top:14px">
+        <button class="btn btn-g" id="paOld">ثبت با قیمت قبلی (${money(info.oldPrice)})</button>
+        <button class="btn btn-p" id="paNew">ثبت با قیمت جدید</button>
+      </div>
+    </div>`;
+    $('#paOld').onclick=()=>{ m.className='modal-bg'; res({keepOld:true, price:info.oldPrice}); };
+    $('#paNew').onclick=()=>{
+      const pr=num($('#paPrice').value);
+      if(!pr){ toast('قیمت جدید را وارد کنید',false); return; }
+      m.className='modal-bg'; res({keepOld:false, price:pr});
+    };
+  });
+}
+async function resolveSalePrice(p, typedPrice){
+  const oldCost=num(p.materialCost);
+  const newCost=productCost(p);
+  const oldPrice=productSale(p);
+  const typed=num(typedPrice);
+  const basePrice=typed||oldPrice;
+  if(!(oldCost>0 && newCost>oldCost+0.5)) return {price:basePrice, cost:newCost};
+  const pct=productProfitPct(p, oldCost);
+  const suggested=Math.round(newCost*(1+pct/100));
+  const ans=await priceAlert({oldCost,newCost,profitPct:pct,oldPrice:basePrice,suggested});
+  if(!ans.keepOld){
+    snapshotProduct(p, ans.price, newCost);
+    upsertLocal('products', p);
+  }
+  return {price:ans.price, cost:newCost};
+}
+
+function persistLocal(){
+  try{
+    localStorage.setItem('py_db', JSON.stringify(DB));
+    const d={};
+    KEYS.forEach(k=>d[k]=[...dirty[k]]);
+    localStorage.setItem('py_dirty', JSON.stringify(d));
+    queueCount = KEYS.reduce((a,k)=>a+dirty[k].size,0);
+  }catch(e){}
+}
+function loadLocal(){
+  try{
+    const raw=localStorage.getItem('py_db');
+    if(raw){
+      const o=JSON.parse(raw);
+      KEYS.forEach(k=>{ if(Array.isArray(o[k])) DB[k]=o[k]; });
+      if(o.settings) DB.settings=o.settings;
+    }
+    const dd=JSON.parse(localStorage.getItem('py_dirty')||'{}');
+    KEYS.forEach(k=> (dd[k]||[]).forEach(id=>dirty[k].add(id)));
+    queueCount = KEYS.reduce((a,k)=>a+dirty[k].size,0);
+  }catch(e){}
+}
+function mark(col, id){ dirty[col].add(String(id)); persistLocal(); }
+function upsertLocal(col, rec){
+  rec.updatedAt = nowIso();
+  if(!rec.createdAt) rec.createdAt = rec.updatedAt;
+  if(rec.deleted==null) rec.deleted='0';
+  const i=DB[col].findIndex(x=>String(x.id)===String(rec.id));
+  if(i>=0) DB[col][i]=rec; else DB[col].push(rec);
+  mark(col, rec.id);
+  return rec;
+}
+
+async function api(action, payload={}){
+  const body=JSON.stringify({action, token:APP.APP_TOKEN, ...payload});
+  const res=await fetch(APP.SCRIPT_URL,{
+    method:'POST', redirect:'follow',
+    headers:{'Content-Type':'text/plain;charset=utf-8'},
+    body
+  });
+  if(!res.ok) throw new Error('خطای شبکه '+res.status);
+  return res.json();
+}
+
+async function bootstrap(){
+  $('#lockMsg').textContent='ارتباط با سرور بکاپ…';
+  const data=await api('bootstrap');
+  if(!data.ok) throw new Error(data.error||'بازیابی ناموفق');
+  KEYS.forEach(k=>{ if(Array.isArray(data.data[k])) DB[k]=data.data[k]; });
+  DB.settings = Object.assign({invoiceCounter:APP.INVOICE_START}, data.data.settings||{});
+  KEYS.forEach(k=>dirty[k].clear());
+  lastSync=new Date(); lastError='';
+  persistLocal();
+}
+
+async function flush(){
+  if(syncing || !navigator.onLine) return;
+  const collections={}; let any=false;
+  KEYS.forEach(k=>{
+    if(!dirty[k].size) return;
+    collections[k]=DB[k].filter(r=>dirty[k].has(String(r.id)));
+    if(collections[k].length) any=true;
+  });
+  if(!any) return;
+  syncing=true; renderStatus();
+  try{
+    const r=await api('sync',{collections, settings:DB.settings});
+    if(!r.ok) throw new Error(r.error||'ذخیره ناموفق');
+    KEYS.forEach(k=>dirty[k].clear());
+    lastSync=new Date(); lastError='';
+    persistLocal();
+  }catch(e){
+    lastError=e.message||'خطای بکاپ';
+  }finally{
+    syncing=false; renderStatus();
+  }
+}
+
+async function nextInvoice(){
+  try{
+    const r=await api('nextInvoice');
+    if(r.ok && r.invoiceNo){
+      DB.settings.invoiceCounter = Number(r.invoiceNo)+1;
+      return Number(r.invoiceNo);
+    }
+  }catch(e){}
+  let n=num(DB.settings.invoiceCounter)||APP.INVOICE_START;
+  alive(DB.orders).forEach(o=>{ const x=num(o.invoiceNo); if(x>=n) n=x+1; });
+  if(n<APP.INVOICE_START) n=APP.INVOICE_START;
+  DB.settings.invoiceCounter=n+1;
+  return n;
+}
+
+function renderStatus(){
+  const on=navigator.onLine;
+  $('#statusbar').innerHTML=`
+    <div class="pill"><span class="dot ${on?'':'off'}"></span> اینترنت: ${on?'متصل':'قطع'}</div>
+    <div class="pill"><span class="dot ${syncing?'warn': lastError?'off':' '}"></span> بکاپ: ${syncing?'در حال ذخیره': lastError?('خطا — '+lastError): lastSync?('ذخیره '+lastSync.toLocaleTimeString('en-GB')):'منتظر'}</div>
+    <div class="pill"><span class="dot ${queueCount?'warn':''}"></span> صف اضطراری: ${queueCount} مورد</div>`;
+}
+
+function tick(){
+  const d=new Date();
+  $('#clock').textContent=d.toLocaleTimeString('en-GB',{hour12:false,hour:'2-digit',minute:'2-digit'});
+  $('#shamsi').textContent=shamsiStr(d);
+}
+
+function setTheme(t){
+  document.documentElement.classList.toggle('dark', t==='dark');
+  localStorage.setItem('py_theme', t);
+}
+function go(page,id){
+  if(page==='new-order') draft=null;
+  route={page,id:id||null};
+  render();
+}
+
+function productCost(p){
+  if(!p) return 0;
+  const bom=alive(DB.productMaterials).filter(b=>b.productId===p.id);
+  if(bom.length){
+    return bom.reduce((s,b)=>{
+      const m=byId(DB.materials,b.materialId);
+      return s + num(m&&m.unitCost)*num(b.qty);
+    },0);
+  }
+  return num(p.materialCost);
+}
+function productSale(p){
+  if(!p) return 0;
+  return num(p.salePrice) || num(p.priceTier1);
+}
+function productProfitPct(p, cost){
+  const c = cost!=null ? num(cost) : productCost(p);
+  const s = productSale(p);
+  if(c>0) return ((s-c)/c)*100;
+  return num(p&&p.profitPct);
+}
+function pctTxt(v){
+  const n=num(v);
+  if(!isFinite(n)) return '۰٪';
+  return (Math.round(n*10)/10).toLocaleString('fa-IR') + '٪';
+}
+function snapshotProduct(p, sale, cost){
+  p.salePrice=num(sale);
+  p.priceTier1=num(sale);
+  p.priceTier2=0; p.priceTier3=0;
+  p.materialCost=num(cost);
+  p.profitPct = cost>0 ? ((sale-cost)/cost)*100 : 0;
+  return p;
+}
+function orderItems(oid){ return alive(DB.orderItems).filter(i=>i.orderId===oid); }
+function totalsOf(oid){
+  const items=orderItems(oid);
+  const totalSale=items.reduce((s,i)=>s+num(i.saleAmount),0);
+  const totalMaterial=items.reduce((s,i)=>s+num(i.materialCost)*num(i.qty),0);
+  return {totalSale,totalMaterial,totalProfit:totalSale-totalMaterial,count:items.length};
+}
+function refreshOrderTotals(order){
+  const t=totalsOf(order.id);
+  order.totalSale=t.totalSale; order.totalMaterial=t.totalMaterial; order.totalProfit=t.totalProfit;
+  return order;
+}
+function ledger(cid){
+  const orders=alive(DB.orders).filter(o=>o.customerId===cid)
+    .sort((a,b)=>String(a.dateGregorian).localeCompare(String(b.dateGregorian))||num(a.invoiceNo)-num(b.invoiceNo));
+  const pays=alive(DB.payments).filter(p=>p.customerId===cid)
+    .sort((a,b)=>String(a.dateGregorian).localeCompare(String(b.dateGregorian))||String(a.createdAt).localeCompare(String(b.createdAt)));
+  const rows=orders.map(o=>({order:o, sale:num(o.totalSale), paid:0, bal:num(o.totalSale)}));
+  pays.forEach(p=>{
+    let left=num(p.amount);
+    rows.forEach(r=>{
+      if(left<=0) return;
+      const take=Math.min(left,r.bal);
+      r.paid+=take; r.bal=Math.round((r.bal-take)*100)/100; left-=take;
+    });
+  });
+  const totalSale=rows.reduce((s,r)=>s+r.sale,0);
+  const totalPaid=pays.reduce((s,p)=>s+num(p.amount),0);
+  const debt=rows.reduce((s,r)=>s+r.bal,0);
+  return {orders:rows, pays, totalSale, totalPaid, debt};
+}
+function applySettleFlags(cid){
+  const L=ledger(cid);
+  L.orders.forEach(r=>{
+    const o=r.order;
+    if(r.bal<=0.5 && num(o.totalSale)>0){
+      if(o.status!=='تسویه شده'){ o.status='تسویه شده'; upsertLocal('orders',o); }
+    }else if(o.status==='تسویه شده'){
+      o.status = num(o.stage)>=4 ? 'تحویل داده شده' : 'آماده‌سازی';
+      upsertLocal('orders',o);
+    }
+  });
+}
+function stageLabel(st){
+  return ({1:'ثبت شده',2:'آماده‌سازی سفارش',3:'آماده تحویل',4:'تحویل به مشتری'}[Number(st)]||'ثبت شده');
+}
+function statusBadge(o){
+  if(o.status==='تسویه شده') return '<span class="badge">تسویه شده</span>';
+  if(Number(o.stage)>=4) return '<span class="badge w">تحویل داده شده</span>';
+  return '<span class="badge n">آماده‌سازی</span>';
+}
+function socialStage(s){
+  return ({1:'ارسال برای چاپ',2:'در حال چاپ',3:'رنگ‌آمیزی و آماده‌سازی',4:'بسته‌بندی',5:'ارسال برای مشتری'}[Number(s)]||'ارسال برای چاپ');
+}
+
+function dashCard(goTo,ico,title,sub){
+  return `<button class="dash-card" data-go="${goTo}"><div class="dash-ico">${ico}</div><div><h3>${title}</h3><p>${sub}</p></div></button>`;
+}
+
+function viewDashboard(){
+  return `
+  <div class="page-head"><h1>داشبورد پزشک‌یار</h1><span class="muted">مدیریت یکپارچه سفارش و حسابداری</span></div>
+  <div class="cards">
+    ${dashCard('new-order','＋','سفارش جدید','ثبت مشتری، کالا و پیش‌فاکتور')}
+    ${dashCard('orders','☰','مدیریت سفارش‌ها','وضعیت، پرتفو و تولید')}
+    ${dashCard('customers','☺','مشتریان','بانک مشتری و مانده حساب')}
+    ${dashCard('accounting','﷼','حسابداری','فروش، دریافتی و مطالبات')}
+    ${dashCard('products','▣','مدیریت محصولات و مواد اولیه','کالا، قیمت و بهای تمام‌شده')}
+  </div>`;
+}
+
+function customerSuggest(q){
+  q=String(q||'').trim();
+  const all=alive(DB.customers);
+  if(!q) return all.slice(0,40);
+  return all.filter(c => (c.name||'').includes(q) || String(c.phone||'').includes(q)).slice(0,40);
+}
+function productSuggest(q){
+  q=String(q||'').trim().toLowerCase();
+  const all=alive(DB.products);
+  if(!q) return all.slice(0,40);
+  return all.filter(p => String(p.name||'').toLowerCase().includes(q) || String(p.code||'').toLowerCase().includes(q)).slice(0,40);
+}
+
+let draft = null;
+function freshDraft(inv){
+  return {
+    id: uid('ord'), invoiceNo: inv, customerId:'', customerName:'', customerPhone:'', customerAddress:'',
+    dateShamsi: shamsiShort(), dateGregorian: nowIso(), notes:'', stage:1, status:'آماده‌سازی', trackingCode:'',
+    items: [], deleted:'0'
+  };
+}
+
+function viewNewOrder(){
+  if(!draft) draft = freshDraft('…');
+  const rows = draft.items.map((it,i)=>`
+    <tr>
+      <td>${esc(it.productCode)}</td>
+      <td>${esc(it.productName)}</td>
+      <td><input class="inp qty" data-edit-qty="${i}" type="number" min="1" value="${it.qty}"></td>
+      <td>${money(it.unitPrice)}</td>
+      <td>${money(num(it.materialCost)*num(it.qty))}</td>
+      <td>${money(it.saleAmount)}</td>
+      <td>${money(it.profit)}</td>
+      <td>${pctTxt(num(it.materialCost)>0 ? (num(it.unitPrice)-num(it.materialCost))/num(it.materialCost)*100 : 0)}</td>
+      <td><button class="btn btn-d" data-del-item="${i}">حذف</button></td>
+    </tr>`).join('') || `<tr><td colspan="9" class="empty">هنوز کالایی اضافه نشده است.</td></tr>`;
+  const ts=draft.items.reduce((s,i)=>s+num(i.saleAmount),0);
+  const tm=draft.items.reduce((s,i)=>s+num(i.materialCost)*num(i.qty),0);
+  const cusLabel = draft.customerName ? `${draft.customerName}${draft.customerPhone?' — '+draft.customerPhone:''}` : '';
+  return `
+  <div class="page-head"><h1>سفارش جدید</h1><div class="row-actions"><button class="btn btn-g" data-go="dashboard">بازگشت</button></div></div>
+  <div class="card">
+    <h3 style="margin:0 0 10px">مشخصات فاکتور</h3>
+    <div class="grid-3">
+      <div class="field"><label>تاریخ شمسی</label><input class="inp" id="cDate" value="${esc(draft.dateShamsi)}"></div>
+      <div class="field"><label>شماره فاکتور</label><input class="inp" id="cInv" value="${esc(draft.invoiceNo)}" readonly></div>
+      <div class="field"><label>توضیحات سفارش</label><input class="inp" id="oNotes" value="${esc(draft.notes)}"></div>
+    </div>
+    <div class="cust-block">
+      <div class="order-bar">
+        <button type="button" class="cust-ico" id="togCust" title="اطلاعات مشتری">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/></svg>
+        </button>
+        <button type="button" class="cust-ico" id="togNewCus" title="مشتری جدید">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M19 8v6M16 11h6"/></svg>
+        </button>
+        <div class="field search grow" style="margin:0">
+          <label>مشتری</label>
+          <input class="inp" id="cSearch" placeholder="انتخاب از لیست یا جستجو" value="${esc(cusLabel)}" autocomplete="off">
+          <div class="sug" id="cSug"></div>
+        </div>
+      </div>
+      <div class="cust-box" id="cusBox">
+        <div class="grid-2">
+          <div class="field"><label>نام</label><input class="inp" id="cName" value="${esc(draft.customerName)}"></div>
+          <div class="field"><label>شماره تماس</label><input class="inp" id="cPhone" value="${esc(draft.customerPhone)}"></div>
+        </div>
+        <div class="field"><label>آدرس</label><textarea class="inp" id="cAddr" rows="2">${esc(draft.customerAddress)}</textarea></div>
+      </div>
+      <div class="cust-box" id="newCusBox">
+        <div class="grid-3">
+          <div class="field"><label>نام مشتری جدید</label><input class="inp" id="ncName"></div>
+          <div class="field"><label>شماره تماس</label><input class="inp" id="ncPhone"></div>
+          <div class="field"><label>آدرس</label><input class="inp" id="ncAddr"></div>
+        </div>
+        <button class="btn btn-p" id="saveNewCus">ذخیره مشتری جدید</button>
+      </div>
+    </div>
+    <div class="cust-block" style="margin-top:12px">
+      <div class="order-bar">
+        <button type="button" class="cust-ico" id="togNewPr" title="محصول جدید">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
+        </button>
+        <div class="field search grow" style="margin:0">
+          <label>محصول</label>
+          <input class="inp" id="pSearch" placeholder="انتخاب از لیست یا جستجو" autocomplete="off">
+          <div class="sug" id="pSug"></div>
+        </div>
+        <input type="hidden" id="pId">
+        <div class="field" style="margin:0;width:90px"><label>تعداد</label><input class="inp" id="pQty" type="number" min="1" value="1"></div>
+        <div class="field" style="margin:0;width:150px"><label>مبلغ واحد</label><input class="inp" id="pPrice" type="number"></div>
+        <button class="btn btn-p" id="addItem">افزودن</button>
+      </div>
+      <div class="pmeta" id="pMeta">محصول را انتخاب کنید تا قیمت تمام‌شده و درصد سود دیده شود.</div>
+      <div class="cust-box" id="newPrBox">
+        <div class="grid-2">
+          <div class="field"><label>نام محصول جدید</label><input class="inp" id="npName"></div>
+          <div class="field"><label>قیمت تمام‌شده</label><input class="inp" id="npCost" type="number"></div>
+        </div>
+        <button class="btn btn-p" id="saveNewPr">ذخیره محصول جدید</button>
+      </div>
+    </div>
+    <p class="sel-hint">آیکون ＋ کنار مشتری و محصول برای ثبت مورد جدید است. آیکون آدمک اطلاعات مشتری انتخاب‌شده را باز می‌کند.</p>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <h3>لیست سفارش</h3>
+    <div class="table-wrap"><table>
+      <thead><tr><th>کد</th><th>نام</th><th>تعداد</th><th>مبلغ واحد</th><th>هزینه مواد</th><th>مبلغ فروش</th><th>سود خالص</th><th>درصد سود</th><th></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <div class="stats" style="margin-top:12px">
+      <div class="stat"><span>جمع فروش</span><b>${money(ts)}</b></div>
+      <div class="stat"><span>هزینه مواد</span><b>${money(tm)}</b></div>
+      <div class="stat"><span>سود خالص</span><b>${money(ts-tm)}</b></div>
+      <div class="stat"><span>اقلام</span><b>${draft.items.length}</b></div>
+    </div>
+    <div class="row-actions" style="margin-top:10px">
+      <button class="btn btn-p" id="saveOrder">ذخیره سفارش</button>
+      <button class="btn" id="previewInv">پیش‌فاکتور مشتری</button>
+    </div>
+  </div>`;
+}
+
+function bindNewOrder(){
+  const fillCustomer = c => {
+    draft.customerId=c.id; draft.customerName=c.name; draft.customerPhone=c.phone; draft.customerAddress=c.address||'';
+    $('#cName').value=c.name||''; $('#cPhone').value=c.phone||''; $('#cAddr').value=c.address||'';
+    $('#cSearch').value = `${c.name||''}${c.phone?' — '+c.phone:''}`;
+  };
+  const openList = (box, items, htmlFn, onPick) => {
+    box.classList.toggle('open', !!items.length);
+    box.innerHTML = items.length ? items.map(htmlFn).join('') : '<div class="muted">موردی یافت نشد</div>';
+    if(!items.length) box.classList.add('open');
+    [...box.children].forEach((el,i)=>{
+      if(!items[i]) return;
+      el.onclick=()=>{ onPick(items[i]); box.classList.remove('open'); };
+    });
+  };
+  const showCustomers = q => openList($('#cSug'), customerSuggest(q),
+    c=>`<div>${esc(c.name)} — ${esc(c.phone)}</div>`,
+    c=>fillCustomer(c)
+  );
+  $('#cSearch').addEventListener('focus', e=>showCustomers(e.target.value.includes(' — ')?'':e.target.value));
+  $('#cSearch').addEventListener('input', e=>showCustomers(e.target.value));
+  let picked=null;
+  const fillPrice=()=>{
+    if(!picked) return;
+    const cost=productCost(picked);
+    const sale=productSale(picked);
+    $('#pPrice').value = sale || '';
+    if($('#pMeta')) $('#pMeta').innerHTML=`قیمت تمام‌شده: <b>${money(cost)}</b> — درصد سود: <b>${pctTxt(productProfitPct(picked,cost))}</b>`;
+  };
+  const showProducts = q => openList($('#pSug'), productSuggest(q),
+    p=>`<div>${esc(p.code)} — ${esc(p.name)}</div>`,
+    p=>{ picked=p; $('#pId').value=p.id; $('#pSearch').value=p.name; fillPrice(); }
+  );
+  $('#pSearch').addEventListener('focus', e=>showProducts(e.target.value));
+  $('#pSearch').addEventListener('input', e=>showProducts(e.target.value));
+  const closePanels = except => {
+    [['cusBox','togCust'],['newCusBox','togNewCus'],['newPrBox','togNewPr']].forEach(([box,btn])=>{
+      if(except===box) return;
+      const b=$( '#'+box), i=$('#'+btn);
+      if(b) b.classList.remove('open');
+      if(i) i.classList.remove('on');
+    });
+  };
+  $('#togCust').onclick=()=>{
+    const open=$('#cusBox').classList.toggle('open');
+    $('#togCust').classList.toggle('on', open);
+    if(open) closePanels('cusBox');
+  };
+  $('#togNewCus').onclick=()=>{
+    const open=$('#newCusBox').classList.toggle('open');
+    $('#togNewCus').classList.toggle('on', open);
+    if(open) closePanels('newCusBox');
+  };
+  $('#togNewPr').onclick=()=>{
+    const open=$('#newPrBox').classList.toggle('open');
+    $('#togNewPr').classList.toggle('on', open);
+    if(open) closePanels('newPrBox');
+  };
+  $('#saveNewCus').onclick=()=>{
+    const name=$('#ncName').value.trim(), phone=$('#ncPhone').value.trim();
+    if(!name||!phone){ toast('نام و شماره تماس مشتری لازم است',false); return; }
+    const c={id:uid('cus'),name,phone,address:$('#ncAddr').value.trim(),deleted:'0'};
+    upsertLocal('customers',c);
+    fillCustomer(c);
+    $('#newCusBox').classList.remove('open');
+    $('#togNewCus').classList.remove('on');
+    toast('مشتری جدید ذخیره شد');
+  };
+  $('#saveNewPr').onclick=()=>{
+    const name=$('#npName').value.trim();
+    const cost=num($('#npCost').value);
+    if(!name){ toast('نام محصول لازم است',false); return; }
+    if(!cost){ toast('قیمت تمام‌شده را وارد کنید',false); return; }
+    const rec=snapshotProduct({id:uid('prd'),code:'P'+Date.now().toString().slice(-6),name,category:APP.CATEGORY,unit:'عدد',notes:'',deleted:'0'}, cost, cost);
+    upsertLocal('products',rec);
+    picked=rec;
+    $('#pId').value=rec.id;
+    $('#pSearch').value=rec.name;
+    $('#pPrice').value=cost;
+    $('#newPrBox').classList.remove('open');
+    $('#togNewPr').classList.remove('on');
+    toast('محصول جدید ذخیره شد');
+  };
+  const grabDraft=()=>{
+    draft.customerName=$('#cName').value.trim();
+    draft.customerPhone=$('#cPhone').value.trim();
+    draft.customerAddress=$('#cAddr').value.trim();
+    draft.dateShamsi=$('#cDate').value.trim();
+    draft.notes=$('#oNotes').value.trim();
+    draft.dateGregorian=parseShamsi(draft.dateShamsi).toISOString();
+    if(!draft.customerName){
+      const raw=($('#cSearch').value||'').split('—')[0].trim();
+      if(raw) draft.customerName=raw;
+    }
+  };
+  $('#addItem').onclick=async()=>{
+    if(!picked){ toast('ابتدا محصول را انتخاب کنید',false); return; }
+    const qty=Math.max(1,num($('#pQty').value));
+    const decided=await resolveSalePrice(picked, $('#pPrice').value);
+    const unit=decided.price;
+    const mc=decided.cost;
+    const sale=qty*unit;
+    draft.items.push({
+      id:uid('oit'), productId:picked.id, productCode:picked.code, productName:picked.name,
+      qty, producedQty:0, priceTier:'', unitPrice:unit,
+      materialCost:mc, saleAmount:sale, profit:sale-mc*qty
+    });
+    grabDraft(); render();
+  };
+  $$('[data-edit-qty]').forEach(inp=>inp.onchange=()=>{
+    const it=draft.items[+inp.dataset.editQty];
+    it.qty=Math.max(1,num(inp.value));
+    it.saleAmount=it.qty*num(it.unitPrice);
+    it.profit=it.saleAmount-num(it.materialCost)*it.qty;
+    grabDraft(); render();
+  });
+  $$('[data-del-item]').forEach(btn=>btn.onclick=async()=>{
+    if(await confirmBox('حذف محصول','این کالا از لیست سفارش حذف شود؟')){
+      draft.items.splice(+btn.dataset.delItem,1); grabDraft(); render();
+    }
+  });
+  $('#saveOrder').onclick=()=>saveDraft(false);
+  $('#previewInv').onclick=()=>saveDraft(true);
+}
+
+async function saveDraft(openInv){
+  draft.customerName=$('#cName').value.trim();
+  draft.customerPhone=$('#cPhone').value.trim();
+  draft.customerAddress=$('#cAddr').value.trim();
+  draft.dateShamsi=$('#cDate').value.trim();
+  draft.notes=$('#oNotes').value.trim();
+  draft.dateGregorian=parseShamsi(draft.dateShamsi).toISOString();
+  if(!draft.customerName || !draft.customerPhone){ toast('نام و شماره مشتری الزامی است',false); return; }
+  if(!draft.items.length){ toast('حداقل یک محصول اضافه کنید',false); return; }
+  for(const it of draft.items){
+    const p=byId(DB.products,it.productId);
+    if(!p) continue;
+    const decided=await resolveSalePrice(p, it.unitPrice);
+    it.unitPrice=decided.price;
+    it.materialCost=decided.cost;
+    it.saleAmount=num(it.qty)*decided.price;
+    it.profit=it.saleAmount-decided.cost*num(it.qty);
+  }
+  if(!draft.customerId){
+    const exist=alive(DB.customers).find(c=>c.phone===draft.customerPhone);
+    if(exist) draft.customerId=exist.id;
+    else{
+      const c={id:uid('cus'), name:draft.customerName, phone:draft.customerPhone, address:draft.customerAddress, deleted:'0'};
+      upsertLocal('customers',c); draft.customerId=c.id;
+    }
+  }else{
+    const c=byId(DB.customers,draft.customerId);
+    if(c){ c.name=draft.customerName; c.phone=draft.customerPhone; c.address=draft.customerAddress; upsertLocal('customers',c); }
+  }
+  if(!num(draft.invoiceNo)) draft.invoiceNo = await nextInvoice();
+  const order={
+    id:draft.id, invoiceNo:draft.invoiceNo, customerId:draft.customerId,
+    customerName:draft.customerName, customerPhone:draft.customerPhone, customerAddress:draft.customerAddress,
+    dateShamsi:draft.dateShamsi, dateGregorian:draft.dateGregorian, notes:draft.notes,
+    stage:1, status:'آماده‌سازی', trackingCode:'', deleted:'0'
+  };
+  draft.items.forEach(it=>{
+    upsertLocal('orderItems', Object.assign({},it,{orderId:order.id, deleted:'0'}));
+  });
+  refreshOrderTotals(order);
+  upsertLocal('orders', order);
+  applySettleFlags(order.customerId);
+  const savedId=order.id;
+  draft=null;
+  toast('سفارش ذخیره شد');
+  flush();
+  if(openInv) showInvoice(savedId);
+  else go('order', savedId);
+}
+
+function viewOrders(){
+  const q=($('#ordQ')&&$('#ordQ').value)||'';
+  const rows=alive(DB.orders)
+    .filter(o=>!q || String(o.invoiceNo).includes(q) || (o.customerName||'').includes(q) || String(o.customerPhone||'').includes(q))
+    .sort((a,b)=>num(b.invoiceNo)-num(a.invoiceNo))
+    .map(o=>`
+      <tr class="clickable" data-open-order="${o.id}">
+        <td>${esc(o.invoiceNo)}</td><td>${esc(o.dateShamsi)}</td><td>${esc(o.customerName)}</td>
+        <td>${esc(o.customerPhone)}</td><td>${orderItems(o.id).length}</td>
+        <td>${statusBadge(o)} <span class="muted">${stageLabel(o.stage)}</span></td>
+        <td><button class="btn btn-d" data-del-order="${o.id}">حذف</button></td>
+      </tr>`).join('') || `<tr><td colspan="7" class="empty">سفارشی ثبت نشده است.</td></tr>`;
+  return `<div class="page-head"><h1>مدیریت سفارش‌ها</h1><div class="row-actions"><input class="inp" id="ordQ" placeholder="جستجو" value="${esc(q)}" style="width:200px"><button class="btn btn-g" data-go="dashboard">بازگشت</button></div></div>
+  <div class="card"><div class="table-wrap"><table><thead><tr><th>شماره</th><th>تاریخ</th><th>مشتری</th><th>تماس</th><th>اقلام</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
+
+function viewOrder(id){
+  const o=byId(DB.orders,id); if(!o) return `<div class="card">سفارش یافت نشد.</div>`;
+  refreshOrderTotals(o);
+  const items=orderItems(o.id);
+  const rows=items.map(it=>`
+    <tr>
+      <td>${esc(it.productCode)}</td>
+      <td><input class="inp" data-ren="${it.id}" value="${esc(it.productName)}"></td>
+      <td><input class="inp qty" type="number" min="1" data-oqty="${it.id}" value="${it.qty}"></td>
+      <td><input class="inp qty" type="number" min="0" data-prod="${it.id}" value="${it.producedQty||0}"></td>
+      <td>${money(it.unitPrice)}</td><td>${money(it.saleAmount)}</td><td>${money(it.profit)}</td>
+      <td><button class="btn btn-d" data-del-oi="${it.id}">حذف</button></td>
+    </tr>`).join('');
+  return `
+  <div class="page-head"><h1>پرتفوی سفارش ${esc(o.invoiceNo)}</h1>
+    <div class="row-actions">
+      <button class="btn" data-inv="${o.id}">پیش‌فاکتور</button>
+      <button class="btn" data-op="${o.id}">لیست اپراتور</button>
+      <button class="btn btn-p" id="addToOrder">افزودن محصول</button>
+      <button class="btn btn-g" data-go="orders">بازگشت</button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat"><span>مشتری</span><b><a href="#" data-go="customer" data-id="${o.customerId}">${esc(o.customerName)}</a></b></div>
+    <div class="stat"><span>تماس</span><b><a href="#" data-go="customer" data-id="${o.customerId}">${esc(o.customerPhone)}</a></b></div>
+    <div class="stat"><span>مبلغ کل</span><b>${money(o.totalSale)}</b></div>
+    <div class="stat"><span>مواد / سود</span><b style="font-size:14px">${money(o.totalMaterial)} / ${money(o.totalProfit)}</b></div>
+  </div>
+  <div class="card">
+    <div class="row-actions">
+      <span class="muted">مرحله:</span>
+      ${[1,2,3,4].map(s=>`<button class="chip ${Number(o.stage)===s?'on':''}" data-stage="${s}">${s}. ${stageLabel(s)}</button>`).join('')}
+    </div>
+    <div class="field" style="margin-top:10px;max-width:280px"><label>کد پیگیری ارسال</label><input class="inp" id="trk" value="${esc(o.trackingCode||'')}" placeholder="در مرحله تحویل"></div>
+    <p class="muted">وضعیت تولید: ${items.filter(i=>num(i.producedQty)>=num(i.qty)).length} از ${items.length} قلم تکمیل</p>
+    <div class="table-wrap"><table>
+      <thead><tr><th>کد</th><th>نام (قابل ویرایش در همین سفارش)</th><th>تعداد</th><th>تولیدشده</th><th>واحد</th><th>فروش</th><th>سود</th><th></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+  </div>
+  <div class="modal-bg" id="addProdBox"></div>`;
+}
+
+function bindOrder(o){
+  $$('[data-ren]').forEach(inp=>inp.onchange=()=>{
+    const it=byId(DB.orderItems,inp.dataset.ren); it.productName=inp.value; upsertLocal('orderItems',it); toast('نام کالا در این سفارش تغییر کرد');
+  });
+  $$('[data-oqty]').forEach(inp=>inp.onchange=()=>{
+    const it=byId(DB.orderItems,inp.dataset.oqty);
+    it.qty=Math.max(1,num(inp.value)); it.saleAmount=it.qty*num(it.unitPrice); it.profit=it.saleAmount-num(it.materialCost)*it.qty;
+    upsertLocal('orderItems',it); refreshOrderTotals(o); upsertLocal('orders',o); applySettleFlags(o.customerId); render();
+  });
+  $$('[data-prod]').forEach(inp=>inp.onchange=()=>{
+    const it=byId(DB.orderItems,inp.dataset.prod); it.producedQty=Math.max(0,num(inp.value)); upsertLocal('orderItems',it); toast('تعداد تولید ذخیره شد');
+  });
+  $$('[data-del-oi]').forEach(btn=>btn.onclick=async()=>{
+    if(!await confirmBox('حذف کالا','این محصول از سفارش حذف شود؟')) return;
+    const it=byId(DB.orderItems,btn.dataset.delOi); it.deleted='1'; upsertLocal('orderItems',it);
+    refreshOrderTotals(o); upsertLocal('orders',o); render();
+  });
+  $$('[data-stage]').forEach(btn=>btn.onclick=async()=>{
+    const s=Number(btn.dataset.stage);
+    if(s<Number(o.stage)){ toast('مرحله فقط به‌ترتیب جلو می‌رود',false); return; }
+    if(s===4){
+      const code=$('#trk').value.trim();
+      if(!code){ toast('برای تحویل، کد پیگیری را وارد کنید',false); return; }
+      o.trackingCode=code;
+    }
+    o.stage=s;
+    if(s>=4 && o.status!=='تسویه شده') o.status='تحویل داده شده';
+    upsertLocal('orders',o); toast('مرحله سفارش به‌روز شد'); render();
+  });
+  $('#trk').onchange=()=>{ o.trackingCode=$('#trk').value.trim(); upsertLocal('orders',o); };
+  $('#addToOrder').onclick=()=>openAddProduct(o);
+}
+
+function bindProductMats(){
+  const recost=()=>{
+    let cost=0;
+    $$('#prMatList [data-pmid]').forEach(cb=>{
+      if(!cb.checked) return;
+      const m=byId(DB.materials,cb.dataset.pmid);
+      const q=num(($(`[data-pmqty="${cb.dataset.pmid}"]`)||{}).value);
+      cost += num(m&&m.unitCost)*q;
+    });
+    if(!cost) cost=num($('#prMc')&&$('#prMc').value);
+    const sale=num($('#prSale')&&$('#prSale').value);
+    if($('#prCostLive')) $('#prCostLive').textContent=money(cost);
+    if($('#prPctLive')) $('#prPctLive').textContent=pctTxt(cost>0&&sale?((sale-cost)/cost)*100:0);
+  };
+  if($('#prMatList')){ $('#prMatList').oninput=recost; $('#prMatList').onchange=recost; }
+  if($('#prSale')) $('#prSale').oninput=recost;
+  if($('#prMc')) $('#prMc').oninput=recost;
+  recost();
+}
+function bindFormulaLive(){
+  const fillBom=()=>{
+    const pid=$('#bomP').value;
+    const bom=alive(DB.productMaterials).filter(b=>b.productId===pid);
+    $$('#matList [data-mid]').forEach(cb=>{
+      const row=bom.find(b=>b.materialId===cb.dataset.mid);
+      cb.checked=!!row;
+      const q=$(`[data-mqty="${cb.dataset.mid}"]`);
+      if(q) q.value=row?row.qty:1;
+    });
+    recost();
+  };
+  const recost=()=>{
+    let cost=0;
+    $$('#matList [data-mid]').forEach(cb=>{
+      if(!cb.checked) return;
+      const m=byId(DB.materials,cb.dataset.mid);
+      const q=num(($(`[data-mqty="${cb.dataset.mid}"]`)||{}).value);
+      cost += num(m&&m.unitCost)*q;
+    });
+    const p=byId(DB.products, $('#bomP').value);
+    const sale=productSale(p);
+    const pct=cost>0?((sale-cost)/cost)*100:0;
+    if($('#bomCost')) $('#bomCost').textContent=money(cost);
+    if($('#bomSale')) $('#bomSale').textContent=money(sale);
+    if($('#bomPct')) $('#bomPct').textContent=pctTxt(pct);
+  };
+  if($('#bomP')) $('#bomP').onchange=fillBom;
+  if($('#matList')){
+    $('#matList').oninput=recost;
+    $('#matList').onchange=recost;
+  }
+  recost();
+}
+function openAddProduct(o){
+  const box=$('#addProdBox');
+  box.className='modal-bg show';
+  box.innerHTML=`<div class="modal"><h3>افزودن محصول به سفارش</h3>
+    <div class="field search"><label>جستجو</label><input class="inp" id="apq"><div class="sug" id="aps"></div></div>
+    <div class="grid-2"><div class="field"><label>تعداد</label><input class="inp" id="apn" type="number" value="1"></div>
+    <div class="field"><label>قیمت واحد</label><input class="inp" id="app" type="number"></div></div>
+    <p class="pmeta" id="apMeta"></p>
+    <div class="row-actions"><button class="btn btn-g" id="apx">بستن</button><button class="btn btn-p" id="apok">افزودن</button></div></div>`;
+  let picked=null;
+  $('#apq').oninput=e=>{
+    const list=productSuggest(e.target.value); const s=$('#aps'); s.classList.toggle('open',!!list.length);
+    s.innerHTML=list.map(p=>`<div data-id="${p.id}">${esc(p.code)} — ${esc(p.name)}</div>`).join('');
+    $$('#aps [data-id]').forEach(el=>el.onclick=()=>{
+      picked=byId(DB.products,el.dataset.id);
+      $('#apq').value=picked.name;
+      $('#app').value=productSale(picked);
+      const c=productCost(picked);
+      $('#apMeta').innerHTML=`قیمت تمام‌شده: <b>${money(c)}</b> — درصد سود: <b>${pctTxt(productProfitPct(picked,c))}</b>`;
+      s.classList.remove('open');
+    });
+  };
+  $('#apx').onclick=()=>box.className='modal-bg';
+  $('#apok').onclick=async()=>{
+    if(!picked){ toast('محصول را انتخاب کنید',false); return; }
+    const qty=Math.max(1,num($('#apn').value));
+    const decided=await resolveSalePrice(picked, $('#app').value);
+    const unit=decided.price, mc=decided.cost;
+    upsertLocal('orderItems',{id:uid('oit'),orderId:o.id,productId:picked.id,productCode:picked.code,productName:picked.name,qty,producedQty:0,priceTier:'',unitPrice:unit,materialCost:mc,saleAmount:qty*unit,profit:qty*unit-mc*qty,deleted:'0'});
+    refreshOrderTotals(o); upsertLocal('orders',o); box.className='modal-bg'; render();
+  };
+}
+
+function viewCustomers(){
+  const rows=alive(DB.customers).map(c=>{
+    const L=ledger(c.id);
+    return `<tr class="clickable" data-open-cus="${c.id}"><td>${esc(c.name)}</td><td>${esc(c.phone)}</td><td>${esc(c.address||'')}</td>
+      <td>${money(L.debt)}</td>
+      <td><button class="btn" data-ed-cus="${c.id}">ویرایش</button> <button class="btn btn-d" data-del-cus="${c.id}">حذف</button></td></tr>`;
+  }).join('') || `<tr><td colspan="5" class="empty">مشتری‌ای ثبت نشده.</td></tr>`;
+  return `<div class="page-head"><h1>مشتریان</h1><button class="btn btn-g" data-go="dashboard">بازگشت</button></div>
+  <div class="card">
+    <button class="btn" id="togCus">＋ افزودن مشتری</button>
+    <div class="coll" id="cusForm"><div class="grid-3" style="margin-top:12px">
+      <div class="field"><label>نام</label><input class="inp" id="nName"></div>
+      <div class="field"><label>شماره تماس</label><input class="inp" id="nPhone"></div>
+      <div class="fi"btn btn-p" id="saveCus">ذخیره مشتری</button></div>
+  </div>
+  <div class="card" style="margin-top:12px"><div class="table-wrap"><table><thead><tr><th>نام</th><th>تماس</th><th>آدرس</th><th>مانده بدهی</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
+
+function viewCustomer(id){
+  const c=byId(DB.customers,id); if(!c) return '<div class="card">مشتری یافت نشد.</div>';
+  const L=ledger(id);
+  const orows=L.orders.map(r=>`<tr class="clickable" data-open-order="${r.order.id}">
+    <td>${esc(r.order.invoiceNo)}</td><td>${esc(r.order.dateShamsi)}</td><td>${money(r.sale)}</td><td>${money(r.paid)}</td>
+    <td>${r.bal<=0.5?'<span class="badge">تسویه شده</span>':money(r.bal)}</td><td>${statusBadge(r.order)}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">سفارشی ندارد.</td></tr>';
+  const prows=L.pays.map(p=>`<tr><td>${esc(p.dateShamsi)}</td><td>${money(p.amount)}</td><td>${esc(p.method||'')}</td><td>${esc(p.notes||'')}</td>
+    <td><button class="btn btn-d" data-del-pay="${p.id}">حذف</button></td></tr>`).join('')||'<tr><td colspan="5" class="empty">پرداختی ثبت نشده.</td></tr>';
+  return `<div class="page-head"><h1>پرتفوی ${esc(c.name)}</h1><button class="btn btn-g" data-go="customers">بازگشت</button></div>
+  <div class="stats">
+    <div class="stat"><span>مجموع سفارش‌ها</span><b>${money(L.totalSale)}</b></div>
+    <div class="stat"><span>مجموع پرداختی‌ها</span><b>${money(L.totalPaid)}</b></div>
+    <div class="stat"><span>مانده بدهی</span><b>${money(L.debt)}</b></div>
+    <div class="stat"><span>تماس / آدرس</span><b style="font-size:13px">${esc(c.phone)}<br>${esc(c.address||'—')}</b></div>
+  </div>
+  <div class="card">
+    <h3>ثبت پرداختی</h3>
+    <div class="grid-3">
+      <div class="field"><label>مبلغ</label><input class="inp" id="payAmt" type="number"></div>
+      <div class="field"><label>روش</label><select class="inp" id="payMet"><option>کارت به کارت</option><option>نقد</option><option>شبا / پایا</option></select></div>
+      <div class="field"><label>تاریخ شمسی</label><input class="inp" id="payDate" value="${shamsiShort()}"></div>
+    </div>
+    <div class="field"><label>توضیح</label><input class="inp" id="payNote"></div>
+    <button class="btn btn-p" id="savePay">ثبت پرداخت</button>
+    <p class="muted">پرداختی‌ها به‌ترتیب روی فاکتورهای قدیمی‌تر اعمال می‌شوند.</p>
+  </div>
+  <div class="card" style="margin-top:12px"><h3>سفارش‌ها</h3><div class="table-wrap"><table><thead><tr><th>فاکتور</th><th>تاریخ</th><th>مبلغ</th><th>پرداخت‌شده</th><th>مانده</th><th>وضعیت</th></tr></thead><tbody>${orows}</tbody></table></div></div>
+  <div class="card" style="margin-top:12px"><h3>تاریخچه پرداختی‌ها</h3><div class="table-wrap"><table><thead><tr><th>تاریخ</th><th>مبلغ</th><th>روش</th><th>توضیح</th><th></th></tr></thead><tbody>${prows}</tbody></table></div></div>`;
+}
+
+function periodStart(key){
+  const d=new Date();
+  if(key==='1W') d.setDate(d.getDate()-7);
+  else if(key==='1M') d.setMonth(d.getMonth()-1);
+  else if(key==='1Y') d.setFullYear(d.getFullYear()-1);
+  else return new Date(2000,0,1);
+  return d;
+}
+function viewAccounting(){
+  const per = (window._accPer)||'ALL';
+  const from=periodStart(per).getTime();
+  const orders=alive(DB.orders).filter(o=>new Date(o.dateGregorian||o.createdAt).getTime()>=from);
+  const pays=alive(DB.payments).filter(p=>new Date(p.dateGregorian||p.createdAt).getTime()>=from);
+  const sale=orders.reduce((s,o)=>s+num(o.totalSale),0);
+  const rec=pays.reduce((s,p)=>s+num(p.amount),0);
+  let remain=0;
+  alive(DB.customers).forEach(c=>{ remain += ledger(c.id).debt; });
+  const tx=[
+    ...orders.map(o=>({t:o.dateGregorian,d:o.dateShamsi,k:'فروش',n:'فاکتور '+o.invoiceNo+' — '+o.customerName,a:num(o.totalSale),id:o.id,kind:'o'})),
+    ...pays.map(p=>{
+      const c=byId(DB.customers,p.customerId);
+      return {t:p.dateGregorian,d:p.dateShamsi,k:'دریافت',n:(c?c.name:'مشتری')+' — '+ (p.method||''),a:num(p.amount),id:p.id,kind:'p'};
+    })
+  ].sort((a,b)=>String(b.t).localeCompare(String(a.t)));
+  const trows=tx.map(x=>`<tr><td>${esc(x.d)}</td><td>${esc(x.k)}</td><td>${esc(x.n)}</td><td>${money(x.a)}</td>
+    <td>${x.kind==='p'?`<button class="btn btn-d" data-del-pay="${x.id}">حذف</button>`:''}</td></tr>`).join('')||'<tr><td colspan="5" class="empty">تراکنشی نیست.</td></tr>';
+  const crows=alive(DB.customers).map(c=>{
+    const L=ledger(c.id);
+    return `<tr class="clickable" data-open-cus="${c.id}"><td>${esc(c.name)}</td><td>${money(L.totalSale)}</td><td>${money(L.totalPaid)}</td><td>${money(L.debt)}</td></tr>`;
+  }).join('');
+  return `<div class="page-head"><h1>حسابداری</h1><button class="btn btn-g" data-go="dashboard">بازگشت</button></div>
+  <div class="filters">${['1W','1M','1Y','ALL'].map(k=>`<button class="chip ${per===k?'on':''}" data-per="${k}">${k}</button>`).join('')}</div>
+  <div class="stats" style="margin-top:12px">
+    <div class="stat"><span>مجموع فروش</span><b>${money(sale)}</b></div>
+    <div class="stat"><span>مجموع دریافتی‌ها</span><b>${money(rec)}</b></div>
+    <div class="stat"><span>مطالبات باقی‌مانده</span><b>${money(remain)}</b></div>
+    <div class="stat"><span>تعداد تراکنش</span><b>${tx.length}</b></div>
+  </div>
+  <div class="card"><h3>گزارش تراکنش‌ها</h3><div class="table-wrap"><table><thead><tr><th>تاریخ</th><th>نوع</th><th>شرح</th><th>مبلغ</th><th></th></tr></thead><tbody>${trows}</tbody></table></div></div>
+  <div class="card" style="margin-top:12px"><h3>پرتفوی مالی مشتریان</h3><div class="table-wrap"><table><thead><tr><th>مشتری</th><th>فروش</th><th>دریافتی</th><th>مانده</th></tr></thead><tbody>${crows}</tbody></table></div></div>`;
+}
+
+function viewProducts(){
+  const ico=(goTo,svg,title,sub)=>`<button class="hub-ico" data-go="${goTo}"><div class="mark">${svg}</div><b>${title}</b><span>${sub}</span></button>`;
+  return `
+  <div class="page-head"><h1>محصولات و مواد اولیه</h1><button class="btn btn-g" data-go="dashboard">بازگشت</button></div>
+  <div class="hub">
+    ${ico('products-add','<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8M8 12h8"/></svg>','افزودن محصول','ثبت کالا و فهرست محصولات')}
+    ${ico('materials','<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2"/></svg>','مواد اولیه','نام، واحد و قیمت مواد')}
+    ${ico('formula','<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5h6v6H5zM13 13h6v6h-6z"/><path d="M8 11v2a3 3 0 0 0 3 3h2"/></svg>','فرمول محاسبه','اتصال مواد و بهای تمام‌شده')}
+  </div>`;
+}
+function viewProductsAdd(){
+  const prows=alive(DB.products).map(p=>{
+    const cost=productCost(p), sale=productSale(p);
+    return `<tr>
+    <td>${esc(p.code)}</td><td>${esc(p.name)}</td><td>${esc(p.category||APP.CATEGORY)}</td>
+    <td>${money(sale)}</td><td>${money(cost)}</td><td>${pctTxt(productProfitPct(p,cost))}</td>
+    <td><button class="btn" data-ed-pr="${p.id}">ویرایش</button> <button class="btn btn-d" data-del-pr="${p.id}">حذف</button></td>
+  </tr>`;
+  }).join('')||'<tr><td colspan="7" class="empty">محصولی نیست.</td></tr>';
+  return `<div class="page-head"><h1>افزودن محصول</h1><button class="btn btn-g" data-go="products">بازگشت</button></div>
+  <div class="card">
+    <div class="grid-2">
+      <div class="field"><label>کد</label><input class="inp" id="prCode"></div>
+      <div class="field"><label>نام</label><input class="inp" id="prName"></div>
+    </div>
+    <div class="grid-3">
+      <div class="field"><label>دسته‌بندی</label><input class="inp" id="prCat" value="${APP.CATEGORY}"></div>
+      <div class="field"><label>واحد</label><input class="inp" id="prUnit" value="عدد"></div>
+      <div class="field"><label>قیمت فروش</label><input class="inp" id="prSale" type="number"></div>
+    </div>
+    <div class="field"><label>انتخاب مواد اولیه</label>
+      <div class="mat-list" id="prMatList">${alive(DB.materials).length ? alive(DB.materials).map(m=>`<label class="mat-row">
+        <input type="checkbox" data-pmid="${m.id}">
+        <span>${esc(m.name)}</span>
+        <span class="muted">${money(m.unitCost)} / ${esc(m.unit||'عدد')}</span>
+        <input class="inp" data-pmqty="${m.id}" type="number" min="0" step="0.01" value="1">
+      </label>`).join('') : '<div class="empty">ابتدا ماده اولیه ثبت کنید.</div>'}</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><span>قیمت تمام‌شده</span><b id="prCostLive">۰</b></div>
+      <div class="stat"><span>درصد سود</span><b id="prPctLive">۰٪</b></div>
+    </div>
+    <div class="field"><label>هزینه مواد دستی (اگر ماده‌ای انتخاب نشود)</label><input class="inp" id="prMc" type="number"></div>
+    <button class="btn btn-p" id="savePr">ذخیره محصول</button>
+  </div>
+  <div class="card" style="margin-top:12px"><h3>فهرست محصولات</h3>
+    <div class="table-wrap"><table><thead><tr><th>کد</th><th>نام</th><th>دسته</th><th>قیمت فروش</th><th>قیمت تمام‌شده</th><th>درصد سود</th><th></th></tr></thead><tbody>${prows}</tbody></table></div>
+  </div>`;
+}
+function viewMaterials(){
+  const mrows=alive(DB.materials).map(m=>`<tr>
+    <td>${esc(m.name)}</td><td>${esc(m.unit||'عدد')}</td><td>${money(m.unitCost)}</td>
+    <td><button class="btn" data-ed-mat="${m.id}">ویرایش</button> <button class="btn btn-d" data-del-mat="${m.id}">حذف</button></td>
+  </tr>`).join('')||'<tr><td colspan="4" class="empty">ماده اولیه‌ای نیست.</td></tr>';
+  return `<div class="page-head"><h1>مواد اولیه</h1><button class="btn btn-g" data-go="products">بازگشت</button></div>
+  <div class="card">
+    <div class="grid-3">
+      <div class="field"><label>نام ماده</label><input class="inp" id="mName"></div>
+      <div class="field"><label>واحد</label><input class="inp" id="mUnit" value="عدد"></div>
+      <div class="field"><label>قیمت واحد</label><input class="inp" id="mCost" type="number"></div>
+    </div>
+    <button class="btn btn-p" id="saveMat">ذخیره ماده اولیه</button>
+  </div>
+  <div class="card" style="margin-top:12px"><div class="table-wrap"><table><thead><tr><th>نام</th><th>واحد</th><th>قیمت</th><th></th></tr></thead><tbody>${mrows}</tbody></table></div></div>`;
+}
+function viewFormula(){
+  const products=alive(DB.products);
+  const mats=alive(DB.materials);
+  const first=products[0];
+  const bom=first?alive(DB.productMaterials).filter(b=>b.productId===first.id):[];
+  const list = mats.length ? mats.map(m=>{
+    const row=bom.find(b=>b.materialId===m.id);
+    return `<label class="mat-row">
+      <input type="checkbox" data-mid="${m.id}" ${row?'checked':''}>
+      <span>${esc(m.name)}</span>
+      <span class="muted">${money(m.unitCost)} / ${esc(m.unit||'عدد')}</span>
+      <input class="inp" data-mqty="${m.id}" type="number" min="0" step="0.01" value="${row?row.qty:1}">
+    </label>`;
+  }).join('') : '<div class="empty">ابتدا ماده اولیه ثبت کنید.</div>';
+  return `<div class="page-head"><h1>فرمول محاسبه</h1><button class="btn btn-g" data-go="products">بازگشت</button></div>
+  <div class="card">
+    <p class="muted">مواد مورد نیاز محصول را از لیست انتخاب کنید. قیمت تمام‌شده و درصد سود همان لحظه محاسبه می‌شود.</p>
+    <div class="field"><label>محصول</label>
+      <select class="inp" id="bomP">${products.map(p=>`<option value="${p.id}">${esc(p.code)} — ${esc(p.name)}</option>`).join('')}</select>
+    </div>
+    <div class="mat-list" id="matList">${list}</div>
+    <div class="stats" style="margin-top:12px">
+      <div class="stat"><span>قیمت تمام‌شده</span><b id="bomCost">۰</b></div>
+      <div class="stat"><span>قیمت فروش</span><b id="bomSale">۰</b></div>
+      <div class="stat"><span>درصد سود</span><b id="bomPct">۰٪</b></div>
+    </div>
+    <button class="btn btn-p" id="saveBom" style="margin-top:10px">ذخیره فرمول</button>
+  </div>`;
+}
+
+function viewSocial(){
+  const rows=alive(DB.socialOrders).sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt))).map(s=>`
+    <tr class="clickable" data-open-soc="${s.id}">
+      <td>${esc(s.platform)}</td><td>${esc(s.recipientName)}</td><td>${esc(s.socialId||'')}</td>
+      <td>${esc(s.phone||'')}</td><td><span class="badge">${socialStage(s.stage)}</span></td>
+      <td><button class="btn btn-d" data-del-soc="${s.id}">حذف</button></td>
+    </tr>`).join('')||'<tr><td colspan="6" class="empty">سفارش سوشالی نیست.</td></tr>';
+  return `<div class="page-head"><h1>سفارش‌های سوشال مدیا</h1><div class="row-actions"><button class="btn btn-p" data-go="social-new">سفارش جدید سوشال</button><button class="btn btn-g" data-go="dashboard">بازگشت</button></div></div>
+  <p class="muted">این بخش کاملاً مستقل است و وارد مشتریان، سفارش‌های اصلی یا حسابداری نمی‌شود.</p>
+  <div class="card"><div class="table-wrap"><table><thead><tr><th>پلتفرم</th><th>گیرنده</th><th>آی‌دی</th><th>تماس</th><th>مرحله</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
+
+function viewSocialForm(id){
+  const s = id ? byId(DB.socialOrders,id) : {
+    id:uid('soc'), platform:'تلگرام', recipientName:'', socialId:'', phone:'', address:'', postalCode:'',
+    shippingMethod:'پست پیشتاز', shippingCost:0, paymentsJson:'[]', itemsJson:'[]', stage:1, trackingCode:'', notes:'', deleted:'0'
+  };
+  const items=JSON.parse(s.itemsJson||'[]');
+  const pays=JSON.parse(s.paymentsJson||'[]');
+  return `<div class="page-head"><h1>${id?'پرتفوی سوشال':'سفارش سوشال جدید'}</h1><button class="btn btn-g" data-go="social">بازگشت</button></div>
+  <div class="card">
+    <div class="grid-3">
+      <div class="field"><label>پلتفرم</label><select class="inp" id="sp"><option ${s.platform==='تلگرام'?'selected':''}>تلگرام</option><option ${s.platform==='اینستاگرام'?'selected':''}>اینستاگرام</option><option ${s.platform==='متفرقه'?'selected':''}>متفرقه</option></select></div>
+      <div class="field"><label>نام گیرنده</label><input class="inp" id="sr" value="${esc(s.recipientName)}"></div>
+      <div class="field"><label>آی‌دی</label><input class="inp" id="sid" value="${esc(s.socialId)}"></div>
+      <div class="field"><label>شماره تماس</label><input class="inp" id="sph" value="${esc(s.phone)}"></div>
+      <div class="field"><label>کد پستی</label><input class="inp" id="spo" value="${esc(s.postalCode)}"></div>
+      <div class="field"><label>نحوه ارسال</label><input class="inp" id="ssm" value="${esc(s.shippingMethod)}"></div>
+    </div>
+    <div class="field"><label>آدرس</label><textarea class="inp" id="sa" rows="2">${esc(s.address)}</textarea></div>
+    <div class="grid-2">
+      <div class="field"><label>هزینه پست</label><input class="inp" id="ssc" type="number" value="${num(s.shippingCost)}"></div>
+      <div class="field"><label>توضیحات</label><input class="inp" id="snt" value="${esc(s.notes)}"></div>
+    </div>
+    <h3>اقلام</h3>
+    <div id="sit">${items.map((it,i)=>`<div class="grid-3"><input class="inp si-n" placeholder="نام" value="${esc(it.name)}"><input class="inp si-q" type="number" value="${it.qty||1}"><input class="inp si-p" placeholder="توضیح" value="${esc(it.note||'')}"></div>`).join('')}
+      <div class="grid-3"><input class="inp si-n" placeholder="نام کالا"><input class="inp si-q" type="number" value="1"><input class="inp si-p" placeholder="توضیح"></div>
+    </div>
+    <h3 style="margin-top:12px">پرداختی‌ها (فقط همین بخش)</h3>
+    <div id="spt">${pays.map(p=>`<div class="grid-2"><input class="inp sp-a" type="number" value="${p.amount||0}"><input class="inp sp-n" value="${esc(p.note||'')}"></div>`).join('')}
+      <div class="grid-2"><input class="inp sp-a" type="number" placeholder="مبلغ"><input class="inp sp-n" placeholder="شرح پرداخت"></div>
+    </div>
+    ${id?`<div class="filters" style="margin:12px 0">${[1,2,3,4,5].map(n=>`<button class="chip ${Number(s.stage)===n?'on':''}" data-sst="${n}">${n}. ${socialStage(n)}</button>`).join('')}</div>
+    <div class="field" style="max-width:280px"><label>کد پیگیری ارسال</label><input class="inp" id="strk" value="${esc(s.trackingCode||'')}"></div>`:''}
+    <div class="row-actions"><button class="btn btn-p" id="saveSoc">ذخیره</button></div>
+  </div>`;
+}
+
+function collectSocial(existing){
+  const items=$$('.si-n').map((n,i)=>({name:n.value.trim(), qty:num($$('.si-q')[i].value), note:($$('.si-p')[i]||{}).value||''})).filter(x=>x.name);
+  const pays=$$('.sp-a').map((a,i)=>({amount:num(a.value), note:($$('.sp-n')[i]||{}).value||''})).filter(x=>x.amount);
+  const rec=Object.assign({},existing,{
+    platform:$('#sp').value, recipientName:$('#sr').value.trim(), socialId:$('#sid').value.trim(),
+    phone:$('#sph').value.trim(), postalCode:$('#spo').value.trim(), shippingMethod:$('#ssm').value.trim(),
+    address:$('#sa').value.trim(), shippingCost:num($('#ssc').value), notes:$('#snt').value.trim(),
+    itemsJson:JSON.stringify(items), paymentsJson:JSON.stringify(pays), deleted:'0'
+  });
+  if($('#strk')) rec.trackingCode=$('#strk').value.trim();
+  return rec;
+}
+
+function prevDebt(order){
+  if(!order.customerId) return 0;
+  return ledger(order.customerId).orders.filter(r=>r.order.id!==order.id).reduce((s,r)=>s+r.bal,0);
+}
+
+function invoiceHead(order, pageNo){
+  return `<div class="inv-head">
+    <div class="inv-meta">تاریخ: ${faDigits(order.dateShamsi||'')}<br>شماره سریال: ${faDigits(order.invoiceNo||'')}${pageNo>1?'<br>صفحه '+faDigits(pageNo):''}</div>
+    <div class="inv-title">پیش‌فاکتور</div>
+    <img class="inv-logo-py" src="logo-py.png" alt="PezeshkYar" onerror="this.src='logo.png'">
+  </div>`;
+}
+function invoicePagesHTML(order){
+  const items=orderItems(order.id);
+  const debt=prevDebt(order);
+  const payable=num(order.totalSale);
+  const firstMax = items.length>7 ? 7 : items.length;
+  const chunks=[items.slice(0, firstMax)];
+  for(let i=firstMax;i<items.length;i+=12) chunks.push(items.slice(i,i+12));
+  if(!chunks.length) chunks.push([]);
+  const noteLines = String(order.notes||'').split(/\n+/).map(s=>s.trim()).filter(Boolean);
+  return chunks.map((chunk,idx)=>{
+    const last = idx===chunks.length-1;
+    const start = idx===0 ? 0 : firstMax + (idx-1)*12;
+    const rows = chunk.map((it,i)=>`<tr>
+      <td>${faDigits(start+i+1)}</td>
+      <td>${faDigits(it.productCode)}</td>
+      <td>${esc(it.productName)}</td>
+      <td>${faDigits(it.qty)}</td>
+      <td>${faMoney(it.unitPrice)}</td>
+      <td>${faMoney(it.saleAmount)}</td>
+    </tr>`).join('') || `<tr><td colspan="6">بدون کالا</td></tr>`;
+    const parties = idx===0 ? `
+      <tr><th class="sec" colspan="6">مشخصات فروشنده</th></tr>
+      <tr>
+        <td class="start" colspan="4">نام شخص حقیقی / حقوقی : پزشک یار</td>
+        <td colspan="2">تلفن: ${faDigits(APP.SELLER_PHONE)}</td>
+      </tr>
+      <tr><th class="sec" colspan="6">مشخصات خریدار</th></tr>
+      <tr><td class="start" colspan="6">نام شخص حقیقی / حقوقی : ${esc(order.customerName||'')}</td></tr>
+      <tr>
+        <td class="start" colspan="3">استان: </td>
+        <td class="start" colspan="3">شهرستان: </td>
+      </tr>
+      <tr>
+        <td class="start" colspan="4">نشانی : ${esc(order.customerAddress||'')}</td>
+        <td colspan="2">تلفن: ${faDigits(order.customerPhone||'')}</td>
+      </tr>` : '';
+    const goodsHead = `<tr><th class="sec" colspan="6">مشخصات کالا</th></tr>
+      <tr>
+        <th style="width:7%">ردیف</th>
+        <th style="width:10%">کد کالا</th>
+        <th class="name-col">شرح کالا</th>
+        <th style="width:8%">تعداد</th>
+        <th class="num-col">مبلغ واحد(ریال)</th>
+        <th class="num-col">مبلغ کل (ریال)</th>
+      </tr>`;
+    const more = last ? '' : `<tr><td colspan="6">ادامه در صفحه بعد…</td></tr>`;
+    const foot = last ? `
+      <tr>
+        <td colspan="2" style="font-weight:800">جمع کل قابل پرداخت:</td>
+        <td colspan="4" style="font-weight:800">${faMoney(payable)} ریال</td>
+      </tr>
+      <tr>
+        <td style="font-weight:800;width:12%">توضیحات:</td>
+        <td class="start" colspan="5">
+          شماره شبا: ${esc(APP.IBAN)}<br>
+          شماره کارت: ${faDigits(APP.CARD)}<br>
+          به نام: ${esc(APP.ACCOUNT)}
+          ${debt>0.5?`<br>بدهی پیشین مشتری: ${faMoney(debt)} ریال`:''}
+          ${noteLines.map(n=>`<br>• ${esc(n)}`).join('')}
+        </td>
+      </tr>` : more;
+    const signs = last ? `<div class="inv-sign"><span>مهر و امضاء فروشنده :</span><span>مهر و امضاء خریدار :</span></div>` : '';
+    return `<section class="a4 land" data-page="${idx+1}">
+      ${invoiceHead(order, idx+1)}
+      <table class="inv-sheet">
+        ${parties}
+        ${goodsHead}
+        ${rows}
+        ${foot}
+      </table>
+      ${signs}
+    </section>`;
+  }).join('');
+}
+
+function showInvoice(orderId){
+  const o=byId(DB.orders,orderId); if(!o) return;
+  refreshOrderTotals(o);
+  const m=$('#modal');
+  m.className='modal-bg show';
+  m.innerHTML=`<div class="modal" style="width:min(1120px,100%);max-height:92vh;overflow:auto">
+    <div class="row-actions" style="margin-bottom:10px">
+      <button class="btn btn-p" id="dlZip">دانلود ZIP تصاویر PNG</button>
+      <button class="btn" id="prInv">چاپ</button>
+      <button class="btn btn-g" id="clInv">بستن</button>
+    </div>
+    <div class="a4-stage" id="invStage">${invoicePagesHTML(o)}</div>
+  </div>`;
+  $('#clInv').onclick=()=>m.className='modal-bg';
+  $('#prInv').onclick=()=>{
+    $('#print-root').innerHTML=invoicePagesHTML(o);
+    $('#print-root').classList.remove('hidden');
+    window.print();
+    setTimeout(()=>$('#print-root').classList.add('hidden'),300);
+  };
+  $('#dlZip').onclick=()=>downloadZip(o,'invoice');
+}
+
+function operatorHTML(o){
+  const items=orderItems(o.id);
+  const rows=items.map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.productCode)}</td><td>${esc(it.productName)}</td><td>${it.qty}</td><td>${it.producedQty||0}</td><td>${Math.max(0,num(it.qty)-num(it.producedQty||0))}</td></tr>`).join('');
+  return `<section class="a4">
+    <div class="inv-top"><div><img class="inv-logo" src="logo.png"><div>لیست اپراتور</div></div>
+    <div>سفارش ${esc(o.invoiceNo)}<br>${esc(o.dateShamsi)}<br>${esc(o.customerName)}</div></div>
+    <table><thead><tr><th>ردیف</th><th>کد</th><th>نام</th><th>سفارش</th><th>تولیدشده</th><th>باقی</th></tr></thead><tbody>${rows}</tbody></table>
+  </section>`;
+}
+function showOperator(id){
+  const o=byId(DB.orders,id); if(!o) return;
+  const m=$('#modal'); m.className='modal-bg show';
+  m.innerHTML=`<div class="modal" style="width:min(920px,100%);max-height:92vh;overflow:auto">
+    <div class="row-actions"><button class="btn btn-p" id="dlOp">دانلود PNG ZIP</button><button class="btn" onclick="window.print()">چاپ</button><button class="btn btn-g" id="clOp">بستن</button></div>
+    <div class="a4-stage" id="opStage">${operatorHTML(o)}</div></div>`;
+  $('#clOp').onclick=()=>m.className='modal-bg';
+  $('#print-root').innerHTML=operatorHTML(o);
+  $('#dlOp').onclick=()=>downloadZip(o,'operator');
+}
+
+async function downloadZip(order, kind){
+  if(!window.html2canvas || !window.JSZip){ toast('کتابخانه دانلود در دسترس نیست',false); return; }
+  const html = kind==='operator' ? operatorHTML(order) : invoicePagesHTML(order);
+  const hold=document.createElement('div');
+  hold.style.cssText='position:fixed;left:-10000px;top:0;';
+  hold.innerHTML=html;
+  document.body.appendChild(hold);
+  const zip=new JSZip();
+  const pages=[...hold.querySelectorAll('.a4')];
+  for(let i=0;i<pages.length;i++){
+    const canvas=await html2canvas(pages[i],{scale:2,backgroundColor:'#ffffff',useCORS:true});
+    const data=canvas.toDataURL('image/png').split(',')[1];
+    zip.file(`PezeshkYar-${kind}-${order.invoiceNo}-p${i+1}.png`, data, {base64:true});
+  }
+  const blob=await zip.generateAsync({type:'blob'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`PezeshkYar-${kind}-${order.invoiceNo}.zip`;
+  a.click();
+  hold.remove();
+  toast('فایل ZIP آماده شد');
+}
+
+function render(){
+  const v=$('#view');
+  if(route.page==='dashboard') v.innerHTML=viewDashboard();
+  else if(route.page==='new-order'){
+    if(!draft) draft=freshDraft('…');
+    v.innerHTML=viewNewOrder(); bindNewOrder();
+    if(String(draft.invoiceNo)==='…'){
+      nextInvoice().then(n=>{ if(draft && String(draft.invoiceNo)==='…'){ draft.invoiceNo=n; const el=$('#cInv'); if(el) el.value=n; }});
+    }
+  }
+  else if(route.page==='orders') v.innerHTML=viewOrders();
+  else if(route.page==='order'){ v.innerHTML=viewOrder(route.id); const o=byId(DB.orders,route.id); if(o) bindOrder(o); }
+  else if(route.page==='customers') v.innerHTML=viewCustomers();
+  else if(route.page==='customer') v.innerHTML=viewCustomer(route.id);
+  else if(route.page==='accounting') v.innerHTML=viewAccounting();
+  else if(route.page==='products') v.innerHTML=viewProducts();
+  else if(route.page==='products-add') v.innerHTML=viewProductsAdd();
+  else if(route.page==='materials') v.innerHTML=viewMaterials();
+  else if(route.page==='formula') v.innerHTML=viewFormula();
+  else if(route.page==='social') v.innerHTML=viewSocial();
+  else if(route.page==='social-new') v.innerHTML=viewSocialForm(null);
+  else if(route.page==='social-detail') v.innerHTML=viewSocialForm(route.id);
+  bindGlobal();
+  renderStatus();
+}
+
+function bindGlobal(){
+  $$('#view [data-go]').forEach(el=>el.addEventListener('click',e=>{
+    e.preventDefault();
+    go(el.dataset.go, el.dataset.id);
+  }));
+  const oq=$('#ordQ'); if(oq) oq.oninput=()=>render();
+  $$('[data-open-order]').forEach(tr=>tr.onclick=e=>{ if(e.target.closest('button')) return; go('order', tr.dataset.openOrder); });
+  $$('[data-del-order]').forEach(b=>b.onclick=async e=>{
+    e.stopPropagation();
+    if(!await confirmBox('حذف سفارش','این سفارش به‌صورت نرم حذف شود؟')) return;
+    const o=byId(DB.orders,b.dataset.delOrder); o.deleted='1'; upsertLocal('orders',o);
+    orderItems(o.id).forEach(it=>{it.deleted='1'; upsertLocal('orderItems',it);});
+    toast('سفارش حذف شد'); render();
+  });
+  $$('[data-inv]').forEach(b=>b.onclick=()=>showInvoice(b.dataset.inv));
+  $$('[data-op]').forEach(b=>b.onclick=()=>showOperator(b.dataset.op));
+  const tog=$('#togCus'); if(tog) tog.onclick=()=>$('#cusForm').classList.toggle('open');
+  const sc=$('#saveCus'); if(sc) sc.onclick=()=>{
+    const name=$('#nName').value.trim(), phone=$('#nPhone').value.trim();
+    if(!name||!phone){ toast('نام و تماس لازم است',false); return; }
+    upsertLocal('customers',{id:uid('cus'),name,phone,address:$('#nAddr').value.trim(),deleted:'0'});
+    toast('مشتری ذخیره شد'); render();
+  };
+  $$('[data-open-cus]').forEach(tr=>tr.onclick=e=>{ if(e.target.closest('button')) return; go('customer', tr.dataset.openCus); });
+  $$('[data-del-cus]').forEach(b=>b.onclick=async e=>{
+    e.stopPropagation();
+    if(!await confirmBox('حذف مشتری','مشتری حذف شود؟')) return;
+    const c=byId(DB.customers,b.dataset.delCus); c.deleted='1'; upsertLocal('customers',c); render();
+  });
+  $$('[data-ed-cus]').forEach(b=>b.onclick=e=>{
+    e.stopPropagation();
+    const c=byId(DB.customers,b.dataset.edCus);
+    const m=$('#modal'); m.className='modal-bg show';
+    m.innerHTML=`<div class="modal"><h3>ویرایش مشتری</h3>
+      <div class="field"><label>نام</label><input class="inp" id="eN" value="${esc(c.name)}"></div>
+      <div class="field"><label>تماس</label><input class="inp" id="eP" value="${esc(c.phone)}"></div>
+      <div class="field"><label>آدرس</label><textarea class="inp" id="eA">${esc(c.address||'')}</textarea></div>
+      <div class="row-actions"><button class="btn btn-g" id="eX">بستن</button><button class="btn btn-p" id="eS">ذخیره</button></div></div>`;
+    $('#eX').onclick=()=>m.className='modal-bg';
+    $('#eS').onclick=()=>{ c.name=$('#eN').value.trim(); c.phone=$('#eP').value.trim(); c.address=$('#eA').value.trim(); upsertLocal('customers',c); m.className='modal-bg'; render(); };
+  });
+  const sp=$('#savePay'); if(sp) sp.onclick=()=>{
+    const amt=num($('#payAmt').value); if(!amt){ toast('مبلغ را وارد کنید',false); return; }
+    upsertLocal('payments',{id:uid('pay'),customerId:route.id,orderId:'',amount:amt,method:$('#payMet').value,dateShamsi:$('#payDate').value,dateGregorian:parseShamsi($('#payDate').value).toISOString(),notes:$('#payNote').value,deleted:'0'});
+    applySettleFlags(route.id); toast('پرداخت ثبت شد و روی فاکتورهای قدیمی‌تر اعمال گردید'); render();
+  };
+  $$('[data-del-pay]').forEach(b=>b.onclick=async()=>{
+    if(!await confirmBox('حذف تراکنش','این پرداختی حذف شود؟')) return;
+    const p=byId(DB.payments,b.dataset.delPay); p.deleted='1'; upsertLocal('payments',p);
+    if(p.customerId) applySettleFlags(p.customerId);
+    render();
+  });
+  $$('[data-per]').forEach(b=>b.onclick=()=>{ window._accPer=b.dataset.per; render(); });
+  const spr=$('#savePr'); if(spr) spr.onclick=()=>{
+    const code=$('#prCode').value.trim(), name=$('#prName').value.trim();
+    if(!code||!name){ toast('کد و نام لازم است',false); return; }
+    const sale=num($('#prSale').value), cost=num($('#prMc').value);
+    const rec=snapshotProduct({id:uid('prd'),code,name,category:$('#prCat').value.trim()||APP.CATEGORY,unit:$('#prUnit').value.trim()||'عدد',notes:'',deleted:'0'}, sale||cost, cost);
+    upsertLocal('products',rec);
+    toast('محصول ذخیره شد'); render();
+  };
+  const sm=$('#saveMat'); if(sm) sm.onclick=()=>{
+    const name=$('#mName').value.trim(); if(!name){ toast('نام ماده لازم است',false); return; }
+    upsertLocal('materials',{id:uid('mat'),name,unit:$('#mUnit').value.trim()||'عدد',unitCost:num($('#mCost').value),notes:'',deleted:'0'});
+    toast('ماده اولیه ذخیره شد'); render();
+  };
+  if($('#matList')) bindFormulaLive();
+  const sb=$('#saveBom'); if(sb) sb.onclick=()=>{
+    const pid=$('#bomP')&&$('#bomP').value;
+    if(!pid){ toast('محصول را انتخاب کنید',false); return; }
+    const selected=[];
+    $$('#matList [data-mid]').forEach(cb=>{
+      if(!cb.checked) return;
+      const qty=Math.max(0,num(($(`[data-mqty="${cb.dataset.mid}"]`)||{}).value));
+      if(qty>0) selected.push({materialId:cb.dataset.mid, qty});
+    });
+    alive(DB.productMaterials).filter(b=>b.productId===pid).forEach(b=>{
+      if(!selected.find(s=>s.materialId===b.materialId)){ b.deleted='1'; upsertLocal('productMaterials',b); }
+    });
+    selected.forEach(s=>{
+      const exist=DB.productMaterials.find(b=>b.productId===pid && b.materialId===s.materialId);
+      const rec=exist?Object.assign({},exist):{id:uid('bom')};
+      rec.productId=pid; rec.materialId=s.materialId; rec.qty=s.qty; rec.deleted='0';
+      upsertLocal('productMaterials',rec);
+    });
+    const prod=byId(DB.products,pid);
+    if(prod){ snapshotProduct(prod, productSale(prod), productCost(prod)); upsertLocal('products',prod); }
+    toast('فرمول ذخیره شد'); render();
+  };
+  $$('[data-del-bom]').forEach(b=>b.onclick=async()=>{
+    if(!await confirmBox('حذف فرمول','این ماده از محصول جدا شود؟')) return;
+    const rec=byId(DB.productMaterials,b.dataset.delBom); rec.deleted='1'; upsertLocal('productMaterials',rec); render();
+  });
+  $$('[data-del-pr]').forEach(b=>b.onclick=async()=>{
+    if(!await confirmBox('حذف محصول','محصول حذف شود؟')) return;
+    const p=byId(DB.products,b.dataset.delPr); p.deleted='1'; upsertLocal('products',p); render();
+  });
+  $$('[data-ed-pr]').forEach(b=>b.onclick=()=>{
+    const p=byId(DB.products,b.dataset.edPr);
+    const cost=productCost(p), sale=productSale(p);
+    const m=$('#modal'); m.className='modal-bg show';
+    m.innerHTML=`<div class="modal"><h3>ویرایش محصول</h3>
+      <div class="grid-2"><div class="field"><label>کد</label><input class="inp" id="xC" value="${esc(p.code)}"></div><div class="field"><label>نام</label><input class="inp" id="xN" value="${esc(p.name)}"></div></div>
+      <div class="field"><label>قیمت فروش</label><input class="inp" id="xS" type="number" value="${sale}"></div>
+      <div class="field"><label>هزینه مواد (دستی، اگر فرمول نباشد)</label><input class="inp" id="xM" type="number" value="${num(p.materialCost)}"></div>
+      <p class="pmeta">قیمت تمام‌شده فعلی از فرمول: <b>${money(cost)}</b> — درصد سود: <b>${pctTxt(productProfitPct(p,cost))}</b></p>
+      <div class="row-actions"><button class="btn btn-g" id="xx">بستن</button><button class="btn btn-p" id="xs">ذخیره</button></div></div>`;
+    $('#xx').onclick=()=>m.className='modal-bg';
+    $('#xs').onclick=()=>{
+      p.code=$('#xC').value; p.name=$('#xN').value;
+      const bomCost=productCost(p);
+      snapshotProduct(p, num($('#xS').value), bomCost>0?bomCost:num($('#xM').value));
+      upsertLocal('products',p); m.className='modal-bg'; render();
+    };
+  });
+  $$('[data-del-mat]').forEach(b=>b.onclick=async()=>{
+    if(!await confirmBox('حذف ماده','ماده اولیه حذف شود؟')) return;
+    const m=byId(DB.materials,b.dataset.delMat); m.deleted='1'; upsertLocal('materials',m); render();
+  });
+  $$('[data-ed-mat]').forEach(b=>b.onclick=()=>{
+    const mat=byId(DB.materials,b.dataset.edMat);
+    const m=$('#modal'); m.className='modal-bg show';
+    m.innerHTML=`<div class="modal"><h3>ویرایش ماده</h3>
+      <div class="field"><label>نام</label><input class="inp" id="mn" value="${esc(mat.name)}"></div>
+      <div class="field"><label>قیمت</label><input class="inp" id="mc" type="number" value="${num(mat.unitCost)}"></div>
+      <div class="row-actions"><button class="btn btn-g" id="mx">بستن</button><button class="btn btn-p" id="ms">ذخیره</button></div></div>`;
+    $('#mx').onclick=()=>m.className='modal-bg';
+    $('#ms').onclick=()=>{ mat.name=$('#mn').value; mat.unitCost=num($('#mc').value); upsertLocal('materials',mat); m.className='modal-bg'; render(); };
+  });
+  $$('[data-open-soc]').forEach(tr=>tr.onclick=e=>{ if(e.target.closest('button')) return; go('social-detail', tr.dataset.openSoc); });
+  $$('[data-del-soc]').forEach(b=>b.onclick=async e=>{
+    e.stopPropagation();
+    if(!await confirmBox('حذف سفارش سوشال','حذف شود؟')) return;
+    const s=byId(DB.socialOrders,b.dataset.delSoc); s.deleted='1'; upsertLocal('socialOrders',s); render();
+  });
+  const ss=$('#saveSoc'); if(ss) ss.onclick=()=>{
+    const existing = route.page==='social-detail' ? byId(DB.socialOrders,route.id) : {id:uid('soc'),stage:1};
+    const rec=collectSocial(existing);
+    if(!rec.recipientName){ toast('نام گیرنده لازم است',false); return; }
+    upsertLocal('socialOrders',rec); toast('سفارش سوشال ذخیره شد'); go('social');
+  };
+  $$('[data-sst]').forEach(b=>b.onclick=()=>{
+    const s=byId(DB.socialOrders,route.id);
+    const n=Number(b.dataset.sst);
+    if(n<Number(s.stage)){ toast('مرحله فقط جلو می‌رود',false); return; }
+    if(n===5 && !($('#strk').value||'').trim()){ toast('کد پیگیری را وارد کنید',false); return; }
+    s.stage=n; s.trackingCode=$('#strk').value.trim();
+    const rec=collectSocial(s); rec.stage=n; upsertLocal('socialOrders',rec); render();
+  });
+}
+
+async function boot(){
+  document.getElementById('appVer').textContent=APP.version;
+  setTheme(localStorage.getItem('py_theme')||'light');
+  $('#btnTheme').onclick=()=>setTheme(document.documentElement.classList.contains('dark')?'light':'dark');
+  $$('.topbar [data-go]').forEach(el=>el.addEventListener('click',e=>{ e.preventDefault(); go(el.dataset.go, el.dataset.id); }));
+  document.addEventListener('click', ev=>{
+    if(ev.target.closest('#cSearch') || ev.target.closest('#cSug')) return;
+    if(ev.target.closest('#pSearch') || ev.target.closest('#pSug')) return;
+    const cs=$('#cSug'), ps=$('#pSug');
+    if(cs) cs.classList.remove('open');
+    if(ps) ps.classList.remove('open');
+  });
+  tick(); setInterval(tick,1000);
+  window.addEventListener('online',()=>{ renderStatus(); if(ready) flush(); });
+  window.addEventListener('offline',()=>{ lastError='اتصال اینترنت قطع است.'; renderStatus(); toast('اتصال اینترنت قطع است',false); });
+  loadLocal();
+  render();
+  try{
+    await bootstrap();
+    ready=true; $('#lock').classList.add('hide');
+    render();
+    toast('اطلاعات از Google Sheets بازیابی شد');
+  }catch(e){
+    lastError = navigator.onLine ? (e.message||'خطای بازیابی') : 'اتصال اینترنت قطع است.';
+    ready=true; $('#lock').classList.add('hide');
+    render();
+    toast('بازیابی از گوگل ناموفق بود. صف اضطراری محلی فعال است.', false);
+  }
+  setInterval(()=>{ if(ready) flush(); }, 30000);
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden && ready) flush(); });
+}
+boot();
+</script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a14958fa4d9207',t:'MTc4NjU1NjY1MA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
+�د. صف اضطراری محلی فعال است.', false);
+  }
+  setInterval(()=>{ if(ready) flush(); }, 30000);
+  document.addEventListener('visibilitychange',()=>{ if(!document.hidden && ready) flush(); });
+}
+boot();
+</script>
+</body>
+</html>
