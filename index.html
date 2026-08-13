@@ -8,15 +8,15 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <style>
 :root{
-  --p:#22c55e;--p2:#16a34a;--p3:#4ade80;--ps:#dcfce7;--pd:#14532d;
-  --bg:#f3faf6;--sf:#fff;--sf2:#eef8f2;--tx:#0b1f16;--mu:#4d6558;--ln:#d5ebdd;
-  --dang:#dc2626;--warn:#d97706;--ok:#16a34a;--sh:0 10px 30px rgba(16,80,45,.08);
-  --inv:#fff;--invt:#111;--r:16px;
+  --p:#16a34a;--p2:#15803d;--p3:#4ade80;--ps:#ecfdf3;--pd:#14532d;
+  --bg:#f6faf7;--sf:#ffffff;--sf2:#f3f8f4;--tx:#10231a;--mu:#5b7264;--ln:#e2eee6;
+  --dang:#dc2626;--warn:#d97706;--ok:#16a34a;--sh:0 1px 2px rgba(16,80,45,.04),0 12px 32px rgba(16,80,45,.06);
+  --inv:#fff;--invt:#111;--r:18px;
 }
 html.dark{
-  --p:#4ade80;--p2:#86efac;--p3:#86efac;--ps:#14532d;--pd:#052e16;
-  --bg:#070b09;--sf:#101614;--sf2:#0c1210;--tx:#ecfdf5;--mu:#9cb5a8;--ln:#1f2e26;
-  --dang:#f87171;--warn:#fbbf24;--ok:#4ade80;--sh:0 10px 30px rgba(0,0,0,.35);
+  --p:#4ade80;--p2:#86efac;--p3:#86efac;--ps:#12261b;--pd:#052e16;
+  --bg:#080c0a;--sf:#101613;--sf2:#0c120f;--tx:#ecfdf5;--mu:#93ad9f;--ln:#1c2a22;
+  --dang:#f87171;--warn:#fbbf24;--ok:#4ade80;--sh:0 1px 0 rgba(255,255,255,.03),0 16px 40px rgba(0,0,0,.35);
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;background:var(--bg);color:var(--tx);font-family:Vazirmatn,Tahoma,Arial,sans-serif;min-height:100%}
@@ -34,32 +34,32 @@ html.dark .brand img{filter:invert(1) brightness(1.15)}
 .clock{font-variant-numeric:tabular-nums;font-size:22px;font-weight:800;letter-spacing:.06em;color:var(--p2)}
 .shamsi{font-size:13px;color:var(--mu)}
 .top-actions{display:flex;gap:8px;align-items:center}
-.icon-btn{border:1px solid var(--ln);background:var(--sf);color:var(--tx);width:40px;height:40px;border-radius:12px;display:grid;place-items:center}
+.icon-btn{border:1px solid var(--ln);background:var(--sf);color:var(--tx);width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none}
 .icon-btn:hover{border-color:var(--p)}
 .wrap{width:min(1180px,calc(100% - 28px));margin:18px auto 88px}
 .page-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
-.page-head h1{margin:0;font-size:24px}
+.page-head h1{margin:0;font-size:22px;font-weight:750;letter-spacing:-.03em}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.dash-card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:16px 12px;box-shadow:var(--sh);text-align:center;transition:.2s transform,.2s border-color;width:100%;height:auto;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px}
-.dash-card:hover{transform:translateY(-3px);border-color:var(--p)}
-.dash-ico{width:58px;height:58px;border-radius:16px;background:var(--ps);color:var(--p2);display:grid;place-items:center;font-size:28px;flex:none;margin:0 auto}
+.dash-card{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:18px 12px;box-shadow:none;text-align:center;transition:.2s transform,.2s border-color,.2s box-shadow;width:100%;height:auto;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px}
+.dash-card:hover{transform:translateY(-2px);border-color:var(--p);box-shadow:var(--sh)}
+.dash-ico{width:52px;height:52px;border-radius:16px;background:var(--ps);color:var(--p2);display:grid;place-items:center;font-size:24px;flex:none;margin:0 auto}
 .dash-card .dash-txt{width:100%;text-align:center}
 .dash-card h3{margin:0;font-size:13px;line-height:1.35;text-align:center}
 .dash-card p{margin:4px 0 0;color:var(--mu);font-size:11px;line-height:1.35;text-align:center}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-.stat{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:14px 16px}
-.stat b{display:block;font-size:20px;margin-top:4px}
+.stat{background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:12px 14px}
+.stat b{display:block;font-size:17px;margin-top:4px;font-weight:750;letter-spacing:-.02em}
 .stat span{color:var(--mu);font-size:12px}
-.card{background:var(--sf);border:1px solid var(--ln);border-radius:var(--r);padding:16px;box-shadow:var(--sh)}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:var(--r);padding:16px;box-shadow:none}
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
 .field{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
 .field label{font-size:12px;color:var(--mu)}
 .inp,select,textarea{width:100%;border:1px solid var(--ln);background:var(--sf2);color:var(--tx);border-radius:12px;padding:10px 12px;outline:none}
 .inp:focus,select:focus,textarea:focus{border-color:var(--p);box-shadow:0 0 0 3px color-mix(in srgb,var(--p) 20%,transparent)}
-.btn{border:0;border-radius:12px;padding:10px 14px;font-weight:700;background:var(--ps);color:var(--pd)}
+.btn{border:0;border-radius:12px;padding:9px 14px;font-weight:700;background:var(--ps);color:var(--pd);font-size:13px}
 html.dark .btn{color:#ecfdf5}
-.btn-p{background:linear-gradient(135deg,var(--p),var(--p2));color:#052e16}
+.btn-p{background:var(--p);color:#fff}
 .btn-d{background:color-mix(in srgb,var(--dang) 16%,var(--sf));color:var(--dang)}
 .btn-g{background:transparent;border:1px solid var(--ln);color:var(--tx)}
 .row-actions{display:flex;gap:8px;flex-wrap:wrap}
@@ -82,7 +82,79 @@ html.dark .btn{color:#ecfdf5}
 .pick-bar .cust-ico{margin-bottom:10px}
 .sug .sug-empty{padding:10px 12px;color:var(--mu);cursor:default}
 .unit-new{margin-top:6px}
-.hub{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:720px;margin:24px auto}
+
+.pf-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 auto 20px;direction:ltr;flex-wrap:wrap}
+.pf-head-meta{direction:rtl;text-align:right;margin-left:auto}
+.pf-head-meta h1{margin:0;font-size:25px;font-weight:800}
+.pf-head-meta p{margin:6px 0 0;font-size:13px;color:var(--mu)}
+.pf-head-meta p.sub{color:var(--p);font-weight:700}
+.pf-head > .btn, .pf-docs{direction:rtl}
+.pf-docs{display:flex;gap:8px}
+.pf-docs button{width:42px;height:42px;padding:0;border:0;border-radius:12px;background:var(--p);color:#fff;font-size:20px;box-shadow:0 7px 15px color-mix(in srgb,var(--p) 35%,transparent)}
+.pf-docs button:hover{transform:translateY(-2px);filter:brightness(.95)}
+.portfolio-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:0;margin:0 0 18px;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);background:var(--sf)}
+.portfolio-stats>div{position:relative;padding:50px 12px 15px;text-align:center;border-inline-start:1px solid var(--ln);min-height:96px;transition:transform .25s ease,background .25s ease}
+.portfolio-stats>div:first-child{border-inline-start:0}
+.portfolio-stats>div:hover{transform:translateY(-5px);background:var(--sf2)}
+.portfolio-stats>div:before{content:"◈";position:absolute;top:13px;left:50%;transform:translateX(-50%);color:var(--p);font-size:26px;line-height:1;text-shadow:0 5px 13px color-mix(in srgb,var(--p) 35%,transparent);animation:pfFloat 2.8s ease-in-out infinite}
+.portfolio-stats>div:nth-child(2):before{content:"▦";animation-delay:.18s}
+.portfolio-stats>div:nth-child(3):before{content:"◌";animation-delay:.36s}
+.portfolio-stats>div:nth-child(4):before{content:"↗";animation-delay:.54s}
+.portfolio-stats>div:nth-child(5):before{content:"◉";animation-delay:.72s}
+.portfolio-stats>div:nth-child(6):before{content:"◷";animation-delay:.9s}
+.portfolio-stats>div:nth-child(7):before{content:"◒";animation-delay:1.08s}
+@keyframes pfFloat{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-4px)}}
+.portfolio-stats small{display:block;color:var(--mu);font-size:11px;margin-bottom:7px}
+.portfolio-stats b{display:block;font-size:16px;font-weight:800;letter-spacing:-.02em}
+.portfolio-stats .debt b{color:var(--p2)}
+html.dark .portfolio-stats{background:#132018;border-color:#1f3328}
+html.dark .portfolio-stats>div{border-inline-start-color:#1f3328}
+html.dark .portfolio-stats>div:hover{background:#173222}
+.card h2,.card h3{margin:0 0 16px;font-size:17px;font-weight:800;padding-bottom:12px;border-bottom:1px solid var(--ln)}
+.card h2:before,.card h3:before{content:"";display:inline-block;width:5px;height:16px;background:var(--p);border-radius:8px;vertical-align:-3px;margin-left:9px}
+.stage-box{padding:18px;border:1px solid color-mix(in srgb,var(--p) 28%,var(--ln));background:var(--ps);border-radius:14px}
+.stage-box b{color:var(--pd);font-size:17px;display:block;margin-bottom:10px}
+html.dark .stage-box b{color:var(--p3)}
+.cart-table{width:100%;border-collapse:collapse;min-width:680px}
+.cart-table th,.cart-table td{padding:10px 8px;border-bottom:1px solid var(--ln);text-align:right;font-size:12px;vertical-align:middle}
+.cart-table th{color:var(--mu);font-weight:650;background:var(--sf2)}
+.cart-table tr:nth-child(even){background:color-mix(in srgb,var(--sf2) 65%,transparent)}
+.cart-table tr.clickable:hover{background:color-mix(in srgb,var(--ps) 70%,transparent)}
+.accounting-range{display:flex;gap:6px;margin:0 0 14px}
+.accounting-range .chip{min-width:52px}
+.cus-link{color:var(--p)!important;font-weight:700;text-decoration:underline;text-underline-offset:4px}
+.cus-link:hover{color:var(--p2)!important}
+@media (max-width:700px){
+  .portfolio-stats{grid-template-columns:1fr 1fr}
+  .portfolio-stats>div{min-height:88px;padding:46px 8px 12px}
+  .pf-head-meta h1{font-size:20px}
+}
+
+.pf-hero{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.pf-ava{width:52px;height:52px;border-radius:16px;background:var(--ps);color:var(--p2);display:grid;place-items:center;font-weight:800;font-size:16px;flex:none}
+.pf-hero .pf-meta{flex:1;min-width:160px}
+.pf-hero .pf-meta h1{margin:0 0 4px;font-size:22px}
+.pf-hero .pf-meta p{margin:0;color:var(--mu);font-size:13px;line-height:1.6}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.kpi{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:12px 14px}
+.kpi span{display:block;color:var(--mu);font-size:11px;margin-bottom:4px}
+.kpi b{display:block;font-size:16px;font-weight:750;letter-spacing:-.02em}
+.pf-list{display:flex;flex-direction:column;gap:8px}
+.pf-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--sf);border:1px solid var(--ln);border-radius:16px;cursor:pointer;text-align:right;width:100%;color:inherit}
+.pf-item:hover{border-color:var(--p);background:color-mix(in srgb,var(--ps) 45%,var(--sf))}
+.pf-item .grow{flex:1;min-width:0}
+.pf-item .grow b{display:block;font-size:14px}
+.pf-item .grow span{display:block;color:var(--mu);font-size:12px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pf-item .amt{font-size:13px;font-weight:750;white-space:nowrap}
+.pf-item .acts{display:flex;gap:6px;flex:none}
+.pf-item .acts .icon-btn{width:36px;height:36px;border-radius:10px}
+.icon-btn.dang{color:var(--dang);border-color:color-mix(in srgb,var(--dang) 28%,var(--ln))}
+.stepper{display:flex;gap:6px;flex-wrap:wrap}
+.stepper .chip{font-size:12px;font-weight:650;padding:6px 10px}
+/* card titles styled with AXIS bar */
+.ghost{background:transparent;border:1px solid var(--ln);color:var(--tx)}
+@media (max-width:900px){.kpi-row{grid-template-columns:1fr 1fr}}
+.hub{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:520px;margin:24px auto}
 .hub-ico{background:var(--sf);border:1px solid var(--ln);border-radius:20px;height:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;box-shadow:var(--sh);color:var(--tx);padding:16px 12px;text-align:center}
 .hub-ico:hover{border-color:var(--p);transform:translateY(-3px)}
 .hub-ico .mark{width:64px;height:64px;border-radius:18px;background:var(--ps);color:var(--p2);display:grid;place-items:center}
@@ -91,13 +163,17 @@ html.dark .btn{color:#ecfdf5}
 @media (max-width:700px){.hub{grid-template-columns:1fr;max-width:280px}}
 .mat-list{border:1px solid var(--ln);border-radius:14px;max-height:320px;overflow:auto;background:var(--sf2)}
 .mat-row{display:grid;grid-template-columns:28px 1fr auto 90px;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--ln);margin:0;font-size:13px}
+.bom-table{min-width:640px}
+.bom-table .inp{min-height:40px;padding:8px 10px}
+.bom-table tfoot td{font-weight:800;background:var(--sf2);border-top:2px solid var(--p)}
+.bom-add{margin-top:10px}
 .mat-row:last-child{border-bottom:0}
 .pmeta{margin-top:8px;font-size:13px;color:var(--mu)}
 .pmeta b{color:var(--tx)}
-.table-wrap{overflow:auto;border:1px solid var(--ln);border-radius:14px}
+.table-wrap{overflow:auto;border:1px solid var(--ln);border-radius:14px;background:var(--sf)}
 table{width:100%;border-collapse:collapse;min-width:720px}
-th,td{padding:10px 12px;border-bottom:1px solid var(--ln);text-align:right;font-size:13px}
-th{background:var(--sf2);color:var(--mu);font-weight:700}
+th,td{padding:11px 12px;border-bottom:1px solid var(--ln);text-align:right;font-size:13px}
+th{background:transparent;color:var(--mu);font-weight:650;font-size:11px;letter-spacing:.02em}
 tr.clickable{cursor:pointer}
 tr.clickable:hover{background:color-mix(in srgb,var(--ps) 55%,transparent)}
 .badge{display:inline-flex;align-items:center;border-radius:999px;padding:3px 8px;font-size:11px;background:var(--ps);color:var(--pd);font-weight:700}
@@ -115,8 +191,8 @@ html.dark .badge{color:#ecfdf5}
 .dot.warn{background:var(--warn)}
 .overlay,.modal-bg{position:fixed;inset:0;background:rgba(6,16,12,.55);display:none;place-items:center;z-index:80;padding:18px}
 .overlay.show,.modal-bg.show{display:grid}
-.modal{width:min(520px,100%);background:var(--sf);border:1px solid var(--ln);border-radius:20px;padding:22px}
-.lock{position:fixed;inset:0;background:color-mix(in srgb,var(--bg) 86%,transparent);display:grid;place-items:center;z-index:90;text-align:center}
+.modal{width:min(520px,100%);background:var(--sf);border:1px solid var(--ln);border-radius:22px;padding:22px;box-shadow:var(--sh)}
+.lock{display:none}
 .lock.hide{display:none;pointer-events:none}
 .spinner{width:42px;height:42px;border-radius:50%;border:4px solid var(--ln);border-top-color:var(--p);animation:sp .8s linear infinite;margin:0 auto 12px}
 @keyframes sp{to{transform:rotate(360deg)}}
@@ -217,11 +293,11 @@ html.is-touch .btn:active,html.is-touch .dash-card:active{transform:scale(.98)}
       <img src="logo.png" alt="PezeshkYar" id="brandLogo">
       <div class="brand-meta">
         <b>پزشک‌یار</b>
-        <span class="ver" id="appVer">v.1.1.25</span>
+        <span class="ver" id="appVer">v.1.1.32</span>
       </div>
     </div>
     <div class="top-mid">
-      <div class="clock" id="clock">00:00:00</div>
+      <div class="clock" id="clock">00:00</div>
       <div class="shamsi" id="shamsi">—</div>
     </div>
     <div class="top-actions">
@@ -245,7 +321,7 @@ html.is-touch .btn:active,html.is-touch .dash-card:active{transform:scale(.98)}
   <button type="button" data-go="products">▣ محصولات و مواد</button>
 </div>
 <div class="statusbar" id="statusbar"></div>
-<div class="lock" id="lock"><div><div class="spinner"></div><div>در حال بازیابی اطلاعات از Google Sheets…<><div>در حال بازیابی اطلاعات از Google Sheets…</div><div class="muted" id="lockMsg">لطفاً صبر کنید</div></div></div>
+<div class="lock hide" id="lock" aria-hidden="true"></div>
 <div class="modal-bg" id="modal"></div>
 <div class="toastbox" id="toasts"></div>
 <div id="print-root" class="hidden"></div>
@@ -255,7 +331,7 @@ html.is-touch .btn:active,html.is-touch .dash-card:active{transform:scale(.98)}
 const APP = {
   name: 'PezeshkYar',
   nameFa: 'پزشک‌یار',
-  version: 'v.1.1.25',
+  version: 'v.1.1.32',
   SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyUDYfULHdPXBdy_zESpCGCUnnNPpuog7db8CQL-ov1F97nZbbEOfQzTxI-punxopBoWQ/exec',
   SHEET_URL: 'https://docs.google.com/spreadsheets/d/1GGHSNreSBvbgYwhxfQuR8xDjIvGxRNUqynz1Cgytkfs/edit?usp=sharing',
   APP_TOKEN: 'PEZESHKYAR_BACKUP_2026',
@@ -264,7 +340,8 @@ const APP = {
   IBAN: 'IR260120010000009679321203',
   CARD: '8703 7096 3389 6104',
   ACCOUNT: 'علی پزشک مفرنقاه',
-  CATEGORY: 'محصولات'
+  CATEGORY: 'محصولات',
+  PRODUCT_CODE_START: 311
 };
 
 const KEYS = ['customers','products','materials','productMaterials','orders','orderItems','payments','purchases','socialOrders'];
@@ -291,6 +368,44 @@ const uid = p => p + '_' + Date.now().toString(36) + Math.random().toString(36).
 const nowIso = () => new Date().toISOString();
 const alive = arr => (arr||[]).filter(x => String(x.deleted) !== '1');
 const byId = (arr,id) => (arr||[]).find(x => String(x.id)===String(id));
+const initials = s => { const p=String(s||'').trim().split(/\s+/).filter(Boolean); return ((p[0]||'؟')[0]+(p[1]?p[1][0]:'')).slice(0,2); };
+function saveCustomerFields(c, name, phone, address){
+  if(!c){ toast('مشتری پیدا نشد', false); return false; }
+  name=String(name||'').trim(); phone=String(phone||'').trim(); address=String(address||'').trim();
+  if(!name || !phone){ toast('نام و شماره تماس لازم است', false); return false; }
+  c.name=name; c.phone=phone; c.address=address;
+  upsertLocal('customers', c);
+  alive(DB.orders).filter(o=>String(o.customerId)===String(c.id)).forEach(o=>{
+    o.customerName=name; o.customerPhone=phone; o.customerAddress=address; upsertLocal('orders', o);
+  });
+  flush();
+  toast('اطلاعات مشتری ذخیره شد');
+  return true;
+}
+function openCustomerEditor(id){
+  const c=byId(DB.customers,id);
+  if(!c){ toast('مشتری پیدا نشد', false); return; }
+  const m=$('#modal');
+  m.className='modal-bg show';
+  m.innerHTML=`<div class="modal">
+    <h3 style="margin:0 0 14px">ویرایش مشتری</h3>
+    <div class="field"><label>نام</label><input class="inp" id="ceN" value="${esc(c.name)}" autocomplete="off"></div>
+    <div class="field"><label>شماره تماس</label><input class="inp" id="ceP" value="${esc(c.phone)}" autocomplete="off" inputmode="tel"></div>
+    <div class="field"><label>آدرس</label><textarea class="inp" id="ceA" rows="3">${esc(c.address||'')}</textarea></div>
+    <div class="row-actions" style="justify-content:flex-end;margin-top:8px">
+      <button type="button" class="btn btn-g" id="ceX">انصراف</button>
+      <button type="button" class="btn btn-p" id="ceS">ذخیره</button>
+    </div>
+  </div>`;
+  const close=()=>{ m.className='modal-bg'; };
+  $('#ceX').onclick=close;
+  m.onclick=ev=>{ if(ev.target===m) close(); };
+  $('#ceS').onclick=()=>{
+    if(saveCustomerFields(c, $('#ceN').value, $('#ceP').value, $('#ceA').value)){ close(); render(); }
+  };
+  setTimeout(()=>{ const el=$('#ceN'); if(el) el.focus(); }, 30);
+}
+
 const esc = s => String(s??'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 function g2j(gy,gm,gd){
@@ -444,20 +559,27 @@ function upsertLocal(col, rec){
   return rec;
 }
 
-async function api(action, payload={}){
-  const body=JSON.stringify({action, token:APP.APP_TOKEN, ...payload});
-  const res=await fetch(APP.SCRIPT_URL,{
-    method:'POST', redirect:'follow',
-    headers:{'Content-Type':'text/plain;charset=utf-8'},
-    body
-  });
-  if(!res.ok) throw new Error('خطای شبکه '+res.status);
-  return res.json();
+async function api(action, payload={}, ms=8000){
+  const ctrl=new AbortController();
+  const timer=setTimeout(()=>ctrl.abort(), ms);
+  try{
+    const res=await fetch(APP.SCRIPT_URL,{
+      method:'POST', redirect:'follow',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify({action, token:APP.APP_TOKEN, ...payload}),
+      signal: ctrl.signal,
+      keepalive: true
+    });
+    if(!res.ok) throw new Error('خطای شبکه '+res.status);
+    return await res.json();
+  }catch(e){
+    if(e && e.name==='AbortError') throw new Error('timeout');
+    throw e;
+  }finally{ clearTimeout(timer); }
 }
 
 async function bootstrap(){
-  $('#lockMsg').textContent='ارتباط با سرور بکاپ…';
-  const data=await api('bootstrap');
+  const data=await api('bootstrap', {}, 9000);
   if(!data.ok) throw new Error(data.error||'بازیابی ناموفق');
   KEYS.forEach(k=>{
     if(!Array.isArray(data.data[k])) return;
@@ -508,18 +630,18 @@ async function flush(){
   }
 }
 
-async function nextInvoice(){
-  try{
-    const r=await api('nextInvoice');
-    if(r.ok && r.invoiceNo){
-      DB.settings.invoiceCounter = Number(r.invoiceNo)+1;
-      return Number(r.invoiceNo);
-    }
-  }catch(e){}
+function nextInvoice(){
   let n=num(DB.settings.invoiceCounter)||APP.INVOICE_START;
   alive(DB.orders).forEach(o=>{ const x=num(o.invoiceNo); if(x>=n) n=x+1; });
   if(n<APP.INVOICE_START) n=APP.INVOICE_START;
   DB.settings.invoiceCounter=n+1;
+  persistLocal();
+  api('nextInvoice', {}, 5000).then(r=>{
+    if(r && r.ok && r.invoiceNo && Number(r.invoiceNo)>n){
+      DB.settings.invoiceCounter = Number(r.invoiceNo)+1;
+      persistLocal();
+    }
+  }).catch(()=>{});
   return n;
 }
 
@@ -579,7 +701,9 @@ function setTheme(t){
 }
 function go(page,id){
   if(page==='new-order') draft=null;
+  if(page==='formula') page='products-add';
   route={page,id:id||null};
+  if(page!=='products-add') window._editPr='';
   render();
 }
 
@@ -593,6 +717,16 @@ function productCost(p){
     },0);
   }
   return num(p.materialCost);
+}
+function nextProductCode(){
+  let n=num(APP.PRODUCT_CODE_START)||311;
+  alive(DB.products).forEach(p=>{
+    const s=String(p.code||'').trim();
+    if(!/^\d{3,4}$/.test(s)) return;
+    const x=num(s);
+    if(x>=n) n=x+1;
+  });
+  return String(n);
 }
 function productSale(p){
   if(!p) return 0;
@@ -678,7 +812,7 @@ function dashCard(goTo,ico,title,sub){
 
 function viewDashboard(){
   return `
-  <div class="page-head"><h1>داشبورد پزشک‌یار</h1><span class="muted">مدیریت یکپارچه سفارش و حسابداری</span></div>
+  <div class="page-head"><h1>خانه</h1><span class="muted">پزشک‌یار</span></div>
   <div class="cards">
     ${dashCard('new-order','＋','سفارش جدید','ثبت مشتری، کالا و پیش‌فاکتور')}
     ${dashCard('orders','☰','مدیریت سفارش‌ها','وضعیت، پرتفو و تولید')}
@@ -729,7 +863,7 @@ function viewNewOrder(){
   const tm=draft.items.reduce((s,i)=>s+num(i.materialCost)*num(i.qty),0);
   const cusLabel = draft.customerName ? `${draft.customerName}${draft.customerPhone?' — '+draft.customerPhone:''}` : '';
   return `
-  <div class="page-head"><h1>سفارش جدید</h1><div class="row-actions"><button class="btn btn-g" data-go="dashboard">بازگشت</button></div></div>
+  <div class="pf-head"><button class="btn btn-g" data-go="dashboard">⌂ صفحه اصلی</button><div class="pf-head-meta"><h1>سفارش جدید</h1><p>ثبت مشتری، کالا و پیش‌فاکتور</p></div></div>
   <div class="card">
     <h3 style="margin:0 0 10px">مشخصات فاکتور</h3>
     <div class="grid-3">
@@ -783,9 +917,8 @@ function viewNewOrder(){
       </div>
       <div class="pmeta" id="pMeta">محصول را انتخاب کنید تا قیمت تمام‌شده و درصد سود دیده شود.</div>
       <div class="cust-box" id="newPrBox">
-        <div class="grid-3">
+        <div class="grid-2">
           <div class="field"><label>نام محصول جدید</label><input class="inp" id="npName"></div>
-          <div class="field"><label>واحد</label>${unitSelectHTML('npUnit','عدد')}</div>
           <div class="field"><label>قیمت تمام‌شده</label><input class="inp" id="npCost" type="number"></div>
         </div>
         <button class="btn btn-p" id="saveNewPr">ذخیره محصول جدید</button>
@@ -839,10 +972,10 @@ function bindNewOrder(){
     const cost=productCost(picked);
     const sale=productSale(picked);
     $('#pPrice').value = sale || '';
-    if($('#pMeta')) $('#pMeta').innerHTML=`واحد: <b>${esc(picked.unit||'عدد')}</b> — قیمت تمام‌شده: <b>${money(cost)}</b> — درصد سود: <b>${pctTxt(productProfitPct(picked,cost))}</b>`;
+    if($('#pMeta')) $('#pMeta').innerHTML=`قیمت تمام‌شده: <b>${money(cost)}</b> — درصد سود: <b>${pctTxt(productProfitPct(picked,cost))}</b>`;
   };
   const showProducts = q => openList($('#pSug'), productSuggest(q),
-    p=>`<div>${esc(p.code)} — ${esc(p.name)} <span class="muted">${esc(p.unit||'عدد')}</span></div>`,
+    p=>`<div>${esc(p.code)} — ${esc(p.name)}</div>`,
     p=>{ picked=p; $('#pId').value=p.id; $('#pSearch').value=p.name; fillPrice(); }
   );
   $('#pSearch').addEventListener('focus', e=>showProducts(e.target.value));
@@ -887,7 +1020,7 @@ function bindNewOrder(){
     const cost=num($('#npCost').value);
     if(!name){ toast('نام محصول لازم است',false); return; }
     if(!cost){ toast('قیمت تمام‌شده را وارد کنید',false); return; }
-    const rec=snapshotProduct({id:uid('prd'),code:'P'+Date.now().toString().slice(-6),name,category:APP.CATEGORY,unit:readUnit('#npUnit','عدد'),notes:'',deleted:'0'}, cost, cost);
+    const rec=snapshotProduct({id:uid('prd'),code:nextProductCode(),name,category:APP.CATEGORY,unit:'',notes:'',deleted:'0'}, cost, cost);
     upsertLocal('products',rec);
     picked=rec;
     $('#pId').value=rec.id;
@@ -991,60 +1124,83 @@ async function saveDraft(openInv){
 
 function viewOrders(){
   const q=($('#ordQ')&&$('#ordQ').value)||'';
-  const rows=alive(DB.orders)
+  const list=alive(DB.orders)
     .filter(o=>!q || String(o.invoiceNo).includes(q) || (o.customerName||'').includes(q) || String(o.customerPhone||'').includes(q))
-    .sort((a,b)=>num(b.invoiceNo)-num(a.invoiceNo))
-    .map(o=>`
-      <tr class="clickable" data-open-order="${o.id}">
-        <td>${esc(o.invoiceNo)}</td><td>${esc(o.dateShamsi)}</td><td>${esc(o.customerName)}</td>
-        <td>${esc(o.customerPhone)}</td><td>${orderItems(o.id).length}</td>
-        <td>${statusBadge(o)} <span class="muted">${stageLabel(o.stage)}</span></td>
-        <td><button class="btn btn-d" data-del-order="${o.id}">حذف</button></td>
-      </tr>`).join('') || `<tr><td colspan="7" class="empty">سفارشی ثبت نشده است.</td></tr>`;
-  return `<div class="page-head"><h1>مدیریت سفارش‌ها</h1><div class="row-actions"><input class="inp" id="ordQ" placeholder="جستجو" value="${esc(q)}" style="width:200px"><button class="btn btn-g" data-go="dashboard">بازگشت</button></div></div>
-  <div class="card"><div class="table-wrap"><table><thead><tr><th>شماره</th><th>تاریخ</th><th>مشتری</th><th>تماس</th><th>اقلام</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+    .sort((a,b)=>num(b.invoiceNo)-num(a.invoiceNo));
+  const rows=list.map(o=>`<tr class="clickable" data-open-order="${o.id}">
+      <td>${esc(o.invoiceNo)}</td><td>${esc(o.dateShamsi)}</td>
+      <td>${esc(o.customerName)}</td><td>${esc(o.customerPhone)}</td>
+      <td>${orderItems(o.id).length}</td>
+      <td>${esc(stageLabel(o.stage))}</td>
+      <td>${statusBadge(o)}</td>
+      <td><button type="button" class="btn btn-d" data-del-order="${o.id}">حذف</button></td>
+    </tr>`).join('') || `<tr><td colspan="8" class="empty">سفارشی ثبت نشده است.</td></tr>`;
+  return `<div class="pf-head">
+    <button class="btn btn-g" data-go="dashboard">⌂ صفحه اصلی</button>
+    <div class="pf-head-meta"><h1>مدیریت سفارش‌ها</h1><p>سفارش‌های ثبت‌شده</p></div>
+  </div>
+  <div class="row-actions" style="margin-bottom:12px"><input class="inp" id="ordQ" placeholder="جستجو" value="${esc(q)}" style="width:220px"></div>
+  <section class="card"><h2>فهرست سفارش‌ها</h2>
+    <div class="table-wrap"><table class="cart-table"><thead><tr><th>شماره سفارش</th><th>تاریخ</th><th>مشتری</th><th>تماس</th><th>تعداد آیتم</th><th>روند</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody>${rows}</tbody></table></div>
+  </section>`;
 }
 
 function viewOrder(id){
   const o=byId(DB.orders,id); if(!o) return `<div class="card">سفارش یافت نشد.</div>`;
   refreshOrderTotals(o);
   const items=orderItems(o.id);
-  const rows=items.map(it=>`
-    <tr>
+  const done=items.filter(i=>num(i.producedQty)>=num(i.qty)).length;
+  const remain=items.reduce((s,i)=>s+Math.max(0,num(i.qty)-num(i.producedQty)),0);
+  const qtySum=items.reduce((s,i)=>s+num(i.qty),0);
+  const rows=items.map(it=>{
+    const left=Math.max(0,num(it.qty)-num(it.producedQty||0));
+    return `<tr>
       <td>${esc(it.productCode)}</td>
       <td><input class="inp" data-ren="${it.id}" value="${esc(it.productName)}"></td>
       <td><input class="inp qty" type="number" min="1" data-oqty="${it.id}" value="${it.qty}"></td>
       <td><input class="inp qty" type="number" min="0" data-prod="${it.id}" value="${it.producedQty||0}"></td>
-      <td>${money(it.unitPrice)}</td><td>${money(it.saleAmount)}</td><td>${money(it.profit)}</td>
-      <td><button class="btn btn-d" data-del-oi="${it.id}">حذف</button></td>
-    </tr>`).join('');
+      <td>${left}</td>
+      <td>${money(it.unitPrice)}</td>
+      <td>${money(it.saleAmount)}</td>
+      <td><button type="button" class="btn btn-d" data-del-oi="${it.id}">حذف</button></td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="8" class="empty">محصولی در این سفارش نیست.</td></tr>';
   return `
-  <div class="page-head"><h1>پرتفوی سفارش ${esc(o.invoiceNo)}</h1>
-    <div class="row-actions">
-      <button class="btn" data-inv="${o.id}">پیش‌فاکتور</button>
-      <button class="btn" data-op="${o.id}">لیست اپراتور</button>
-      <button class="btn btn-p" id="addToOrder">افزودن محصول</button>
-      <button class="btn btn-g" data-go="orders">بازگشت</button>
+  <div class="pf-head">
+    <button class="btn btn-g" data-go="orders">← مدیریت سفارش‌ها</button>
+    <div class="pf-docs">
+      <button type="button" id="addToOrder" title="افزودن محصول">＋</button>
+      <button type="button" data-inv="${o.id}" title="پیش‌فاکتور">▧</button>
+      <button type="button" data-op="${o.id}" title="لیست اپراتور">▤</button>
+    </div>
+    <div class="pf-head-meta">
+      <h1>پرتفوی سفارش</h1>
+      <p class="sub"><a href="#" class="cus-link" data-go="customer" data-id="${o.customerId||''}">${esc(o.customerName||'بدون مشتری')}</a> · ${esc(o.invoiceNo)} · ${esc(o.dateShamsi||'')}</p>
     </div>
   </div>
-  <div class="stats">
-    <div class="stat"><span>مشتری</span><b><a href="#" data-go="customer" data-id="${o.customerId}">${esc(o.customerName)}</a></b></div>
-    <div class="stat"><span>تماس</span><b><a href="#" data-go="customer" data-id="${o.customerId}">${esc(o.customerPhone)}</a></b></div>
-    <div class="stat"><span>مبلغ کل</span><b>${money(o.totalSale)}</b></div>
-    <div class="stat"><span>مواد / سود</span><b style="font-size:14px">${money(o.totalMaterial)} / ${money(o.totalProfit)}</b></div>
-  </div>
-  <div class="card">
-    <div class="row-actions">
-      <span class="muted">مرحله:</span>
-      ${[1,2,3,4].map(s=>`<button class="chip ${Number(o.stage)===s?'on':''}" data-stage="${s}">${s}. ${stageLabel(s)}</button>`).join('')}
-    </div>
-    <div class="field" style="margin-top:10px;max-width:280px"><label>کد پیگیری ارسال</label><input class="inp" id="trk" value="${esc(o.trackingCode||'')}" placeholder="در مرحله تحویل"></div>
-    <p class="muted">وضعیت تولید: ${items.filter(i=>num(i.producedQty)>=num(i.qty)).length} از ${items.length} قلم تکمیل</p>
-    <div class="table-wrap"><table>
-      <thead><tr><th>کد</th><th>نام (قابل ویرایش در همین سفارش)</th><th>تعداد</th><th>تولیدشده</th><th>واحد</th><th>فروش</th><th>سود</th><th></th></tr></thead>
+  <section class="portfolio-stats">
+    <div><small>مبلغ کل سفارش</small><b>${money(o.totalSale)}</b></div>
+    <div><small>تعداد کل محصولات</small><b>${qtySum}</b></div>
+    <div><small>هزینه مواد</small><b>${money(o.totalMaterial)}</b></div>
+    <div><small>سود خالص</small><b>${money(o.totalProfit)}</b></div>
+    <div class="debt"><small>وضعیت تولید</small><b>${done} / ${items.length}</b></div>
+    <div><small>تعداد باقی‌مانده</small><b>${remain}</b></div>
+  </section>
+  <section class="card">
+    <h2>وضعیت محصولات سفارش</h2>
+    <div class="table-wrap"><table class="cart-table">
+      <thead><tr><th>کد</th><th>محصول</th><th>تعداد سفارش</th><th>تولیدشده</th><th>باقی‌مانده</th><th>مبلغ واحد</th><th>فروش</th><th>عملیات</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>
-  </div>
+  </section>
+  <section class="card">
+    <h2>مرحله سفارش</h2>
+    <div class="stage-box">
+      <b>${esc(stageLabel(o.stage))}</b>
+      <div class="stepper">${[1,2,3,4].map(s=>`<button type="button" class="chip ${Number(o.stage)===s?'on':''}" data-stage="${s}">${s}. ${stageLabel(s)}</button>`).join('')}</div>
+      <div class="field" style="margin-top:12px;max-width:280px"><label>کد پیگیری ارسال</label><input class="inp" id="trk" value="${esc(o.trackingCode||'')}"></div>
+    </div>
+  </section>
   <div class="modal-bg" id="addProdBox"></div>`;
 }
 
@@ -1081,21 +1237,64 @@ function bindOrder(o){
   if($('#addToOrder')) $('#addToOrder').onclick=()=>openAddProduct(o);
 }
 
+function bomRowHTML(mId, qty){
+  const mats=alive(DB.materials);
+  const m=mId?byId(DB.materials,mId):null;
+  const q=(qty==null||qty==='')?1:qty;
+  const opts=['<option value="">— انتخاب ماده اولیه —</option>'].concat(
+    mats.map(x=>`<option value="${x.id}" ${m&&String(x.id)===String(m.id)?'selected':''}>${esc(x.name)}</option>`)
+  ).join('');
+  const price=m?num(m.unitCost):0;
+  const line=price*num(q);
+  return `<tr class="bom-row">
+    <td><select class="inp bom-mat">${opts}</select></td>
+    <td><input class="inp bom-qty" type="number" min="0" step="0.01" value="${q}"></td>
+    <td class="bom-unit">${m?esc(m.unit||''):'—'}</td>
+    <td class="bom-price" data-price="${price}">${m?money(price):'—'}</td>
+    <td class="bom-line">${m?money(line):'—'}</td>
+    <td><button type="button" class="icon-btn dang bom-del" title="حذف ردیف">✕</button></td>
+  </tr>`;
+}
+function collectBomRows(){
+  const selected=[];
+  $$('#bomRows .bom-row').forEach(tr=>{
+    const materialId=(tr.querySelector('.bom-mat')||{}).value||'';
+    const qty=num((tr.querySelector('.bom-qty')||{}).value);
+    if(materialId && qty>0) selected.push({materialId, qty});
+  });
+  return selected;
+}
 function bindProductMats(){
   const recost=()=>{
     let cost=0;
-    $$('#prMatList [data-pmid]').forEach(cb=>{
-      if(!cb.checked) return;
-      const m=byId(DB.materials,cb.dataset.pmid);
-      const q=num(($(`[data-pmqty="${cb.dataset.pmid}"]`)||{}).value);
-      cost += num(m&&m.unitCost)*q;
+    $$('#bomRows .bom-row').forEach(tr=>{
+      const id=(tr.querySelector('.bom-mat')||{}).value;
+      const m=byId(DB.materials,id);
+      const q=num((tr.querySelector('.bom-qty')||{}).value);
+      const price=m?num(m.unitCost):0;
+      const line=price*q;
+      const u=tr.querySelector('.bom-unit'); if(u) u.textContent=m?(m.unit||''):'—';
+      const pr=tr.querySelector('.bom-price'); if(pr) pr.textContent=m?money(price):'—';
+      const ln=tr.querySelector('.bom-line'); if(ln) ln.textContent=(m&&q>0)?money(line):'—';
+      if(m&&q>0) cost+=line;
     });
     if(!cost) cost=num($('#prMc')&&$('#prMc').value);
     const sale=num($('#prSale')&&$('#prSale').value);
+    if($('#bomSum')) $('#bomSum').textContent=money(cost);
     if($('#prCostLive')) $('#prCostLive').textContent=money(cost);
+    if($('#prSaleLive')) $('#prSaleLive').textContent=money(sale);
     if($('#prPctLive')) $('#prPctLive').textContent=pctTxt(cost>0&&sale?((sale-cost)/cost)*100:0);
   };
-  if($('#prMatList')){ $('#prMatList').oninput=recost; $('#prMatList').onchange=recost; }
+  const box=$('#bomRows');
+  if($('#addBomRow') && box) $('#addBomRow').onclick=()=>{ box.insertAdjacentHTML('beforeend', bomRowHTML('',1)); recost(); };
+  if(box){
+    box.oninput=recost; box.onchange=recost;
+    box.onclick=e=>{
+      const b=e.target.closest('.bom-del'); if(!b) return;
+      const tr=b.closest('tr'); if(tr) tr.remove();
+      recost();
+    };
+  }
   if($('#prSale')) $('#prSale').oninput=recost;
   if($('#prMc')) $('#prMc').oninput=recost;
   recost();
@@ -1149,7 +1348,7 @@ function openAddProduct(o){
       $('#apq').value=picked.name;
       $('#app').value=productSale(picked);
       const c=productCost(picked);
-      $('#apMeta').innerHTML=`واحد: <b>${esc(picked.unit||'عدد')}</b> — قیمت تمام‌شده: <b>${money(c)}</b> — درصد سود: <b>${pctTxt(productProfitPct(picked,c))}</b>`;
+      $('#apMeta').innerHTML=`قیمت تمام‌شده: <b>${money(c)}</b> — درصد سود: <b>${pctTxt(productProfitPct(picked,c))}</b>`;
       s.classList.remove('open');
     });
   };
@@ -1167,71 +1366,106 @@ function openAddProduct(o){
 function viewCustomers(){
   const rows=alive(DB.customers).map(c=>{
     const L=ledger(c.id);
-    return `<tr class="clickable" data-open-cus="${c.id}"><td>${esc(c.name)}</td><td>${esc(c.phone)}</td><td>${esc(c.address||'')}</td>
-      <td>${money(L.debt)}</td>
-      <td><button class="btn" data-ed-cus="${c.id}">ویرایش</button> <button class="btn btn-d" data-del-cus="${c.id}">حذف</button></td></tr>`;
-  }).join('') || `<tr><td colspan="5" class="empty">مشتری‌ای ثبت نشده.</td></tr>`;
-  return `<div class="page-head"><h1>مشتریان</h1><button class="btn btn-g" data-go="dashboard">بازگشت</button></div>
-  <div class="card">
-    <h3 style="margin:0 0 12px">افزودن مشتری جدید</h3>
+    const ords=L.orders;
+    const last=ords.length? ords[ords.length-1].order.dateShamsi : '—';
+    return `<tr class="clickable" data-open-cus="${c.id}">
+      <td>${esc(c.name)}</td><td>${esc(c.phone)}</td><td>${esc(c.address||'—')}</td>
+      <td>${ords.length}</td><td>${esc(last)}</td><td>${money(L.totalSale)}</td>
+      <td>
+        <button type="button" class="btn" data-ed-cus="${c.id}">ویرایش</button>
+        <button type="button" class="btn btn-d" data-del-cus="${c.id}">حذف</button>
+      </td>
+    </tr>`;
+  }).join('') || '<tr><td colspan="7" class="empty">مشتری‌ای ثبت نشده.</td></tr>';
+  return `<div class="pf-head">
+    <button class="btn btn-g" data-go="dashboard">⌂ صفحه اصلی</button>
+    <div class="pf-head-meta"><h1>مشتریان</h1><p>فهرست نام، تماس، آدرس و سوابق سفارش</p></div>
+  </div>
+  <section class="card">
+    <h2>افزودن مشتری</h2>
     <form id="cusAddForm">
       <div class="grid-3">
-        <div class="field"><label>نام</label><input class="inp" id="nName" name="name" placeholder="نام مشتری" required></div>
-        <div class="field"><label>شماره تماس</label><input class="inp" id="nPhone" name="phone" placeholder="09xxxxxxxxx" required></div>
-        <div class="field"><label>آدرس</label><input class="inp" id="nAddr" name="address" placeholder="آدرس"></div>
+        <div class="field"><label>نام مشتری</label><input class="inp" id="nName" name="name" autocomplete="off" required></div>
+        <div class="field"><label>شماره تماس</label><input class="inp" id="nPhone" name="phone" inputmode="tel" autocomplete="off" required></div>
+        <div class="field"><label>آدرس</label><input class="inp" id="nAddr" name="address" autocomplete="off"></div>
       </div>
-      <button type="submit" class="btn btn-p" id="saveCus">ذخیره مشتری</button>
+      <button type="submit" class="btn btn-p" id="saveCus">＋ ثبت مشتری</button>
     </form>
-  </div>
-  <div class="card" style="margin-top:12px"><div class="table-wrap"><table><thead><tr><th>نام</th><th>تماس</th><th>آدرس</th><th>مانده بدهی</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
+  </section>
+  <section class="card">
+    <h2>فهرست مشتریان</h2>
+    <div class="table-wrap"><table class="cart-table"><thead><tr><th>نام مشتری</th><th>شماره تماس</th><th>آدرس</th><th>تعداد سفارش</th><th>آخرین سفارش</th><th>مجموع خرید</th><th>عملیات</th></tr></thead><tbody>${rows}</tbody></table></div>
+  </section>`;
 }
 
 function viewCustomer(id){
   const c=byId(DB.customers,id); if(!c) return '<div class="card">مشتری یافت نشد.</div>';
   const L=ledger(id);
   const orows=L.orders.map(r=>`<tr class="clickable" data-open-order="${r.order.id}">
-    <td>${esc(r.order.invoiceNo)}</td><td>${esc(r.order.dateShamsi)}</td><td>${money(r.sale)}</td><td>${money(r.paid)}</td>
-    <td>${r.bal<=0.5?'<span class="badge">تسویه شده</span>':money(r.bal)}</td><td>${statusBadge(r.order)}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">سفارشی ندارد.</td></tr>';
-  const prows=L.pays.map(p=>`<tr><td>${esc(p.dateShamsi)}</td><td>${money(p.amount)}</td><td>${esc(p.method||'')}</td><td>${esc(p.notes||'')}</td>
-    <td><button class="btn btn-d" data-del-pay="${p.id}">حذف</button></td></tr>`).join('')||'<tr><td colspan="5" class="empty">پرداختی ثبت نشده.</td></tr>';
-  return `<div class="page-head"><h1>پرتفوی ${esc(c.name)}</h1><button class="btn btn-g" data-go="customers">بازگشت</button></div>
-  <div class="stats">
-    <div class="stat"><span>مجموع سفارش‌ها</span><b>${money(L.totalSale)}</b></div>
-    <div class="stat"><span>مجموع پرداختی‌ها</span><b>${money(L.totalPaid)}</b></div>
-    <div class="stat"><span>مانده بدهی</span><b>${money(L.debt)}</b></div>
-    <div class="stat"><span>تماس / آدرس</span><b style="font-size:13px">${esc(c.phone)}<br>${esc(c.address||'—')}</b></div>
+    <td>${esc(r.order.invoiceNo)}</td><td>${esc(r.order.dateShamsi)}</td>
+    <td>${money(r.sale)}</td><td>${money(r.paid)}</td>
+    <td>${r.bal<=0.5?'<span class="badge">تسویه شده</span>':money(r.bal)}</td>
+    <td>${statusBadge(r.order)}</td>
+  </tr>`).join('')||'<tr><td colspan="6" class="empty">سفارشی ندارد.</td></tr>';
+  const prows=L.pays.map(p=>`<tr>
+    <td>${esc(p.dateShamsi)}</td><td>${money(p.amount)}</td><td>${esc(p.method||'')}</td><td>${esc(p.notes||'')}</td>
+    <td><button type="button" class="btn btn-d" data-del-pay="${p.id}">حذف</button></td>
+  </tr>`).join('')||'<tr><td colspan="5" class="empty">پرداختی ثبت نشده.</td></tr>';
+  return `<div class="pf-head">
+    <button class="btn btn-g" data-go="customers">← مشتریان</button>
+    <div class="pf-docs"><button type="button" data-ed-cus="${c.id}" title="ویرایش اطلاعات">✎</button></div>
+    <div class="pf-head-meta"><h1>پرونده مشتری</h1><p class="sub">${esc(c.name)} · ${esc(c.phone)}${c.address?' · '+esc(c.address):''}</p></div>
   </div>
-  <div class="card">
-    <h3>ثبت پرداختی</h3>
+  <section class="portfolio-stats">
+    <div><small>مجموع سفارش‌ها</small><b>${money(L.totalSale)}</b></div>
+    <div><small>مجموع پرداختی‌ها</small><b>${money(L.totalPaid)}</b></div>
+    <div class="debt"><small>مانده بدهی</small><b>${money(L.debt)}</b></div>
+  </section>
+  <section class="card">
+    <h2>اطلاعات مشتری</h2>
     <div class="grid-3">
-      <div class="field"><label>مبلغ</label><input class="inp" id="payAmt" type="number"></div>
-      <div class="field"><label>روش</label><select class="inp" id="payMet"><option>کارت به کارت</option><option>نقد</option><option>شبا / پایا</option></select></div>
-      <div class="field"><label>تاریخ شمسی</label><input class="inp" id="payDate" value="${shamsiShort()}"></div>
+      <div class="field"><label>نام</label><input class="inp" id="ceName" value="${esc(c.name)}" autocomplete="off"></div>
+      <div class="field"><label>شماره تماس</label><input class="inp" id="cePhone" value="${esc(c.phone)}" inputmode="tel" autocomplete="off"></div>
+      <div class="field"><label>آدرس</label><input class="inp" id="ceAddr" value="${esc(c.address||'')}" autocomplete="off"></div>
     </div>
-    <div class="field"><label>توضیح</label><input class="inp" id="payNote"></div>
-    <button class="btn btn-p" id="savePay">ثبت پرداخت</button>
-    <p class="muted">پرداختی‌ها به‌ترتیب روی فاکتورهای قدیمی‌تر اعمال می‌شوند.</p>
-  </div>
-  <div class="card" style="margin-top:12px"><h3>سفارش‌ها</h3><div class="table-wrap"><table><thead><tr><th>فاکتور</th><th>تاریخ</th><th>مبلغ</th><th>پرداخت‌شده</th><th>مانده</th><th>وضعیت</th></tr></thead><tbody>${orows}</tbody></table></div></div>
-  <div class="card" style="margin-top:12px"><h3>تاریخچه پرداختی‌ها</h3><div class="table-wrap"><table><thead><tr><th>تاریخ</th><th>مبلغ</th><th>روش</th><th>توضیح</th><th></th></tr></thead><tbody>${prows}</tbody></table></div></div>`;
+    <button type="button" class="btn btn-p" id="saveCusEdit">ذخیره تغییرات</button>
+  </section>
+  <section class="card">
+    <h2>ثبت پرداختی جدید</h2>
+    <div class="grid-3">
+      <div class="field"><label>مبلغ پرداختی (تومان)</label><input class="inp" id="payAmt" type="number"></div>
+      <div class="field"><label>روش</label><select class="inp" id="payMet"><option>کارت به کارت</option><option>نقد</option><option>شبا / پایا</option></select></div>
+      <div class="field"><label>تاریخ پرداخت</label><input class="inp" id="payDate" value="${shamsiShort()}"></div>
+    </div>
+    <div class="field"><label>توضیحات</label><input class="inp" id="payNote"></div>
+    <button type="button" class="btn btn-p" id="savePay">ثبت پرداختی</button>
+  </section>
+  <section class="card"><h2>وضعیت سفارش‌ها</h2>
+    <div class="table-wrap"><table class="cart-table"><thead><tr><th>فاکتور</th><th>تاریخ</th><th>مبلغ</th><th>پرداخت‌شده</th><th>مانده</th><th>وضعیت</th></tr></thead><tbody>${orows}</tbody></table></div>
+  </section>
+  <section class="card"><h2>تاریخچه پرداختی‌ها</h2>
+    <div class="table-wrap"><table class="cart-table"><thead><tr><th>تاریخ</th><th>مبلغ</th><th>روش</th><th>توضیح</th><th></th></tr></thead><tbody>${prows}</tbody></table></div>
+  </section>`;
 }
 
 function priceChangeConfirm(info){
   return new Promise(res=>{
     const m=$('#modal');
     m.className='modal-bg show';
-    const diff=num(info.newPrice)-num(info.oldPrice);
     m.innerHTML=`<div class="modal">
       <h3 style="margin:0 0 8px">تغییر قیمت «${esc(info.name)}»</h3>
-      <div class="stats">
-        <dی می‌شود.</p>
+      <div class="kpi-row" style="grid-template-columns:1fr 1fr">
+        <div class="kpi"><span>قیمت قبلی</span><b>${money(info.oldPrice)}</b></div>
+        <div class="kpi"><span>قیمت جدید</span><b>${money(info.newPrice)}</b></div>
+      </div>
       <div class="row-actions" style="justify-content:flex-end;margin-top:14px">
-        <button class="btn btn-g" id="pcNo">انصراف</button>
-        <button class="btn btn-p" id="pcYes">تأیید و جایگزینی</button>
+        <button type="button" class="btn btn-g" id="pcNo">انصراف</button>
+        <button type="button" class="btn btn-p" id="pcYes">تأیید و جایگزینی</button>
       </div>
     </div>`;
-    $('#pcNo').onclick=()=>{m.className='modal-bg';res(false)};
-    $('#pcYes').onclick=()=>{m.className='modal-bg';res(true)};
+    const done=v=>{ m.className='modal-bg'; res(v); };
+    $('#pcNo').onclick=()=>done(false);
+    $('#pcYes').onclick=()=>done(true);
   });
 }
 const BASE_UNITS=['عدد','کیلوگرم','گرم','متر','سانتی‌متر','لیتر','بسته','کارتن','جفت','رول','ورق','متر مربع','دست','شانه','جعبه'];
@@ -1285,7 +1519,6 @@ function knownUnits(){
   const extra=parseJsonArr(DB.settings.unitNames).map(s=>String(s||'').trim());
   const fromItems=[
     ...alive(DB.materials).map(m=>m.unit),
-    ...alive(DB.products).map(p=>p.unit),
     ...alive(DB.purchases).map(p=>p.unit),
     ...serviceCatalog().map(s=>s.unit)
   ].map(s=>String(s||'').trim());
@@ -1395,11 +1628,14 @@ function viewPurchases(){
       <td><button class="btn btn-d" data-del-buy="${p.id}">حذف</button></td>
     </tr>`).join('') || '<tr><td colspan="7" class="empty">خرید یا پرداختی ثبت نشده.</td></tr>';
   const sum=alive(DB.purchases).reduce((s,p)=>s+num(p.totalAmount),0);
-  return `<div class="page-head"><h1>خرید و پرداختی‌ها</h1><button class="btn btn-g" data-go="dashboard">بازگشت</button></div>
-  <div class="stats">
-    <div class="stat"><span>مجموع هزینه‌ها</span><b>${money(sum)}</b></div>
-    <div class="stat"><span>تعداد سند</span><b>${alive(DB.purchases).length}</b></div>
+  return `<div class="pf-head">
+    <button class="btn btn-g" data-go="dashboard">⌂ صفحه اصلی</button>
+    <div class="pf-head-meta"><h1>خرید و پرداختی‌ها</h1><p>خرید مواد، خدمات و هزینه‌ها</p></div>
   </div>
+  <section class="portfolio-stats">
+    <div><small>مجموع هزینه‌ها</small><b>${money(sum)}</b></div>
+    <div><small>تعداد سند</small><b>${alive(DB.purchases).length}</b></div>
+  </section>
   <div class="grid-2">
     <div class="card">
       <h3>خرید مواد / کالا</h3>
@@ -1622,87 +1858,112 @@ function viewAccounting(){
   let remain=0;
   alive(DB.customers).forEach(c=>{ remain += ledger(c.id).debt; });
   const tx=[
-    ...orders.map(o=>({t:o.dateGregorian,d:o.dateShamsi,k:'فروش',n:'فاکتور '+o.invoiceNo+' — '+o.customerName,a:num(o.totalSale),id:o.id,kind:'o'})),
+    ...orders.map(o=>({t:o.dateGregorian,d:o.dateShamsi,k:'فروش',n:o.customerName,inv:o.invoiceNo,a:num(o.totalSale),id:o.id,kind:'o'})),
     ...pays.map(p=>{
       const c=byId(DB.customers,p.customerId);
-      return {t:p.dateGregorian,d:p.dateShamsi,k:'دریافت',n:(c?c.name:'مشتری')+' — '+ (p.method||''),a:num(p.amount),id:p.id,kind:'p'};
+      return {t:p.dateGregorian,d:p.dateShamsi,k:'دریافت',n:(c?c.name:'مشتری'),inv:'',a:num(p.amount),note:p.method||'',id:p.id,kind:'p'};
     }),
-    ...buys.map(p=>({t:p.dateGregorian,d:p.dateShamsi,k:p.kind==='service'?'هزینه خدمات':'خرید کالا',n:p.title,a:-num(p.totalAmount),id:p.id,kind:'b'}))
+    ...buys.map(p=>({t:p.dateGregorian,d:p.dateShamsi,k:p.kind==='service'?'هزینه خدمات':'خرید کالا',n:p.title,inv:'',a:-num(p.totalAmount),id:p.id,kind:'b'}))
   ].sort((a,b)=>String(b.t).localeCompare(String(a.t)));
-  const trows=tx.map(x=>`<tr><td>${esc(x.d)}</td><td>${esc(x.k)}</td><td>${esc(x.n)}</td><td>${money(x.a)}</td>
-    <td>${x.kind==='p'?`<button class="btn btn-d" data-del-pay="${x.id}">حذف</button>`:''}</td></tr>`).join('')||'<tr><td colspan="5" class="empty">تراکنشی نیست.</td></tr>';
+  const trows=tx.map(x=>`<tr><td>${esc(x.d)}</td><td>${esc(x.k)}</td><td>${esc(x.n||'')}</td><td>${esc(x.inv||'')}</td><td>${money(x.a)}</td><td>${esc(x.note||'')}</td>
+    <td>${x.kind==='p'?`<button type="button" class="btn btn-d" data-del-pay="${x.id}">حذف</button>`:''}</td></tr>`).join('')||'<tr><td colspan="7" class="empty">تراکنشی نیست.</td></tr>';
   const crows=alive(DB.customers).map(c=>{
     const L=ledger(c.id);
     return `<tr class="clickable" data-open-cus="${c.id}"><td>${esc(c.name)}</td><td>${money(L.totalSale)}</td><td>${money(L.totalPaid)}</td><td>${money(L.debt)}</td></tr>`;
-  }).join('');
-  return `<div class="page-head"><h1>حسابداری</h1><button class="btn btn-g" data-go="dashboard">بازگشت</button></div>
-  <div class="filters">${['1W','1M','1Y','ALL'].map(k=>`<button class="chip ${per===k?'on':''}" data-per="${k}">${k}</button>`).join('')}</div>
-  <div class="stats" style="margin-top:12px">
-    <div class="stat"><span>مجموع فروش</span><b>${money(sale)}</b></div>
-    <div class="stat"><span>مجموع دریافتی‌ها</span><b>${money(rec)}</b></div>
-    <div class="stat"><span>خرید و هزینه‌ها</span><b>${money(expense)}</b></div>
-    <div class="stat"><span>درآمد خالص</span><b>${money(net)}</b></div>
-    <div class="stat"><span>مطالبات باقی‌مانده</span><b>${money(remain)}</b></div>
+  }).join('')||'<tr><td colspan="4" class="empty">مشتری‌ای نیست.</td></tr>';
+  return `<div class="pf-head">
+    <button class="btn btn-g" data-go="dashboard">⌂ صفحه اصلی</button>
+    <div class="pf-head-meta"><h1>حسابداری</h1><p>پرتفوی مالی و گزارش تراکنش‌ها</p></div>
   </div>
-  <div class="card"><h3>گزارش تراکنش‌ها</h3><div class="table-wrap"><table><thead><tr><th>تاریخ</th><th>نوع</th><th>شرح</th><th>مبلغ</th><th></th></tr></thead><tbody>${trows}</tbody></table></div></div>
-  <div class="card" style="margin-top:12px"><h3>پرتفوی مالی مشتریان</h3><div class="table-wrap"><table><thead><tr><th>مشتری</th><th>فروش</th><th>دریافتی</th><th>مانده</th></tr></thead><tbody>${crows}</tbody></table></div></div>`;
+  <div class="accounting-range">${[['1W','1W'],['1M','1M'],['1Y','1Y'],['ALL','ALL']].map(([k,l])=>`<button class="chip ${per===k?'on':''}" data-per="${k}">${l}</button>`).join('')}</div>
+  <section class="portfolio-stats">
+    <div><small>مجموع فروش ثبت‌شده</small><b>${money(sale)}</b></div>
+    <div><small>دریافتی‌ها</small><b>${money(rec)}</b></div>
+    <div><small>خرید و هزینه‌ها</small><b>${money(expense)}</b></div>
+    <div><small>درآمد خالص</small><b>${money(net)}</b></div>
+    <div class="debt"><small>مطالبات باقی‌مانده</small><b>${money(remain)}</b></div>
+  </section>
+  <section class="card"><h2>تراکنش‌ها</h2>
+    <div class="table-wrap"><table class="cart-table"><thead><tr><th>تاریخ</th><th>نوع تراکنش</th><th>مشتری</th><th>شماره سفارش</th><th>مبلغ</th><th>توضیحات</th><th>عملیات</th></tr></thead><tbody>${trows}</tbody></table></div>
+  </section>
+  <section class="card"><h2>پرتفوی مشتریان</h2>
+    <div class="table-wrap"><table class="cart-table"><thead><tr><th>مشتری</th><th>کل سفارش‌ها</th><th>پرداختی‌ها</th><th>بدهی</th></tr></thead><tbody>${crows}</tbody></table></div>
+  </section>`;
 }
 
 function viewProducts(){
   const ico=(goTo,svg,title,sub)=>`<button class="hub-ico" data-go="${goTo}"><div class="mark">${svg}</div><b>${title}</b><span>${sub}</span></button>`;
   return `
-  <div class="page-head"><h1>محصولات و مواد اولیه</h1><button class="btn btn-g" data-go="dashboard">بازگشت</button></div>
+  <div class="pf-head"><button class="btn btn-g" data-go="dashboard">⌂ صفحه اصلی</button><div class="pf-head-meta"><h1>مدیریت محصولات و مواد اولیه</h1><p>ثبت کالا، مواد و بهای تمام‌شده</p></div></div>
   <div class="hub">
-    ${ico('products-add','<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8M8 12h8"/></svg>','افزودن محصول','ثبت کالا و فهرست محصولات')}
+    ${ico('products-add','<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8M8 12h8"/></svg>','افزودن محصول','ثبت کالا، فرمول و فهرست')}
     ${ico('materials','<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2"/></svg>','مواد اولیه','نام، واحد و قیمت مواد')}
-    ${ico('formula','<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5h6v6H5zM13 13h6v6h-6z"/><path d="M8 11v2a3 3 0 0 0 3 3h2"/></svg>','فرمول محاسبه','اتصال مواد و بهای تمام‌شده')}
   </div>`;
 }
 function viewProductsAdd(){
+  const editId=route.id || window._editPr || '';
+  const editing=editId?byId(DB.products,editId):null;
   const prows=alive(DB.products).map(p=>{
     const cost=productCost(p), sale=productSale(p);
     return `<tr>
     <td>${esc(p.code)}</td><td>${esc(p.name)}</td><td>${esc(p.category||APP.CATEGORY)}</td>
     <td>${money(sale)}</td><td>${money(cost)}</td><td>${pctTxt(productProfitPct(p,cost))}</td>
-    <td><button class="btn" data-ed-pr="${p.id}">ویرایش</button> <button class="btn btn-d" data-del-pr="${p.id}">حذف</button></td>
+    <td><button type="button" class="btn" data-ed-pr="${p.id}">فرمول / ویرایش</button> <button type="button" class="btn btn-d" data-del-pr="${p.id}">حذف</button></td>
   </tr>`;
   }).join('')||'<tr><td colspan="7" class="empty">محصولی نیست.</td></tr>';
-  return `<div class="page-head"><h1>افزودن محصول</h1><button class="btn btn-g" data-go="products">بازگشت</button></div>
-  <div class="card">
+  const bom=editing?alive(DB.productMaterials).filter(b=>b.productId===editing.id):[];
+  const mats=alive(DB.materials);
+  const bomRows=(!mats.length)?'': (bom.length?bom:[{materialId:'',qty:1}]).map(r=>bomRowHTML(r.materialId,r.qty)).join('');
+  return `<div class="pf-head"><button class="btn btn-g" data-go="products">← مدیریت محصولات</button><div class="pf-head-meta"><h1>${editing?'ویرایش محصول':'افزودن محصول'}</h1><p>مشخصات، فرمول محاسبه و بهای تمام‌شده</p></div></div>
+  <section class="card">
+    <h2>مشخصات محصول</h2>
+    <input type="hidden" id="prId" value="${editing?esc(editing.id):''}">
+    <div class="field"><label>بارگذاری محصول موجود برای ویرایش فرمول</label>
+      <select class="inp" id="prPick">
+        <option value="">— محصول جدید —</option>
+        ${alive(DB.products).map(p=>`<option value="${p.id}" ${editing&&editing.id===p.id?'selected':''}>${esc(p.code)} — ${esc(p.name)}</option>`).join('')}
+      </select>
+    </div>
     <div class="grid-2">
-      <div class="field"><label>کد</label><input class="inp" id="prCode"></div>
-      <div class="field"><label>نام</label><input class="inp" id="prName"></div>
+      <div class="field"><label>کد</label><input class="inp" id="prCode" value="${editing?esc(editing.code):esc(nextProductCode())}"></div>
+      <div class="field"><label>نام</label><input class="inp" id="prName" value="${editing?esc(editing.name):''}"></div>
     </div>
-    <div class="grid-3">
-      <div class="field"><label>دسته‌بندی</label><input class="inp" id="prCat" value="${APP.CATEGORY}"></div>
-      <div class="field"><label>واحد</label>${unitSelectHTML('prUnit','عدد')}</div>
-      <div class="field"><label>قیمت فروش</label><input class="inp" id="prSale" type="number"></div>
+    <div class="grid-2">
+      <div class="field"><label>دسته‌بندی</label><input class="inp" id="prCat" value="${esc(editing&&editing.category?editing.category:APP.CATEGORY)}"></div>
+      <div class="field"><label>قیمت فروش</label><input class="inp" id="prSale" type="number" value="${editing?productSale(editing):''}"></div>
     </div>
-    <div class="field"><label>انتخاب مواد اولیه</label>
-      <div class="mat-list" id="prMatList">${alive(DB.materials).length ? alive(DB.materials).map(m=>`<label class="mat-row">
-        <input type="checkbox" data-pmid="${m.id}">
-        <span>${esc(m.name)}</span>
-        <span class="muted">${money(m.unitCost)} / ${esc(m.unit||'عدد')}</span>
-        <input class="inp" data-pmqty="${m.id}" type="number" min="0" step="0.01" value="1">
-      </label>`).join('') : '<div class="empty">ابتدا ماده اولیه ثبت کنید.</div>'}</div>
+  </section>
+  <section class="card">
+    <h2>فرمول محاسبه</h2>
+    <p class="muted">ماده را انتخاب کنید، میزان مصرف را بزنید. قیمت همان ردیف و جمع کل پایین جدول دیده می‌شود.</p>
+    ${!mats.length?'<div class="empty">ابتدا از بخش مواد اولیه، ماده ثبت کنید.</div>':`
+    <div class="table-wrap"><table class="cart-table bom-table">
+      <thead><tr><th>ماده اولیه</th><th>میزان مصرف</th><th>واحد</th><th>قیمت واحد</th><th>مبلغ این ماده</th><th></th></tr></thead>
+      <tbody id="bomRows">${bomRows}</tbody>
+      <tfoot><tr><td colspan="4">جمع مواد اولیه</td><td id="bomSum">۰</td><td></td></tr></tfoot>
+    </table></div>
+    <button type="button" class="btn bom-add" id="addBomRow">＋ افزودن ماده اولیه</button>`}
+    <section class="portfolio-stats" style="margin-top:14px">
+      <div><small>جمع مواد اولیه</small><b id="prCostLive">۰</b></div>
+      <div><small>قیمت فروش</small><b id="prSaleLive">۰</b></div>
+      <div class="debt"><small>درصد سود</small><b id="prPctLive">۰٪</b></div>
+    </section>
+    <div class="field"><label>هزینه مواد دستی (اگر ردیفی انتخاب نشود)</label><input class="inp" id="prMc" type="number" value="${editing&&!bom.length?num(editing.materialCost):''}"></div>
+    <div class="row-actions">
+      <button type="button" class="btn btn-p" id="savePr">${editing?'ذخیره محصول و فرمول':'ذخیره محصول و فرمول'}</button>
+      ${editing?'<button type="button" class="btn btn-g" id="prNew">محصول جدید</button>':''}
     </div>
-    <div class="stats">
-      <div class="stat"><span>قیمت تمام‌شده</span><b id="prCostLive">۰</b></div>
-      <div class="stat"><span>درصد سود</span><b id="prPctLive">۰٪</b></div>
-    </div>
-    <div class="field"><label>هزینه مواد دستی (اگر ماده‌ای انتخاب نشود)</label><input class="inp" id="prMc" type="number"></div>
-    <button class="btn btn-p" id="savePr">ذخیره محصول</button>
-  </div>
-  <div class="card" style="margin-top:12px"><h3>فهرست محصولات</h3>
-    <div class="table-wrap"><table><thead><tr><th>کد</th><th>نام</th><th>دسته</th><th>قیمت فروش</th><th>قیمت تمام‌شده</th><th>درصد سود</th><th></th></tr></thead><tbody>${prows}</tbody></table></div>
-  </div>`;
+  </section>
+  <section class="card"><h2>فهرست محصولات</h2>
+    <div class="table-wrap"><table class="cart-table"><thead><tr><th>کد</th><th>نام</th><th>دسته</th><th>قیمت فروش</th><th>قیمت تمام‌شده</th><th>درصد سود</th><th></th></tr></thead><tbody>${prows}</tbody></table></div>
+  </section>`;
 }
 function viewMaterials(){
   const mrows=alive(DB.materials).map(m=>`<tr>
     <td>${esc(m.name)}</td><td>${esc(m.unit||'عدد')}</td><td>${money(m.unitCost)}</td>
     <td><button class="btn" data-ed-mat="${m.id}">ویرایش</button> <button class="btn btn-d" data-del-mat="${m.id}">حذف</button></td>
   </tr>`).join('')||'<tr><td colspan="4" class="empty">ماده اولیه‌ای نیست.</td></tr>';
-  return `<div class="page-head"><h1>مواد اولیه</h1><button class="btn btn-g" data-go="products">بازگشت</button></div>
+  return `<div class="pf-head"><button class="btn btn-g" data-go="products">← مدیریت محصولات</button><div class="pf-head-meta"><h1>مواد اولیه</h1><p>نام، واحد و قیمت مواد</p></div></div>
   <div class="card">
     <div class="grid-3">
       <div class="field"><label>نام ماده</label><input class="inp" id="mName"></div>
@@ -1727,7 +1988,7 @@ function viewFormula(){
       <input class="inp" data-mqty="${m.id}" type="number" min="0" step="0.01" value="${row?row.qty:1}">
     </label>`;
   }).join('') : '<div class="empty">ابتدا ماده اولیه ثبت کنید.</div>';
-  return `<div class="page-head"><h1>فرمول محاسبه</h1><button class="btn btn-g" data-go="products">بازگشت</button></div>
+  return `<div class="pf-head"><button class="btn btn-g" data-go="products">← مدیریت محصولات</button><div class="pf-head-meta"><h1>فرمول محاسبه</h1><p>اتصال مواد و بهای تمام‌شده</p></div></div>
   <div class="card">
     <p class="muted">مواد مورد نیاز محصول را از لیست انتخاب کنید. قیمت تمام‌شده و درصد سود همان لحظه محاسبه می‌شود.</p>
     <div class="field"><label>محصول</label>
@@ -1912,7 +2173,7 @@ function render(){
   else if(route.page==='products') v.innerHTML=viewProducts();
   else if(route.page==='products-add') v.innerHTML=viewProductsAdd();
   else if(route.page==='materials') v.innerHTML=viewMaterials();
-  else if(route.page==='formula') v.innerHTML=viewFormula();
+  else if(route.page==='formula'){ route.page='products-add'; v.innerHTML=viewProductsAdd(); }
   bindGlobal();
   renderStatus();
   if(typeof syncMobNav==='function') syncMobNav();
@@ -1925,7 +2186,7 @@ function bindGlobal(){
     go(el.dataset.go, el.dataset.id);
   }));
   const oq=$('#ordQ'); if(oq) oq.oninput=()=>render();
-  $$('[data-open-order]').forEach(tr=>tr.onclick=e=>{ if(e.target.closest('button')) return; go('order', tr.dataset.openOrder); });
+  $$('[data-open-order]').forEach(el=>el.addEventListener('click', e=>{ if(e.target.closest('button,input,a')) return; go('order', el.dataset.openOrder); }));
   $$('[data-del-order]').forEach(b=>b.onclick=async e=>{
     e.stopPropagation();
     if(!await confirmBox('حذف سفارش','این سفارش به‌صورت نرم حذف شود؟')) return;
@@ -1941,24 +2202,26 @@ function bindGlobal(){
     const c=addCustomer($('#nName')&&$('#nName').value, $('#nPhone')&&$('#nPhone').value, $('#nAddr')&&$('#nAddr').value);
     if(c) render();
   };
-  $$('[data-open-cus]').forEach(tr=>tr.onclick=e=>{ if(e.target.closest('button')) return; go('customer', tr.dataset.openCus); });
-  $$('[data-del-cus]').forEach(b=>b.onclick=async e=>{
-    e.stopPropagation();
+  $$('[data-open-cus]').forEach(el=>el.addEventListener('click', e=>{
+    if(e.target.closest('button,input,textarea,select,a')) return;
+    e.preventDefault();
+    go('customer', el.dataset.openCus);
+  }));
+  $$('[data-del-cus]').forEach(b=>b.addEventListener('click', async e=>{
+    e.preventDefault(); e.stopPropagation();
     if(!await confirmBox('حذف مشتری','مشتری حذف شود؟')) return;
-    const c=byId(DB.customers,b.dataset.delCus); c.deleted='1'; upsertLocal('customers',c); render();
-  });
-  $$('[data-ed-cus]').forEach(b=>b.onclick=e=>{
-    e.stopPropagation();
-    const c=byId(DB.customers,b.dataset.edCus);
-    const m=$('#modal'); m.className='modal-bg show';
-    m.innerHTML=`<div class="modal"><h3>ویرایش مشتری</h3>
-      <div class="field"><label>نام</label><input class="inp" id="eN" value="${esc(c.name)}"></div>
-      <div class="field"><label>تماس</label><input class="inp" id="eP" value="${esc(c.phone)}"></div>
-      <div class="field"><label>آدرس</label><textarea class="inp" id="eA">${esc(c.address||'')}</textarea></div>
-      <div class="row-actions"><button class="btn btn-g" id="eX">بستن</button><button class="btn btn-p" id="eS">ذخیره</button></div></div>`;
-    $('#eX').onclick=()=>m.className='modal-bg';
-    $('#eS').onclick=()=>{ c.name=$('#eN').value.trim(); c.phone=$('#eP').value.trim(); c.address=$('#eA').value.trim(); upsertLocal('customers',c); m.className='modal-bg'; render(); };
-  });
+    const c=byId(DB.customers,b.dataset.delCus); if(!c) return;
+    c.deleted='1'; upsertLocal('customers',c); flush(); toast('مشتری حذف شد'); render();
+  }));
+  $$('[data-ed-cus]').forEach(b=>b.addEventListener('click', e=>{
+    e.preventDefault(); e.stopPropagation();
+    openCustomerEditor(b.dataset.edCus);
+  }));
+  const sce=$('#saveCusEdit');
+  if(sce) sce.onclick=()=>{
+    const c=byId(DB.customers, route.id);
+    if(saveCustomerFields(c, $('#ceName')&&$('#ceName').value, $('#cePhone')&&$('#cePhone').value, $('#ceAddr')&&$('#ceAddr').value)) render();
+  };
   const sp=$('#savePay'); if(sp) sp.onclick=()=>{
     const amt=num($('#payAmt').value); if(!amt){ toast('مبلغ را وارد کنید',false); return; }
     upsertLocal('payments',{id:uid('pay'),customerId:route.id,orderId:'',amount:amt,method:$('#payMet').value,dateShamsi:$('#payDate').value,dateGregorian:parseShamsi($('#payDate').value).toISOString(),notes:$('#payNote').value,deleted:'0'});
@@ -1971,25 +2234,38 @@ function bindGlobal(){
     render();
   });
   $$('[data-per]').forEach(b=>b.onclick=()=>{ window._accPer=b.dataset.per; render(); });
-  if($('#prMatList')) bindProductMats();
+  bindProductMats();
   const spr=$('#savePr'); if(spr) spr.onclick=()=>{
     const code=$('#prCode').value.trim(), name=$('#prName').value.trim();
     if(!code||!name){ toast('کد و نام لازم است',false); return; }
-    const selected=[];
-    $$('#prMatList [data-pmid]').forEach(cb=>{
-      if(!cb.checked) return;
-      const qty=Math.max(0,num(($(`[data-pmqty="${cb.dataset.pmid}"]`)||{}).value));
-      if(qty>0) selected.push({materialId:cb.dataset.pmid, qty});
-    });
+    const selected=collectBomRows();
     let cost=0;
     selected.forEach(s=>{ const m=byId(DB.materials,s.materialId); cost += num(m&&m.unitCost)*s.qty; });
     if(!cost) cost=num($('#prMc').value);
     const sale=num($('#prSale').value);
-    const rec=snapshotProduct({id:uid('prd'),code,name,category:$('#prCat').value.trim()||APP.CATEGORY,unit:readUnit('#prUnit','عدد'),notes:'',deleted:'0'}, sale||cost, cost);
+    const existId=($('#prId')&&$('#prId').value)||'';
+    const rec=snapshotProduct(existId&&byId(DB.products,existId) ? byId(DB.products,existId) : {id:uid('prd'),deleted:'0'}, sale||cost, cost);
+    rec.code=code; rec.name=name; rec.category=$('#prCat').value.trim()||APP.CATEGORY; rec.unit=''; rec.deleted='0';
     upsertLocal('products',rec);
-    selected.forEach(s=>upsertLocal('productMaterials',{id:uid('bom'),productId:rec.id,materialId:s.materialId,qty:s.qty,deleted:'0'}));
-    toast('محصول ذخیره شد'); render();
+    alive(DB.productMaterials).filter(b=>b.productId===rec.id).forEach(b=>{
+      if(!selected.find(s=>s.materialId===b.materialId)){ b.deleted='1'; upsertLocal('productMaterials',b); }
+    });
+    selected.forEach(s=>{
+      const exist=DB.productMaterials.find(b=>b.productId===rec.id && b.materialId===s.materialId);
+      const row=exist?Object.assign({},exist):{id:uid('bom')};
+      row.productId=rec.id; row.materialId=s.materialId; row.qty=s.qty; row.deleted='0';
+      upsertLocal('productMaterials',row);
+    });
+    window._editPr='';
+    toast('محصول و فرمول ذخیره شد'); render();
   };
+  if($('#prPick')) $('#prPick').onchange=()=>{
+    const id=$('#prPick').value;
+    window._editPr=id||'';
+    route.id=id||null;
+    render();
+  };
+  if($('#prNew')) $('#prNew').onclick=()=>{ window._editPr=''; route.id=null; render(); };
   const sm=$('#saveMat'); if(sm) sm.onclick=()=>{
     const name=$('#mName').value.trim(); if(!name){ toast('نام ماده لازم است',false); return; }
     upsertLocal('materials',{id:uid('mat'),name,unit:readUnit('#mUnit','عدد'),unitCost:num($('#mCost').value),notes:'',deleted:'0'});
@@ -2023,24 +2299,9 @@ function bindGlobal(){
     const p=byId(DB.products,b.dataset.delPr); p.deleted='1'; upsertLocal('products',p); render();
   });
   $$('[data-ed-pr]').forEach(b=>b.onclick=()=>{
-    const p=byId(DB.products,b.dataset.edPr);
-    const cost=productCost(p), sale=productSale(p);
-    const m=$('#modal'); m.className='modal-bg show';
-    m.innerHTML=`<div class="modal"><h3>ویرایش محصول</h3>
-      <div class="grid-2"><div class="field"><label>کد</label><input class="inp" id="xC" value="${esc(p.code)}"></div><div class="field"><label>نام</label><input class="inp" id="xN" value="${esc(p.name)}"></div></div>
-      <div class="field"><label>واحد</label>${unitSelectHTML('xU', p.unit||'عدد')}</div>
-      <div class="field"><label>قیمت فروش</label><input class="inp" id="xS" type="number" value="${sale}"></div>
-      <div class="field"><label>هزینه مواد (دستی)</label><input class="inp" id="xM" type="number" value="${num(p.materialCost)}"></div>
-      <p class="pmeta">قیمت تمام‌شده از فرمول: <b>${money(cost)}</b> — درصد سود: <b>${pctTxt(productProfitPct(p,cost))}</b></p>
-      <div class="row-actions"><button class="btn btn-g" id="xx">بستن</button><button class="btn btn-p" id="xs">ذخیره</button></div></div>`;
-    bindUnitSelects(m);
-    $('#xx').onclick=()=>m.className='modal-bg';
-    $('#xs').onclick=()=>{
-      p.code=$('#xC').value; p.name=$('#xN').value; p.unit=readUnit('#xU', p.unit||'عدد');
-      const bomCost=productCost(p);
-      snapshotProduct(p, num($('#xS').value), bomCost>0?bomCost:num($('#xM').value));
-      upsertLocal('products',p); m.className='modal-bg'; render();
-    };
+    window._editPr=b.dataset.edPr;
+    if(route.page!=='products-add'){ go('products-add', b.dataset.edPr); return; }
+    route.id=b.dataset.edPr; render();
   });
   $$('[data-del-mat]').forEach(b=>b.onclick=async()=>{
     if(!await confirmBox('حذف ماده','ماده اولیه حذف شود؟')) return;
@@ -2092,22 +2353,17 @@ async function boot(){
   window.addEventListener('online',()=>{ renderStatus(); if(ready) flush(); });
   window.addEventListener('offline',()=>{ lastError='اتصال اینترنت قطع است.'; renderStatus(); toast('اتصال اینترنت قطع است',false); });
   loadLocal();
+  ready=true;
+  const lk=$('#lock'); if(lk) lk.classList.add('hide');
   render();
-  try{
-    await bootstrap();
-    ready=true; $('#lock').classList.add('hide');
-    render();
-    toast('اطلاعات از Google Sheets بازیابی شد');
-  }catch(e){
-    lastError = navigator.onLine ? (e.message||'خطای بازیابی') : 'اتصال اینترنت قطع است.';
-    ready=true; $('#lock').classList.add('hide');
-    render();
-    toast('بازیابی از گوگل ناموفق بود. صف اضطراری محلی فعال است.', false);
-  }
+  bootstrap().then(()=>{ lastError=''; render(); }).catch(e=>{
+    lastError = navigator.onLine ? (e.message||'خطای بکاپ') : 'آفلاین';
+    renderStatus();
+  });
   setInterval(()=>{ if(ready) flush(); }, 30000);
   document.addEventListener('visibilitychange',()=>{ if(!document.hidden && ready) flush(); });
 }
 boot();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a6bd3b3da3d394',t:'MTc4NjYxMzgyNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a8af09d869dbad',t:'MTc4NjYzNDIxNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
