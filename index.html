@@ -40,11 +40,12 @@ html.dark .brand img{filter:invert(1) brightness(1.15)}
 .page-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap}
 .page-head h1{margin:0;font-size:24px}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.dash-card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:12px 10px 10px;box-shadow:var(--sh);text-align:center;transition:.2s transform,.2s border-color;aspect-ratio:1/1;width:100%;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;gap:6px}
+.dash-card{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:16px 12px;box-shadow:var(--sh);text-align:center;transition:.2s transform,.2s border-color;width:100%;height:auto;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px}
 .dash-card:hover{transform:translateY(-3px);border-color:var(--p)}
-.dash-ico{width:58px;height:58px;border-radius:16px;background:var(--ps);color:var(--p2);display:grid;place-items:center;font-size:28px;flex:none}
-.dash-card h3{margin:2px 0 0;font-size:13px;line-height:1.3}
-.dash-card p{margin:0;color:var(--mu);font-size:11px;line-height:1.35}
+.dash-ico{width:58px;height:58px;border-radius:16px;background:var(--ps);color:var(--p2);display:grid;place-items:center;font-size:28px;flex:none;margin:0 auto}
+.dash-card .dash-txt{width:100%;text-align:center}
+.dash-card h3{margin:0;font-size:13px;line-height:1.35;text-align:center}
+.dash-card p{margin:4px 0 0;color:var(--mu);font-size:11px;line-height:1.35;text-align:center}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
 .stat{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:14px 16px}
 .stat b{display:block;font-size:20px;margin-top:4px}
@@ -76,8 +77,13 @@ html.dark .btn{color:#ecfdf5}
 .cust-box.open{display:block}
 .cust-box:before{content:"";position:absolute;top:-6px;inset-inline-start:16px;width:11px;height:11px;background:var(--sf2);border-inline-start:1px solid var(--p);border-top:1px solid var(--p);transform:rotate(45deg)}
 .sel-hint{font-size:11px;color:var(--mu);margin-top:4px}
+.pick-bar{display:flex;align-items:flex-end;gap:8px}
+.pick-bar .grow{flex:1;min-width:0}
+.pick-bar .cust-ico{margin-bottom:10px}
+.sug .sug-empty{padding:10px 12px;color:var(--mu);cursor:default}
+.unit-new{margin-top:6px}
 .hub{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:720px;margin:24px auto}
-.hub-ico{background:var(--sf);border:1px solid var(--ln);border-radius:20px;aspect-ratio:1/1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;box-shadow:var(--sh);color:var(--tx);padding:16px}
+.hub-ico{background:var(--sf);border:1px solid var(--ln);border-radius:20px;height:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;box-shadow:var(--sh);color:var(--tx);padding:16px 12px;text-align:center}
 .hub-ico:hover{border-color:var(--p);transform:translateY(-3px)}
 .hub-ico .mark{width:64px;height:64px;border-radius:18px;background:var(--ps);color:var(--p2);display:grid;place-items:center}
 .hub-ico b{font-size:15px}
@@ -142,15 +148,57 @@ html.dark .badge{color:#ecfdf5}
 .coll{overflow:hidden;max-height:0;transition:.25s}
 .coll.open{max-height:900px}
 hr.sep{border:0;border-top:1px solid var(--ln);margin:14px 0}
+.os-badge{font-size:11px;color:var(--mu);background:var(--sf2);border:1px solid var(--ln);border-radius:999px;padding:3px 8px;white-space:nowrap}
+.mob-nav,.mob-sheet{display:none}
 @media (max-width:900px){
   .cards{grid-template-columns:repeat(2,1fr)}
   .stats,.grid-2,.grid-3{grid-template-columns:1fr}
+  .hub{grid-template-columns:1fr 1fr;max-width:none}
 }
+@media (max-width:720px), html.is-mobile {
+  .top-actions .btn-g{display:none}
+  .brand-meta b{font-size:15px}
+  .brand img{height:40px}
+  .clock{font-size:16px}
+  .shamsi{font-size:11px;max-width:42vw;text-align:center}
+  .wrap{width:calc(100% - 16px);margin:12px auto 108px}
+  .page-head h1{font-size:20px}
+  .cards{grid-template-columns:repeat(2,1fr);gap:8px}
+  .dash-ico{width:52px;height:52px;font-size:24px}
+  .dash-card{padding:14px 8px}
+  .stats{grid-template-columns:1fr 1fr;gap:8px}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .order-bar{flex-direction:column;align-items:stretch}
+  .order-bar .grow,.order-bar .field{width:100% !important;min-width:0}
+  .order-bar .btn,.order-bar .cust-ico{min-height:48px}
+  .cust-ico{width:48px}
+  .btn,.inp,select,textarea{min-height:48px;font-size:16px !important;border-radius:14px}
+  .icon-btn{width:44px;height:44px}
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px}
+  table{min-width:640px}
+  th,td{padding:12px 10px;font-size:13px}
+  .statusbar{left:10px;right:10px;inset-inline:10px;bottom:calc(72px + env(safe-area-inset-bottom));justify-content:center}
+  .toastbox{bottom:calc(78px + env(safe-area-inset-bottom));left:10px}
+  .modal{width:100%;max-height:88vh;overflow:auto;border-radius:18px 18px 12px 12px}
+  .mob-nav{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:70;background:var(--sf);border-top:1px solid var(--ln);padding:6px 4px calc(6px + env(safe-area-inset-bottom));justify-content:space-around;gap:2px}
+  .mob-nav button{flex:1;border:0;background:transparent;color:var(--mu);font-size:11px;font-weight:700;padding:6px 2px;border-radius:12px;display:flex;flex-direction:column;align-items:center;gap:2px}
+  .mob-nav button .mi{font-size:18px;line-height:1}
+  .mob-nav button.on{color:var(--p2);background:var(--ps)}
+  .mob-sheet{display:none;position:fixed;left:8px;right:8px;bottom:calc(70px + env(safe-area-inset-bottom));z-index:71;background:var(--sf);border:1px solid var(--ln);border-radius:16px;padding:10px;box-shadow:var(--sh)}
+  .mob-sheet.open{display:block}
+  .mob-sheet button{width:100%;text-align:right;border:0;background:transparent;padding:12px 10px;border-radius:10px;color:var(--tx);font-weight:700}
+  .mob-sheet button:active{background:var(--ps)}
+}
+html.os-ios .btn,html.os-ios .inp,html.os-ios select,html.os-ios textarea{-webkit-appearance:none}
+html.os-ios input,html.os-ios select,html.os-ios textarea{font-size:16px}
+html.os-ios .app{min-height:100dvh;padding-top:env(safe-area-inset-top)}
+html.os-android .btn{border-radius:10px}
+html.os-android .dash-card,html.os-android .card{border-radius:12px}
+html.is-touch .dash-card:hover,html.is-touch .hub-ico:hover{transform:none}
+html.is-touch .btn:active,html.is-touch .dash-card:active{transform:scale(.98)}
 @media (max-width:520px){
   .cards{grid-template-columns:repeat(2,1fr)}
-  .clock{font-size:18px}
-  .brand img{height:42px}
-  .wrap{width:calc(100% - 16px)}
+  .hub{grid-template-columns:1fr}
 }
 @media print{
   body *{visibility:hidden}
@@ -169,7 +217,7 @@ hr.sep{border:0;border-top:1px solid var(--ln);margin:14px 0}
       <img src="logo.png" alt="PezeshkYar" id="brandLogo">
       <div class="brand-meta">
         <b>پزشک‌یار</b>
-        <span class="ver" id="appVer">v.1.1.18</span>
+        <span class="ver" id="appVer">v.1.1.25</span>
       </div>
     </div>
     <div class="top-mid">
@@ -177,14 +225,27 @@ hr.sep{border:0;border-top:1px solid var(--ln);margin:14px 0}
       <div class="shamsi" id="shamsi">—</div>
     </div>
     <div class="top-actions">
+      <span class="os-badge" id="osBadge">—</span>
       <button class="icon-btn" id="btnTheme" title="حالت روز/شب">◐</button>
       <button class="btn btn-g" data-go="dashboard">داشبورد</button>
     </div>
   </header>
   <main class="wrap" id="view"></main>
 </div>
+<nav class="mob-nav" id="mobNav">
+  <button type="button" data-go="dashboard"><span class="mi">⌂</span>خانه</button>
+  <button type="button" data-go="new-order"><span class="mi">＋</span>سفارش</button>
+  <button type="button" data-go="orders"><span class="mi">☰</span>سفارش‌ها</button>
+  <button type="button" data-go="purchases"><span class="mi">⊟</span>خرید</button>
+  <button type="button" id="mobMore"><span class="mi">⋯</span>بیشتر</button>
+</nav>
+<div class="mob-sheet" id="mobSheet">
+  <button type="button" data-go="customers">☺ مشتریان</button>
+  <button type="button" data-go="accounting">﷼ حسابداری</button>
+  <button type="button" data-go="products">▣ محصولات و مواد</button>
+</div>
 <div class="statusbar" id="statusbar"></div>
-<div class="lock" id="lock"><div><div class="spinner"></div><div>در حال بازیابی اطلاعات از Google Sheets…</div><div class="muted" id="lockMsg">لطفاً صبر کنید</div></div></div>
+<div class="lock" id="lock"><div><div class="spinner"></div><div>در حال بازیابی اطلاعات از Google Sheets…<><div>در حال بازیابی اطلاعات از Google Sheets…</div><div class="muted" id="lockMsg">لطفاً صبر کنید</div></div></div>
 <div class="modal-bg" id="modal"></div>
 <div class="toastbox" id="toasts"></div>
 <div id="print-root" class="hidden"></div>
@@ -194,7 +255,7 @@ hr.sep{border:0;border-top:1px solid var(--ln);margin:14px 0}
 const APP = {
   name: 'PezeshkYar',
   nameFa: 'پزشک‌یار',
-  version: 'v.1.1.18',
+  version: 'v.1.1.25',
   SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyUDYfULHdPXBdy_zESpCGCUnnNPpuog7db8CQL-ov1F97nZbbEOfQzTxI-punxopBoWQ/exec',
   SHEET_URL: 'https://docs.google.com/spreadsheets/d/1GGHSNreSBvbgYwhxfQuR8xDjIvGxRNUqynz1Cgytkfs/edit?usp=sharing',
   APP_TOKEN: 'PEZESHKYAR_BACKUP_2026',
@@ -206,7 +267,7 @@ const APP = {
   CATEGORY: 'محصولات'
 };
 
-const KEYS = ['customers','products','materials','productMaterials','orders','orderItems','payments','socialOrders'];
+const KEYS = ['customers','products','materials','productMaterials','orders','orderItems','payments','purchases','socialOrders'];
 const DB = { settings: { invoiceCounter: APP.INVOICE_START } };
 KEYS.forEach(k => DB[k] = []);
 const dirty = {};
@@ -218,6 +279,7 @@ let syncing = false;
 let lastSync = null;
 let lastError = '';
 let queueCount = 0;
+let settingsDirty = false;
 
 const $ = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => [...r.querySelectorAll(s)];
@@ -405,7 +467,19 @@ async function bootstrap(){
     });
     DB[k]=[...map.values()];
   });
+  const prevSvc=DB.settings && DB.settings.serviceNames;
+  const prevUnits=DB.settings && DB.settings.unitNames;
   DB.settings = Object.assign({invoiceCounter:APP.INVOICE_START}, data.data.settings||{});
+  try{
+    const a=parseJsonArr(prevSvc);
+    const b=parseJsonArr(DB.settings.serviceNames);
+    DB.settings.serviceNames=JSON.stringify(mergeSvcLists(a,b));
+  }catch(e){ if(prevSvc && !DB.settings.serviceNames) DB.settings.serviceNames=prevSvc; }
+  try{
+    const a=parseJsonArr(prevUnits);
+    const b=parseJsonArr(DB.settings.unitNames);
+    DB.settings.unitNames=JSON.stringify([...new Set([...a,...b].map(s=>String(s||'').trim()).filter(Boolean))]);
+  }catch(e){ if(prevUnits && !DB.settings.unitNames) DB.settings.unitNames=prevUnits; }
   lastSync=new Date(); lastError='';
   persistLocal();
 }
@@ -418,12 +492,13 @@ async function flush(){
     collections[k]=DB[k].filter(r=>dirty[k].has(String(r.id)));
     if(collections[k].length) any=true;
   });
-  if(!any) return;
+  if(!any && !settingsDirty) return;
   syncing=true; renderStatus();
   try{
     const r=await api('sync',{collections, settings:DB.settings});
     if(!r.ok) throw new Error(r.error||'ذخیره ناموفق');
     KEYS.forEach(k=>dirty[k].clear());
+    settingsDirty=false;
     lastSync=new Date(); lastError='';
     persistLocal();
   }catch(e){
@@ -462,9 +537,45 @@ function tick(){
   $('#shamsi').textContent=shamsiStr(d);
 }
 
+function detectPlatform(){
+  const ua=navigator.userAgent||'';
+  const plat=navigator.platform||'';
+  const touch=('ontouchstart' in window) || navigator.maxTouchPoints>0;
+  const narrow=Math.min(window.innerWidth||999, screen.width||999)<820;
+  const uaMob=/Android|iPhone|iPad|iPod|Mobile|webOS|BlackBerry/i.test(ua);
+  const mobile=uaMob || (touch && narrow);
+  let os='other';
+  if(/iPhone|iPad|iPod/i.test(ua) || (plat==='MacIntel' && navigator.maxTouchPoints>1)) os='ios';
+  else if(/Android/i.test(ua)) os='android';
+  else if(/Windows Phone/i.test(ua)) os='android';
+  else if(/Win/i.test(plat)||/Windows/i.test(ua)) os='windows';
+  else if(/Mac/i.test(plat)||/Mac OS/i.test(ua)) os='mac';
+  else if(/Linux/i.test(ua)) os='linux';
+  const root=document.documentElement;
+  root.classList.toggle('is-mobile', !!mobile);
+  root.classList.toggle('is-touch', !!touch);
+  ['ios','android','windows','mac','linux','other'].forEach(x=>root.classList.remove('os-'+x));
+  root.classList.add('os-'+os);
+  document.body.dataset.os=os;
+  const lab={ios:'iOS · آیفون/آیپد',android:'اندروید',windows:'ویندوز',mac:'مک',linux:'لینوکس',other:'دستگاه'}[os];
+  const badge=$('#osBadge');
+  if(badge) badge.textContent=lab+(mobile?' · موبایل':' · دسکتاپ');
+  const tc=$('#themeColor');
+  if(tc) tc.setAttribute('content', root.classList.contains('dark')?'#0a0f0d':'#22c55e');
+  return {os, mobile, touch};
+}
+function syncMobNav(){
+  const map={dashboard:'dashboard','new-order':'new-order',orders:'orders',purchases:'purchases'};
+  $$('#mobNav [data-go]').forEach(b=>b.classList.toggle('on', b.dataset.go===route.page));
+  const moreOn=['customers','customer','accounting','products','products-add','materials','formula'].includes(route.page);
+  const more=$('#mobMore'); if(more) more.classList.toggle('on', moreOn);
+  const sheet=$('#mobSheet'); if(sheet && !moreOn) sheet.classList.remove('open');
+}
 function setTheme(t){
   document.documentElement.classList.toggle('dark', t==='dark');
   localStorage.setItem('py_theme', t);
+  const tc=$('#themeColor');
+  if(tc) tc.setAttribute('content', t==='dark'?'#0a0f0d':'#22c55e');
 }
 function go(page,id){
   if(page==='new-order') draft=null;
@@ -562,7 +673,7 @@ function socialStage(s){
 }
 
 function dashCard(goTo,ico,title,sub){
-  return `<button class="dash-card" data-go="${goTo}"><div class="dash-ico">${ico}</div><div><h3>${title}</h3><p>${sub}</p></div></button>`;
+  return `<button class="dash-card" data-go="${goTo}"><div class="dash-ico">${ico}</div><div class="dash-txt"><h3>${title}</h3><p>${sub}</p></div></button>`;
 }
 
 function viewDashboard(){
@@ -573,6 +684,7 @@ function viewDashboard(){
     ${dashCard('orders','☰','مدیریت سفارش‌ها','وضعیت، پرتفو و تولید')}
     ${dashCard('customers','☺','مشتریان','بانک مشتری و مانده حساب')}
     ${dashCard('accounting','﷼','حسابداری','فروش، دریافتی و مطالبات')}
+    ${dashCard('purchases','⊟','خرید و پرداختی‌ها','خرید مواد، خدمات و هزینه‌ها')}
     ${dashCard('products','▣','مدیریت محصولات و مواد اولیه','کالا، قیمت و بهای تمام‌شده')}
   </div>`;
 }
@@ -643,8 +755,7 @@ function viewNewOrder(){
         <div class="grid-2">
           <div class="field"><label>نام</label><input class="inp" id="cName" value="${esc(draft.customerName)}"></div>
           <div class="field"><label>شماره تماس</label><input class="inp" id="cPhone" value="${esc(draft.customerPhone)}"></div>
-        </div>
-        <div class="field"><label>آدرس</label><textarea class="inp" id="cAddr" rows="2">${esc(draft.customerAddress)}</textarea></div>
+      <div class="field"><label>آدرس</label><textarea class="inp" id="cAddr" rows="2">${esc(draft.customerAddress)}</textarea></div>
       </div>
       <div class="cust-box" id="newCusBox">
         <div class="grid-3">
@@ -672,8 +783,9 @@ function viewNewOrder(){
       </div>
       <div class="pmeta" id="pMeta">محصول را انتخاب کنید تا قیمت تمام‌شده و درصد سود دیده شود.</div>
       <div class="cust-box" id="newPrBox">
-        <div class="grid-2">
+        <div class="grid-3">
           <div class="field"><label>نام محصول جدید</label><input class="inp" id="npName"></div>
+          <div class="field"><label>واحد</label>${unitSelectHTML('npUnit','عدد')}</div>
           <div class="field"><label>قیمت تمام‌شده</label><input class="inp" id="npCost" type="number"></div>
         </div>
         <button class="btn btn-p" id="saveNewPr">ذخیره محصول جدید</button>
@@ -727,10 +839,10 @@ function bindNewOrder(){
     const cost=productCost(picked);
     const sale=productSale(picked);
     $('#pPrice').value = sale || '';
-    if($('#pMeta')) $('#pMeta').innerHTML=`قیمت تمام‌شده: <b>${money(cost)}</b> — درصد سود: <b>${pctTxt(productProfitPct(picked,cost))}</b>`;
+    if($('#pMeta')) $('#pMeta').innerHTML=`واحد: <b>${esc(picked.unit||'عدد')}</b> — قیمت تمام‌شده: <b>${money(cost)}</b> — درصد سود: <b>${pctTxt(productProfitPct(picked,cost))}</b>`;
   };
   const showProducts = q => openList($('#pSug'), productSuggest(q),
-    p=>`<div>${esc(p.code)} — ${esc(p.name)}</div>`,
+    p=>`<div>${esc(p.code)} — ${esc(p.name)} <span class="muted">${esc(p.unit||'عدد')}</span></div>`,
     p=>{ picked=p; $('#pId').value=p.id; $('#pSearch').value=p.name; fillPrice(); }
   );
   $('#pSearch').addEventListener('focus', e=>showProducts(e.target.value));
@@ -757,7 +869,9 @@ function bindNewOrder(){
     const open=$('#newPrBox').classList.toggle('open');
     $('#togNewPr').classList.toggle('on', open);
     if(open) closePanels('newPrBox');
+    bindUnitSelects($('#newPrBox'));
   };
+  bindUnitSelects($('#newPrBox'));
   $('#saveNewCus').onclick=()=>{
     const name=$('#ncName').value.trim(), phone=$('#ncPhone').value.trim();
     if(!name||!phone){ toast('نام و شماره تماس مشتری لازم است',false); return; }
@@ -773,7 +887,7 @@ function bindNewOrder(){
     const cost=num($('#npCost').value);
     if(!name){ toast('نام محصول لازم است',false); return; }
     if(!cost){ toast('قیمت تمام‌شده را وارد کنید',false); return; }
-    const rec=snapshotProduct({id:uid('prd'),code:'P'+Date.now().toString().slice(-6),name,category:APP.CATEGORY,unit:'عدد',notes:'',deleted:'0'}, cost, cost);
+    const rec=snapshotProduct({id:uid('prd'),code:'P'+Date.now().toString().slice(-6),name,category:APP.CATEGORY,unit:readUnit('#npUnit','عدد'),notes:'',deleted:'0'}, cost, cost);
     upsertLocal('products',rec);
     picked=rec;
     $('#pId').value=rec.id;
@@ -799,12 +913,12 @@ function bindNewOrder(){
     if(!picked){ toast('ابتدا محصول را انتخاب کنید',false); return; }
     const qty=Math.max(1,num($('#pQty').value));
     const decided=await resolveSalePrice(picked, $('#pPrice').value);
-    const unit=decided.price;
+    const price=decided.price;
     const mc=decided.cost;
-    const sale=qty*unit;
+    const sale=qty*price;
     draft.items.push({
       id:uid('oit'), productId:picked.id, productCode:picked.code, productName:picked.name,
-      qty, producedQty:0, priceTier:'', unitPrice:unit,
+      qty, producedQty:0, priceTier:'', unitPrice:price, unit:picked.unit||'عدد',
       materialCost:mc, saleAmount:sale, profit:sale-mc*qty
     });
     grabDraft(); render();
@@ -871,7 +985,7 @@ async function saveDraft(openInv){
   draft=null;
   toast('سفارش ذخیره شد');
   flush();
-  if(openInv) showInvoice(savedId);
+    if(openInv) showInvoice(savedId);
   else go('order', savedId);
 }
 
@@ -963,8 +1077,8 @@ function bindOrder(o){
     if(s>=4 && o.status!=='تسویه شده') o.status='تحویل داده شده';
     upsertLocal('orders',o); toast('مرحله سفارش به‌روز شد'); render();
   });
-  $('#trk').onchange=()=>{ o.trackingCode=$('#trk').value.trim(); upsertLocal('orders',o); };
-  $('#addToOrder').onclick=()=>openAddProduct(o);
+  if($('#trk')) $('#trk').onchange=()=>{ o.trackingCode=$('#trk').value.trim(); upsertLocal('orders',o); };
+  if($('#addToOrder')) $('#addToOrder').onclick=()=>openAddProduct(o);
 }
 
 function bindProductMats(){
@@ -987,8 +1101,23 @@ function bindProductMats(){
   recost();
 }
 function bindFormulaLive(){
+  const recost=()=>{
+    let cost=0;
+    $$('#matList [data-mid]').forEach(cb=>{
+      if(!cb.checked) return;
+      const m=byId(DB.materials,cb.dataset.mid);
+      const q=num(($(`[data-mqty="${cb.dataset.mid}"]`)||{}).value);
+      cost += num(m&&m.unitCost)*q;
+    });
+    const p=byId(DB.products, $('#bomP')&&$('#bomP').value);
+    const sale=productSale(p);
+    const pct=cost>0?((sale-cost)/cost)*100:0;
+    if($('#bomCost')) $('#bomCost').textContent=money(cost);
+    if($('#bomSale')) $('#bomSale').textContent=money(sale);
+    if($('#bomPct')) $('#bomPct').textContent=pctTxt(pct);
+  };
   const fillBom=()=>{
-    const pid=$('#bomP').value;
+    const pid=$('#bomP')&&$('#bomP').value;
     const bom=alive(DB.productMaterials).filter(b=>b.productId===pid);
     $$('#matList [data-mid]').forEach(cb=>{
       const row=bom.find(b=>b.materialId===cb.dataset.mid);
@@ -998,26 +1127,8 @@ function bindFormulaLive(){
     });
     recost();
   };
-  const recost=()=>{
-    let cost=0;
-    $$('#matList [data-mid]').forEach(cb=>{
-      if(!cb.checked) return;
-      const m=byId(DB.materials,cb.dataset.mid);
-      const q=num(($(`[data-mqty="${cb.dataset.mid}"]`)||{}).value);
-      cost += num(m&&m.unitCost)*q;
-    });
-    const p=byId(DB.products, $('#bomP').value);
-    const sale=productSale(p);
-    const pct=cost>0?((sale-cost)/cost)*100:0;
-    if($('#bomCost')) $('#bomCost').textContent=money(cost);
-    if($('#bomSale')) $('#bomSale').textContent=money(sale);
-    if($('#bomPct')) $('#bomPct').textContent=pctTxt(pct);
-  };
   if($('#bomP')) $('#bomP').onchange=fillBom;
-  if($('#matList')){
-    $('#matList').oninput=recost;
-    $('#matList').onchange=recost;
-  }
+  if($('#matList')){ $('#matList').oninput=recost; $('#matList').onchange=recost; }
   recost();
 }
 function openAddProduct(o){
@@ -1038,7 +1149,7 @@ function openAddProduct(o){
       $('#apq').value=picked.name;
       $('#app').value=productSale(picked);
       const c=productCost(picked);
-      $('#apMeta').innerHTML=`قیمت تمام‌شده: <b>${money(c)}</b> — درصد سود: <b>${pctTxt(productProfitPct(picked,c))}</b>`;
+      $('#apMeta').innerHTML=`واحد: <b>${esc(picked.unit||'عدد')}</b> — قیمت تمام‌شده: <b>${money(c)}</b> — درصد سود: <b>${pctTxt(productProfitPct(picked,c))}</b>`;
       s.classList.remove('open');
     });
   };
@@ -1048,7 +1159,7 @@ function openAddProduct(o){
     const qty=Math.max(1,num($('#apn').value));
     const decided=await resolveSalePrice(picked, $('#app').value);
     const unit=decided.price, mc=decided.cost;
-    upsertLocal('orderItems',{id:uid('oit'),orderId:o.id,productId:picked.id,productCode:picked.code,productName:picked.name,qty,producedQty:0,priceTier:'',unitPrice:unit,materialCost:mc,saleAmount:qty*unit,profit:qty*unit-mc*qty,deleted:'0'});
+    upsertLocal('orderItems',{id:uid('oit'),orderId:o.id,productId:picked.id,productCode:picked.code,productName:picked.name,qty,producedQty:0,priceTier:'',unitPrice:unit,unit:picked.unit||'عدد',materialCost:mc,saleAmount:qty*unit,profit:qty*unit-mc*qty,deleted:'0'});
     refreshOrderTotals(o); upsertLocal('orders',o); box.className='modal-bg'; render();
   };
 }
@@ -1105,6 +1216,391 @@ function viewCustomer(id){
   <div class="card" style="margin-top:12px"><h3>تاریخچه پرداختی‌ها</h3><div class="table-wrap"><table><thead><tr><th>تاریخ</th><th>مبلغ</th><th>روش</th><th>توضیح</th><th></th></tr></thead><tbody>${prows}</tbody></table></div></div>`;
 }
 
+function priceChangeConfirm(info){
+  return new Promise(res=>{
+    const m=$('#modal');
+    m.className='modal-bg show';
+    const diff=num(info.newPrice)-num(info.oldPrice);
+    m.innerHTML=`<div class="modal">
+      <h3 style="margin:0 0 8px">تغییر قیمت «${esc(info.name)}»</h3>
+      <div class="stats">
+        <dی می‌شود.</p>
+      <div class="row-actions" style="justify-content:flex-end;margin-top:14px">
+        <button class="btn btn-g" id="pcNo">انصراف</button>
+        <button class="btn btn-p" id="pcYes">تأیید و جایگزینی</button>
+      </div>
+    </div>`;
+    $('#pcNo').onclick=()=>{m.className='modal-bg';res(false)};
+    $('#pcYes').onclick=()=>{m.className='modal-bg';res(true)};
+  });
+}
+const BASE_UNITS=['عدد','کیلوگرم','گرم','متر','سانتی‌متر','لیتر','بسته','کارتن','جفت','رول','ورق','متر مربع','دست','شانه','جعبه'];
+function parseJsonArr(raw){
+  try{ const v=JSON.parse(raw||'[]'); return Array.isArray(v)?v:[]; }catch(e){ return []; }
+}
+function normalizeSvcList(arr){
+  if(!Array.isArray(arr)) return [];
+  return arr.map(x=>{
+    if(typeof x==='string') return {name:String(x).trim(), unit:'عدد'};
+    return {name:String(x&&x.name||'').trim(), unit:String(x&&x.unit||'عدد').trim()||'عدد'};
+  }).filter(x=>x.name);
+}
+function mergeSvcLists(a,b){
+  const map=new Map();
+  [...normalizeSvcList(a), ...normalizeSvcList(b)].forEach(s=>{
+    const prev=map.get(s.name);
+    if(!prev || (s.unit && s.unit!=='عدد')) map.set(s.name,s);
+    else if(!map.has(s.name)) map.set(s.name,s);
+  });
+  return [...map.values()];
+}
+function serviceCatalog(){
+  const map=new Map();
+  normalizeSvcList(parseJsonArr(DB.settings.serviceNames)).forEach(s=>map.set(s.name,s));
+  alive(DB.purchases).filter(p=>p.kind==='service').forEach(p=>{
+    const name=String(p.title||'').trim();
+    if(!name) return;
+    const unit=String(p.unit||'').trim();
+    const prev=map.get(name);
+    if(!prev) map.set(name,{name, unit:unit||'عدد'});
+    else if(unit) map.set(name,{name, unit});
+  });
+  return [...map.values()].sort((a,b)=>a.name.localeCompare(b.name,'fa'));
+}
+function addServiceToCatalog(name, unit){
+  name=String(name||'').trim();
+  if(!name) return '';
+  if(!name.startsWith('خدمات')) name='خدمات '+name;
+  unit=rememberUnit(unit||'عدد');
+  const list=normalizeSvcList(parseJsonArr(DB.settings.serviceNames));
+  const i=list.findIndex(x=>x.name===name);
+  if(i>=0){ if(unit) list[i].unit=unit; }
+  else list.push({name, unit});
+  DB.settings.serviceNames=JSON.stringify(list);
+  settingsDirty=true;
+  persistLocal();
+  return name;
+}
+function knownUnits(){
+  const extra=parseJsonArr(DB.settings.unitNames).map(s=>String(s||'').trim());
+  const fromItems=[
+    ...alive(DB.materials).map(m=>m.unit),
+    ...alive(DB.products).map(p=>p.unit),
+    ...alive(DB.purchases).map(p=>p.unit),
+    ...serviceCatalog().map(s=>s.unit)
+  ].map(s=>String(s||'').trim());
+  const all=[...new Set([...BASE_UNITS, ...extra, ...fromItems].filter(Boolean))];
+  all.sort((a,b)=>{
+    if(a==='عدد') return -1;
+    if(b==='عدد') return 1;
+    return a.localeCompare(b,'fa');
+  });
+  return all;
+}
+function rememberUnit(u){
+  u=String(u||'').trim();
+  if(!u || u==='__new__') return 'عدد';
+  const extra=parseJsonArr(DB.settings.unitNames);
+  if(!BASE_UNITS.includes(u) && !extra.includes(u)){
+    extra.push(u);
+    DB.settings.unitNames=JSON.stringify(extra);
+    settingsDirty=true;
+    persistLocal();
+  }
+  return u;
+}
+function unitSelectHTML(id, selected){
+  const cur=String(selected||'عدد').trim()||'عدد';
+  const units=knownUnits();
+  if(cur && !units.includes(cur)) units.unshift(cur);
+  const opts=units.map(u=>`<option value="${esc(u)}" ${u===cur?'selected':''}>${esc(u)}</option>`).join('');
+  return `<select class="inp" id="${id}" data-unit-sel="1">${opts}<option value="__new__">＋ واحد جدید…</option></select>`;
+}
+function bindUnitSelects(root){
+  $$('[data-unit-sel]', root||document).forEach(sel=>{
+    if(sel.dataset.bound==='1') return;
+    sel.dataset.bound='1';
+    sel.addEventListener('change', ()=>{
+      if(sel.value!=='__new__'){ rememberUnit(sel.value); return; }
+      const wrap=sel.closest('.field')||sel.parentElement;
+      let extra=wrap.querySelector('.unit-new');
+      if(!extra){
+        extra=document.createElement('input');
+        extra.className='inp unit-new';
+        extra.setAttribute('autocomplete','off');
+        extra.placeholder='نام واحد را بنویسید';
+        wrap.appendChild(extra);
+      }
+      extra.value='';
+      extra.focus();
+      const commit=()=>{
+        const u=(extra.value||'').trim();
+        if(extra.parentNode) extra.remove();
+        if(!u){ sel.value='عدد'; return; }
+        rememberUnit(u);
+        if(![...sel.options].some(o=>o.value===u)){
+          const opt=document.createElement('option');
+          opt.value=u; opt.textContent=u;
+          const last=[...sel.options].find(o=>o.value==='__new__');
+          sel.insertBefore(opt, last||null);
+        }
+        sel.value=u;
+      };
+      extra.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); commit(); } };
+      extra.onblur=()=>setTimeout(commit, 120);
+    });
+  });
+}
+function readUnit(id, fallback){
+  const el=$(id);
+  let u=el ? String(el.value||'').trim() : '';
+  if(!u || u==='__new__'){
+    const extra=el && el.closest('.field') && el.closest('.field').querySelector('.unit-new');
+    u=extra ? String(extra.value||'').trim() : '';
+  }
+  return rememberUnit(u||fallback||'عدد');
+}
+function setUnitSelect(id, unit){
+  const sel=$(id); if(!sel) return;
+  const u=rememberUnit(unit||'عدد');
+  if(![...sel.options].some(o=>o.value===u)){
+    const opt=document.createElement('option');
+    opt.value=u; opt.textContent=u;
+    const last=[...sel.options].find(o=>o.value==='__new__');
+    sel.insertBefore(opt, last||null);
+  }
+  sel.value=u;
+}
+function fillSugList(el, items, onPick){
+  if(!el) return;
+  if(!items.length){
+    el.innerHTML='<div class="sug-empty">موردی در فهرست نیست — با ＋ اضافه کنید</div>';
+  }else{
+    el.innerHTML=items.map((it,i)=>`<div data-i="${i}">${esc(it.label)}</div>`).join('');
+    el.querySelectorAll('div[data-i]').forEach(d=>{
+      d.onclick=()=>{ onPick(items[Number(d.dataset.i)]); el.classList.remove('open'); };
+    });
+  }
+  el.classList.add('open');
+}
+function viewPurchases(){
+  const rows=alive(DB.purchases).slice().sort((a,b)=>String(b.dateGregorian||b.createdAt).localeCompare(String(a.dateGregorian||a.createdAt)))
+    .map(p=>`<tr>
+      <td>${esc(p.dateShamsi||'')}</td>
+      <td>${p.kind==='service'?'<span class="badge w">خدمات</span>':'<span class="badge">خرید کالا</span>'}</td>
+      <td>${esc(p.title)}</td>
+      <td>${p.qty||'—'} ${esc(p.unit||'')}</td>
+      <td>${money(p.unitPrice)}</td>
+      <td>${money(p.totalAmount)}</td>
+      <td><button class="btn btn-d" data-del-buy="${p.id}">حذف</button></td>
+    </tr>`).join('') || '<tr><td colspan="7" class="empty">خرید یا پرداختی ثبت نشده.</td></tr>';
+  const sum=alive(DB.purchases).reduce((s,p)=>s+num(p.totalAmount),0);
+  return `<div class="page-head"><h1>خرید و پرداختی‌ها</h1><button class="btn btn-g" data-go="dashboard">بازگشت</button></div>
+  <div class="stats">
+    <div class="stat"><span>مجموع هزینه‌ها</span><b>${money(sum)}</b></div>
+    <div class="stat"><span>تعداد سند</span><b>${alive(DB.purchases).length}</b></div>
+  </div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>خرید مواد / کالا</h3>
+      <p class="muted">از منوی همبرگر کالا را انتخاب کنید. اگر در فهرست نبود، با ＋ اضافه کنید. تعداد و مبلغ کل، قیمت هر واحد را می‌سازد.</p>
+      <div class="pick-bar">
+        <button type="button" class="cust-ico" id="buyMenu" title="فهرست کالاها">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <div class="field search grow" style="margin:0">
+          <label>نام کالا</label>
+          <input class="inp" id="buyName" placeholder="از فهرست انتخاب کنید" autocomplete="off" readonly>
+          <div class="sug" id="buyMatSug"></div>
+        </div>
+        <button type="button" class="cust-ico" id="togNewMat" title="کالای جدید">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+      <div class="cust-box" id="newMatBox">
+        <div class="grid-2">
+          <div class="field"><label>نام کالای جدید</label><input class="inp" id="nmName" autocomplete="off"></div>
+          <div class="field"><label>واحد</label>${unitSelectHTML('nmUnit','عدد')}</div>
+        </div>
+        <button class="btn btn-p" id="saveNewMatQuick">افزودن به فهرست</button>
+      </div>
+      <div class="grid-3">
+        <div class="field"><label>واحد</label>${unitSelectHTML('buyUnit','عدد')}</div>
+        <div class="field"><label>تعداد</label><input class="inp" id="buyQty" type="number" min="0" step="0.01"></div>
+        <div class="field"><label>مبلغ کل خرید</label><input class="inp" id="buyTotal" type="number"></div>
+      </div>
+      <p class="pmeta" id="buyUnitLive">قیمت هر واحد: —</p>
+      <button class="btn btn-p" id="saveBuyMat">ثبت خرید کالا</button>
+    </div>
+    <div class="card">
+      <h3>پرداخت بابت خدمات</h3>
+      <p class="muted">خدمت را از منوی همبرگر انتخاب کنید. اگر در فهرست نبود، با ＋ عنوان جدید بسازید.</p>
+      <div class="pick-bar">
+        <button type="button" class="cust-ico" id="svcMenu" title="فهرست خدمات">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+        <div class="field search grow" style="margin:0">
+          <label>عنوان خدمت</label>
+          <input class="inp" id="svcTitle" placeholder="از فهرست انتخاب کنید" autocomplete="off" readonly>
+          <div class="sug" id="svcSug"></div>
+        </div>
+        <button type="button" class="cust-ico" id="togNewSvc" title="خدمت جدید">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+      <div class="cust-box" id="newSvcBox">
+        <div class="grid-2">
+          <div class="field"><label>عنوان خدمت جدید</label><input class="inp" id="nsTitle" autocomplete="off"></div>
+          <div class="field"><label>واحد</label>${unitSelectHTML('nsUnit','عدد')}</div>
+        </div>
+        <button class="btn btn-p" id="saveNewSvcQuick">افزودن به فهرست</button>
+      </div>
+      <div class="grid-3">
+        <div class="field"><label>واحد</label>${unitSelectHTML('svcUnit','عدد')}</div>
+        <div class="field"><label>تعداد</label><input class="inp" id="svcQty" type="number" min="0" step="0.01"></div>
+        <div class="field"><label>مبلغ کل</label><input class="inp" id="svcTotal" type="number"></div>
+      </div>
+      <p class="pmeta" id="svcUnitLive">قیمت هر واحد: —</p>
+      <button class="btn btn-p" id="saveBuySvc">ثبت پرداخت خدمات</button>
+    </div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <h3>سوابق خرید و پرداخت</h3>
+    <div class="table-wrap"><table><thead><tr><th>تاریخ</th><th>نوع</th><th>شرح</th><th>تعداد</th><th>فی</th><th>مبلغ کل</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
+  </div>`;
+}
+function bindPurchases(){
+  bindUnitSelects($('#view'));
+  const live=(q,t,el)=>{
+    const qty=num(q&&q.value), tot=num(t&&t.value);
+    if(el) el.textContent = (qty>0 && tot>0) ? ('قیمت هر واحد: '+money(tot/qty)) : 'قیمت هر واحد: —';
+  };
+  if($('#buyQty')) $('#buyQty').oninput=$('#buyTotal').oninput=()=>live($('#buyQty'),$('#buyTotal'),$('#buyUnitLive'));
+  if($('#svcQty')) $('#svcQty').oninput=$('#svcTotal').oninput=()=>live($('#svcQty'),$('#svcTotal'),$('#svcUnitLive'));
+  const matItems=()=>alive(DB.materials).map(m=>({
+    label: m.name+(m.unit?' — '+m.unit:''),
+    name:m.name, unit:m.unit||'عدد', id:m.id
+  }));
+  const svcItems=()=>serviceCatalog().map(t=>({label:t.name+(t.unit?' — '+t.unit:''), name:t.name, unit:t.unit||'عدد'}));
+  const pickMat=it=>{
+    if($('#buyName')) $('#buyName').value=it.name;
+    if(it.unit) setUnitSelect('#buyUnit', it.unit);
+  };
+  const pickSvc=it=>{
+    if($('#svcTitle')) $('#svcTitle').value=it.name;
+    if(it.unit) setUnitSelect('#svcUnit', it.unit);
+  };
+  const openMats=()=>fillSugList($('#buyMatSug'), matItems(), pickMat);
+  const openSvcs=()=>fillSugList($('#svcSug'), svcItems(), pickSvc);
+  if($('#buyMenu')) $('#buyMenu').onclick=e=>{
+    e.preventDefault(); e.stopPropagation();
+    const el=$('#buyMatSug');
+    if(el && el.classList.contains('open')) el.classList.remove('open');
+    else openMats();
+    const s=$('#svcSug'); if(s) s.classList.remove('open');
+  };
+  if($('#svcMenu')) $('#svcMenu').onclick=e=>{
+    e.preventDefault(); e.stopPropagation();
+    const el=$('#svcSug');
+    if(el && el.classList.contains('open')) el.classList.remove('open');
+    else openSvcs();
+    const s=$('#buyMatSug'); if(s) s.classList.remove('open');
+  };
+  if($('#buyName')) $('#buyName').onclick=e=>{ e.stopPropagation(); openMats(); };
+  if($('#svcTitle')) $('#svcTitle').onclick=e=>{ e.stopPropagation(); openSvcs(); };
+  if($('#togNewMat')) $('#togNewMat').onclick=()=>{
+    $('#newMatBox').classList.toggle('open');
+    $('#togNewMat').classList.toggle('on');
+    if($('#buyMatSug')) $('#buyMatSug').classList.remove('open');
+    if($('#newMatBox').classList.contains('open') && $('#nmName')) $('#nmName').focus();
+  };
+  if($('#togNewSvc')) $('#togNewSvc').onclick=()=>{
+    $('#newSvcBox').classList.toggle('open');
+    $('#togNewSvc').classList.toggle('on');
+    if($('#svcSug')) $('#svcSug').classList.remove('open');
+    if($('#newSvcBox').classList.contains('open') && $('#nsTitle')) $('#nsTitle').focus();
+  };
+  if($('#saveNewMatQuick')) $('#saveNewMatQuick').onclick=()=>{
+    const name=($('#nmName').value||'').trim();
+    const unit=readUnit('#nmUnit','عدد');
+    if(!name){ toast('نام کالا لازم است',false); return; }
+    let mat=alive(DB.materials).find(m=>String(m.name).trim()===name);
+    if(!mat){
+      mat={id:uid('mat'), name, unit, unitCost:0, notes:'', deleted:'0'};
+      upsertLocal('materials',mat);
+      flush();
+    }
+    pickMat(mat);
+    $('#newMatBox').classList.remove('open');
+    $('#togNewMat').classList.remove('on');
+    $('#nmName').value='';
+    toast('به فهرست کالاها اضافه شد');
+  };
+  if($('#saveNewSvcQuick')) $('#saveNewSvcQuick').onclick=()=>{
+    const unit=readUnit('#nsUnit','عدد');
+    const title=addServiceToCatalog($('#nsTitle').value, unit);
+    if(!title){ toast('عنوان خدمت لازم است',false); return; }
+    pickSvc({name:title, unit});
+    $('#newSvcBox').classList.remove('open');
+    $('#togNewSvc').classList.remove('on');
+    $('#nsTitle').value='';
+    flush();
+    toast('به فهرست خدمات اضافه شد');
+  };
+  const recBuy=({kind,title,materialId,qty,total,unit})=>{
+    upsertLocal('purchases',{
+      id:uid('buy'), kind, title, materialId:materialId||'', qty, totalAmount:total,
+      unitPrice: qty>0? total/qty : total, unit:unit||'عدد',
+      dateShamsi:shamsiShort(), dateGregorian:nowIso(), notes:'', deleted:'0'
+    });
+    flush();
+  };
+  if($('#saveBuyMat')) $('#saveBuyMat').onclick=async()=>{
+    const name=($('#buyName').value||'').trim();
+    const qty=num($('#buyQty').value), total=num($('#buyTotal').value), unit=readUnit('#buyUnit','عدد');
+    if(!name){ toast('نام کالا لازم است',false); return; }
+    if(!(qty>0) || !(total>0)){ toast('تعداد و مبلغ کل را وارد کنید',false); return; }
+    const unitPrice=total/qty;
+    let mat=alive(DB.materials).find(m=>String(m.name).trim()===name);
+    if(mat){
+      if(Math.abs(num(mat.unitCost)-unitPrice)>0.5){
+        const ok=await priceChangeConfirm({name, oldPrice:num(mat.unitCost), newPrice:unitPrice});
+        if(!ok) return;
+        mat.unitCost=unitPrice;
+      }
+      if(unit && mat.unit!==unit) mat.unit=unit;
+      upsertLocal('materials',mat);
+    }else{
+      mat={id:uid('mat'), name, unit, unitCost:unitPrice, notes:'خرید ثبت‌شده', deleted:'0'};
+      upsertLocal('materials',mat);
+    }
+    recBuy({kind:'material', title:name, materialId:mat.id, qty, total, unit});
+    toast('خرید کالا ثبت شد'); render();
+  };
+  if($('#saveBuySvc')) $('#saveBuySvc').onclick=async()=>{
+    let title=($('#svcTitle').value||'').trim();
+    const qty=num($('#svcQty').value), total=num($('#svcTotal').value);
+    if(!title){ toast('عنوان خدمت لازم است',false); return; }
+    if(!title.startsWith('خدمات')) title='خدمات '+title;
+    if(!(qty>0) || !(total>0)){ toast('تعداد و مبلغ کل را وارد کنید',false); return; }
+    const unitPrice=total/qty;
+    const prev=alive(DB.purchases).filter(p=>p.kind==='service' && p.title===title)
+      .sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt)))[0];
+    if(prev && Math.abs(num(prev.unitPrice)-unitPrice)>0.5){
+      const ok=await priceChangeConfirm({name:title, oldPrice:num(prev.unitPrice), newPrice:unitPrice});
+      if(!ok) return;
+    }
+    const unit=readUnit('#svcUnit', (prev&&prev.unit)||'عدد');
+    addServiceToCatalog(title, unit);
+    recBuy({kind:'service', title, qty, total, unit});
+    toast('پرداخت خدمات ثبت شد'); render();
+  };
+  $$('[data-del-buy]').forEach(b=>b.onclick=async()=>{
+    if(!await confirmBox('حذف سند','این خرید/پرداختی حذف شود؟')) return;
+    const rec=byId(DB.purchases,b.dataset.delBuy); rec.deleted='1'; upsertLocal('purchases',rec); render();
+  });
+}
+
 function periodStart(key){
   const d=new Date();
   if(key==='1W') d.setDate(d.getDate()-7);
@@ -1118,8 +1614,11 @@ function viewAccounting(){
   const from=periodStart(per).getTime();
   const orders=alive(DB.orders).filter(o=>new Date(o.dateGregorian||o.createdAt).getTime()>=from);
   const pays=alive(DB.payments).filter(p=>new Date(p.dateGregorian||p.createdAt).getTime()>=from);
+  const buys=alive(DB.purchases).filter(p=>new Date(p.dateGregorian||p.createdAt).getTime()>=from);
   const sale=orders.reduce((s,o)=>s+num(o.totalSale),0);
   const rec=pays.reduce((s,p)=>s+num(p.amount),0);
+  const expense=buys.reduce((s,p)=>s+num(p.totalAmount),0);
+  const net=rec-expense;
   let remain=0;
   alive(DB.customers).forEach(c=>{ remain += ledger(c.id).debt; });
   const tx=[
@@ -1127,7 +1626,8 @@ function viewAccounting(){
     ...pays.map(p=>{
       const c=byId(DB.customers,p.customerId);
       return {t:p.dateGregorian,d:p.dateShamsi,k:'دریافت',n:(c?c.name:'مشتری')+' — '+ (p.method||''),a:num(p.amount),id:p.id,kind:'p'};
-    })
+    }),
+    ...buys.map(p=>({t:p.dateGregorian,d:p.dateShamsi,k:p.kind==='service'?'هزینه خدمات':'خرید کالا',n:p.title,a:-num(p.totalAmount),id:p.id,kind:'b'}))
   ].sort((a,b)=>String(b.t).localeCompare(String(a.t)));
   const trows=tx.map(x=>`<tr><td>${esc(x.d)}</td><td>${esc(x.k)}</td><td>${esc(x.n)}</td><td>${money(x.a)}</td>
     <td>${x.kind==='p'?`<button class="btn btn-d" data-del-pay="${x.id}">حذف</button>`:''}</td></tr>`).join('')||'<tr><td colspan="5" class="empty">تراکنشی نیست.</td></tr>';
@@ -1140,8 +1640,9 @@ function viewAccounting(){
   <div class="stats" style="margin-top:12px">
     <div class="stat"><span>مجموع فروش</span><b>${money(sale)}</b></div>
     <div class="stat"><span>مجموع دریافتی‌ها</span><b>${money(rec)}</b></div>
+    <div class="stat"><span>خرید و هزینه‌ها</span><b>${money(expense)}</b></div>
+    <div class="stat"><span>درآمد خالص</span><b>${money(net)}</b></div>
     <div class="stat"><span>مطالبات باقی‌مانده</span><b>${money(remain)}</b></div>
-    <div class="stat"><span>تعداد تراکنش</span><b>${tx.length}</b></div>
   </div>
   <div class="card"><h3>گزارش تراکنش‌ها</h3><div class="table-wrap"><table><thead><tr><th>تاریخ</th><th>نوع</th><th>شرح</th><th>مبلغ</th><th></th></tr></thead><tbody>${trows}</tbody></table></div></div>
   <div class="card" style="margin-top:12px"><h3>پرتفوی مالی مشتریان</h3><div class="table-wrap"><table><thead><tr><th>مشتری</th><th>فروش</th><th>دریافتی</th><th>مانده</th></tr></thead><tbody>${crows}</tbody></table></div></div>`;
@@ -1174,7 +1675,7 @@ function viewProductsAdd(){
     </div>
     <div class="grid-3">
       <div class="field"><label>دسته‌بندی</label><input class="inp" id="prCat" value="${APP.CATEGORY}"></div>
-      <div class="field"><label>واحد</label><input class="inp" id="prUnit" value="عدد"></div>
+      <div class="field"><label>واحد</label>${unitSelectHTML('prUnit','عدد')}</div>
       <div class="field"><label>قیمت فروش</label><input class="inp" id="prSale" type="number"></div>
     </div>
     <div class="field"><label>انتخاب مواد اولیه</label>
@@ -1205,7 +1706,7 @@ function viewMaterials(){
   <div class="card">
     <div class="grid-3">
       <div class="field"><label>نام ماده</label><input class="inp" id="mName"></div>
-      <div class="field"><label>واحد</label><input class="inp" id="mUnit" value="عدد"></div>
+      <div class="field"><label>واحد</label>${unitSelectHTML('mUnit','عدد')}</div>
       <div class="field"><label>قیمت واحد</label><input class="inp" id="mCost" type="number"></div>
     </div>
     <button class="btn btn-p" id="saveMat">ذخیره ماده اولیه</button>
@@ -1242,72 +1743,10 @@ function viewFormula(){
   </div>`;
 }
 
-function viewSocial(){
-  const rows=alive(DB.socialOrders).sort((a,b)=>String(b.createdAt).localeCompare(String(a.createdAt))).map(s=>`
-    <tr class="clickable" data-open-soc="${s.id}">
-      <td>${esc(s.platform)}</td><td>${esc(s.recipientName)}</td><td>${esc(s.socialId||'')}</td>
-      <td>${esc(s.phone||'')}</td><td><span class="badge">${socialStage(s.stage)}</span></td>
-      <td><button class="btn btn-d" data-del-soc="${s.id}">حذف</button></td>
-    </tr>`).join('')||'<tr><td colspan="6" class="empty">سفارش سوشالی نیست.</td></tr>';
-  return `<div class="page-head"><h1>سفارش‌های سوشال مدیا</h1><div class="row-actions"><button class="btn btn-p" data-go="social-new">سفارش جدید سوشال</button><button class="btn btn-g" data-go="dashboard">بازگشت</button></div></div>
-  <p class="muted">این بخش کاملاً مستقل است و وارد مشتریان، سفارش‌های اصلی یا حسابداری نمی‌شود.</p>
-  <div class="card"><div class="table-wrap"><table><thead><tr><th>پلتفرم</th><th>گیرنده</th><th>آی‌دی</th><th>تماس</th><th>مرحله</th><th></th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
-}
-
-function viewSocialForm(id){
-  const s = id ? byId(DB.socialOrders,id) : {
-    id:uid('soc'), platform:'تلگرام', recipientName:'', socialId:'', phone:'', address:'', postalCode:'',
-    shippingMethod:'پست پیشتاز', shippingCost:0, paymentsJson:'[]', itemsJson:'[]', stage:1, trackingCode:'', notes:'', deleted:'0'
-  };
-  const items=JSON.parse(s.itemsJson||'[]');
-  const pays=JSON.parse(s.paymentsJson||'[]');
-  return `<div class="page-head"><h1>${id?'پرتفوی سوشال':'سفارش سوشال جدید'}</h1><button class="btn btn-g" data-go="social">بازگشت</button></div>
-  <div class="card">
-    <div class="grid-3">
-      <div class="field"><label>پلتفرم</label><select class="inp" id="sp"><option ${s.platform==='تلگرام'?'selected':''}>تلگرام</option><option ${s.platform==='اینستاگرام'?'selected':''}>اینستاگرام</option><option ${s.platform==='متفرقه'?'selected':''}>متفرقه</option></select></div>
-      <div class="field"><label>نام گیرنده</label><input class="inp" id="sr" value="${esc(s.recipientName)}"></div>
-      <div class="field"><label>آی‌دی</label><input class="inp" id="sid" value="${esc(s.socialId)}"></div>
-      <div class="field"><label>شماره تماس</label><input class="inp" id="sph" value="${esc(s.phone)}"></div>
-      <div class="field"><label>کد پستی</label><input class="inp" id="spo" value="${esc(s.postalCode)}"></div>
-      <div class="field"><label>نحوه ارسال</label><input class="inp" id="ssm" value="${esc(s.shippingMethod)}"></div>
-    </div>
-    <div class="field"><label>آدرس</label><textarea class="inp" id="sa" rows="2">${esc(s.address)}</textarea></div>
-    <div class="grid-2">
-      <div class="field"><label>هزینه پست</label><input class="inp" id="ssc" type="number" value="${num(s.shippingCost)}"></div>
-      <div class="field"><label>توضیحات</label><input class="inp" id="snt" value="${esc(s.notes)}"></div>
-    </div>
-    <h3>اقلام</h3>
-    <div id="sit">${items.map((it,i)=>`<div class="grid-3"><input class="inp si-n" placeholder="نام" value="${esc(it.name)}"><input class="inp si-q" type="number" value="${it.qty||1}"><input class="inp si-p" placeholder="توضیح" value="${esc(it.note||'')}"></div>`).join('')}
-      <div class="grid-3"><input class="inp si-n" placeholder="نام کالا"><input class="inp si-q" type="number" value="1"><input class="inp si-p" placeholder="توضیح"></div>
-    </div>
-    <h3 style="margin-top:12px">پرداختی‌ها (فقط همین بخش)</h3>
-    <div id="spt">${pays.map(p=>`<div class="grid-2"><input class="inp sp-a" type="number" value="${p.amount||0}"><input class="inp sp-n" value="${esc(p.note||'')}"></div>`).join('')}
-      <div class="grid-2"><input class="inp sp-a" type="number" placeholder="مبلغ"><input class="inp sp-n" placeholder="شرح پرداخت"></div>
-    </div>
-    ${id?`<div class="filters" style="margin:12px 0">${[1,2,3,4,5].map(n=>`<button class="chip ${Number(s.stage)===n?'on':''}" data-sst="${n}">${n}. ${socialStage(n)}</button>`).join('')}</div>
-    <div class="field" style="max-width:280px"><label>کد پیگیری ارسال</label><input class="inp" id="strk" value="${esc(s.trackingCode||'')}"></div>`:''}
-    <div class="row-actions"><button class="btn btn-p" id="saveSoc">ذخیره</button></div>
-  </div>`;
-}
-
-function collectSocial(existing){
-  const items=$$('.si-n').map((n,i)=>({name:n.value.trim(), qty:num($$('.si-q')[i].value), note:($$('.si-p')[i]||{}).value||''})).filter(x=>x.name);
-  const pays=$$('.sp-a').map((a,i)=>({amount:num(a.value), note:($$('.sp-n')[i]||{}).value||''})).filter(x=>x.amount);
-  const rec=Object.assign({},existing,{
-    platform:$('#sp').value, recipientName:$('#sr').value.trim(), socialId:$('#sid').value.trim(),
-    phone:$('#sph').value.trim(), postalCode:$('#spo').value.trim(), shippingMethod:$('#ssm').value.trim(),
-    address:$('#sa').value.trim(), shippingCost:num($('#ssc').value), notes:$('#snt').value.trim(),
-    itemsJson:JSON.stringify(items), paymentsJson:JSON.stringify(pays), deleted:'0'
-  });
-  if($('#strk')) rec.trackingCode=$('#strk').value.trim();
-  return rec;
-}
-
 function prevDebt(order){
   if(!order.customerId) return 0;
   return ledger(order.customerId).orders.filter(r=>r.order.id!==order.id).reduce((s,r)=>s+r.bal,0);
 }
-
 function invoiceHead(order, pageNo){
   return `<div class="inv-head">
     <div class="inv-meta">تاریخ: ${faDigits(order.dateShamsi||'')}<br>شماره سریال: ${faDigits(order.invoiceNo||'')}${pageNo>1?'<br>صفحه '+faDigits(pageNo):''}</div>
@@ -1412,7 +1851,6 @@ function showInvoice(orderId){
   };
   $('#dlZip').onclick=()=>downloadZip(o,'invoice');
 }
-
 function operatorHTML(o){
   const items=orderItems(o.id);
   const rows=items.map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.productCode)}</td><td>${esc(it.productName)}</td><td>${it.qty}</td><td>${it.producedQty||0}</td><td>${Math.max(0,num(it.qty)-num(it.producedQty||0))}</td></tr>`).join('');
@@ -1432,7 +1870,6 @@ function showOperator(id){
   $('#print-root').innerHTML=operatorHTML(o);
   $('#dlOp').onclick=()=>downloadZip(o,'operator');
 }
-
 async function downloadZip(order, kind){
   if(!window.html2canvas || !window.JSZip){ toast('کتابخانه دانلود در دسترس نیست',false); return; }
   const html = kind==='operator' ? operatorHTML(order) : invoicePagesHTML(order);
@@ -1471,18 +1908,18 @@ function render(){
   else if(route.page==='customers') v.innerHTML=viewCustomers();
   else if(route.page==='customer') v.innerHTML=viewCustomer(route.id);
   else if(route.page==='accounting') v.innerHTML=viewAccounting();
+  else if(route.page==='purchases'){ v.innerHTML=viewPurchases(); bindPurchases(); }
   else if(route.page==='products') v.innerHTML=viewProducts();
   else if(route.page==='products-add') v.innerHTML=viewProductsAdd();
   else if(route.page==='materials') v.innerHTML=viewMaterials();
   else if(route.page==='formula') v.innerHTML=viewFormula();
-  else if(route.page==='social') v.innerHTML=viewSocial();
-  else if(route.page==='social-new') v.innerHTML=viewSocialForm(null);
-  else if(route.page==='social-detail') v.innerHTML=viewSocialForm(route.id);
   bindGlobal();
   renderStatus();
+  if(typeof syncMobNav==='function') syncMobNav();
 }
 
 function bindGlobal(){
+  bindUnitSelects($('#view'));
   $$('#view [data-go]').forEach(el=>el.addEventListener('click',e=>{
     e.preventDefault();
     go(el.dataset.go, el.dataset.id);
@@ -1498,14 +1935,8 @@ function bindGlobal(){
   });
   $$('[data-inv]').forEach(b=>b.onclick=()=>showInvoice(b.dataset.inv));
   $$('[data-op]').forEach(b=>b.onclick=()=>showOperator(b.dataset.op));
-  const tog=$('#togCus'); if(tog) tog.onclick=()=>$('#cusForm').classList.toggle('open');
   const cf=$('#cusAddForm');
   if(cf) cf.onsubmit=e=>{
-    e.preventDefault();
-    const c=addCustomer($('#nName')&&$('#nName').value, $('#nPhone')&&$('#nPhone').value, $('#nAddr')&&$('#nAddr').value);
-    if(c) render();
-  };
-  const sc=$('#saveCus'); if(sc) sc.onclick=e=>{
     e.preventDefault();
     const c=addCustomer($('#nName')&&$('#nName').value, $('#nPhone')&&$('#nPhone').value, $('#nAddr')&&$('#nAddr').value);
     if(c) render();
@@ -1531,7 +1962,7 @@ function bindGlobal(){
   const sp=$('#savePay'); if(sp) sp.onclick=()=>{
     const amt=num($('#payAmt').value); if(!amt){ toast('مبلغ را وارد کنید',false); return; }
     upsertLocal('payments',{id:uid('pay'),customerId:route.id,orderId:'',amount:amt,method:$('#payMet').value,dateShamsi:$('#payDate').value,dateGregorian:parseShamsi($('#payDate').value).toISOString(),notes:$('#payNote').value,deleted:'0'});
-    applySettleFlags(route.id); toast('پرداخت ثبت شد و روی فاکتورهای قدیمی‌تر اعمال گردید'); render();
+    applySettleFlags(route.id); toast('پرداخت ثبت شد'); render();
   };
   $$('[data-del-pay]').forEach(b=>b.onclick=async()=>{
     if(!await confirmBox('حذف تراکنش','این پرداختی حذف شود؟')) return;
@@ -1540,17 +1971,28 @@ function bindGlobal(){
     render();
   });
   $$('[data-per]').forEach(b=>b.onclick=()=>{ window._accPer=b.dataset.per; render(); });
+  if($('#prMatList')) bindProductMats();
   const spr=$('#savePr'); if(spr) spr.onclick=()=>{
     const code=$('#prCode').value.trim(), name=$('#prName').value.trim();
     if(!code||!name){ toast('کد و نام لازم است',false); return; }
-    const sale=num($('#prSale').value), cost=num($('#prMc').value);
-    const rec=snapshotProduct({id:uid('prd'),code,name,category:$('#prCat').value.trim()||APP.CATEGORY,unit:$('#prUnit').value.trim()||'عدد',notes:'',deleted:'0'}, sale||cost, cost);
+    const selected=[];
+    $$('#prMatList [data-pmid]').forEach(cb=>{
+      if(!cb.checked) return;
+      const qty=Math.max(0,num(($(`[data-pmqty="${cb.dataset.pmid}"]`)||{}).value));
+      if(qty>0) selected.push({materialId:cb.dataset.pmid, qty});
+    });
+    let cost=0;
+    selected.forEach(s=>{ const m=byId(DB.materials,s.materialId); cost += num(m&&m.unitCost)*s.qty; });
+    if(!cost) cost=num($('#prMc').value);
+    const sale=num($('#prSale').value);
+    const rec=snapshotProduct({id:uid('prd'),code,name,category:$('#prCat').value.trim()||APP.CATEGORY,unit:readUnit('#prUnit','عدد'),notes:'',deleted:'0'}, sale||cost, cost);
     upsertLocal('products',rec);
+    selected.forEach(s=>upsertLocal('productMaterials',{id:uid('bom'),productId:rec.id,materialId:s.materialId,qty:s.qty,deleted:'0'}));
     toast('محصول ذخیره شد'); render();
   };
   const sm=$('#saveMat'); if(sm) sm.onclick=()=>{
     const name=$('#mName').value.trim(); if(!name){ toast('نام ماده لازم است',false); return; }
-    upsertLocal('materials',{id:uid('mat'),name,unit:$('#mUnit').value.trim()||'عدد',unitCost:num($('#mCost').value),notes:'',deleted:'0'});
+    upsertLocal('materials',{id:uid('mat'),name,unit:readUnit('#mUnit','عدد'),unitCost:num($('#mCost').value),notes:'',deleted:'0'});
     toast('ماده اولیه ذخیره شد'); render();
   };
   if($('#matList')) bindFormulaLive();
@@ -1576,10 +2018,6 @@ function bindGlobal(){
     if(prod){ snapshotProduct(prod, productSale(prod), productCost(prod)); upsertLocal('products',prod); }
     toast('فرمول ذخیره شد'); render();
   };
-  $$('[data-del-bom]').forEach(b=>b.onclick=async()=>{
-    if(!await confirmBox('حذف فرمول','این ماده از محصول جدا شود؟')) return;
-    const rec=byId(DB.productMaterials,b.dataset.delBom); rec.deleted='1'; upsertLocal('productMaterials',rec); render();
-  });
   $$('[data-del-pr]').forEach(b=>b.onclick=async()=>{
     if(!await confirmBox('حذف محصول','محصول حذف شود؟')) return;
     const p=byId(DB.products,b.dataset.delPr); p.deleted='1'; upsertLocal('products',p); render();
@@ -1590,13 +2028,15 @@ function bindGlobal(){
     const m=$('#modal'); m.className='modal-bg show';
     m.innerHTML=`<div class="modal"><h3>ویرایش محصول</h3>
       <div class="grid-2"><div class="field"><label>کد</label><input class="inp" id="xC" value="${esc(p.code)}"></div><div class="field"><label>نام</label><input class="inp" id="xN" value="${esc(p.name)}"></div></div>
+      <div class="field"><label>واحد</label>${unitSelectHTML('xU', p.unit||'عدد')}</div>
       <div class="field"><label>قیمت فروش</label><input class="inp" id="xS" type="number" value="${sale}"></div>
-      <div class="field"><label>هزینه مواد (دستی، اگر فرمول نباشد)</label><input class="inp" id="xM" type="number" value="${num(p.materialCost)}"></div>
-      <p class="pmeta">قیمت تمام‌شده فعلی از فرمول: <b>${money(cost)}</b> — درصد سود: <b>${pctTxt(productProfitPct(p,cost))}</b></p>
+      <div class="field"><label>هزینه مواد (دستی)</label><input class="inp" id="xM" type="number" value="${num(p.materialCost)}"></div>
+      <p class="pmeta">قیمت تمام‌شده از فرمول: <b>${money(cost)}</b> — درصد سود: <b>${pctTxt(productProfitPct(p,cost))}</b></p>
       <div class="row-actions"><button class="btn btn-g" id="xx">بستن</button><button class="btn btn-p" id="xs">ذخیره</button></div></div>`;
+    bindUnitSelects(m);
     $('#xx').onclick=()=>m.className='modal-bg';
     $('#xs').onclick=()=>{
-      p.code=$('#xC').value; p.name=$('#xN').value;
+      p.code=$('#xC').value; p.name=$('#xN').value; p.unit=readUnit('#xU', p.unit||'عدد');
       const bomCost=productCost(p);
       snapshotProduct(p, num($('#xS').value), bomCost>0?bomCost:num($('#xM').value));
       upsertLocal('products',p); m.className='modal-bg'; render();
@@ -1611,38 +2051,29 @@ function bindGlobal(){
     const m=$('#modal'); m.className='modal-bg show';
     m.innerHTML=`<div class="modal"><h3>ویرایش ماده</h3>
       <div class="field"><label>نام</label><input class="inp" id="mn" value="${esc(mat.name)}"></div>
+      <div class="field"><label>واحد</label>${unitSelectHTML('mu', mat.unit||'عدد')}</div>
       <div class="field"><label>قیمت</label><input class="inp" id="mc" type="number" value="${num(mat.unitCost)}"></div>
       <div class="row-actions"><button class="btn btn-g" id="mx">بستن</button><button class="btn btn-p" id="ms">ذخیره</button></div></div>`;
+    bindUnitSelects(m);
     $('#mx').onclick=()=>m.className='modal-bg';
-    $('#ms').onclick=()=>{ mat.name=$('#mn').value; mat.unitCost=num($('#mc').value); upsertLocal('materials',mat); m.className='modal-bg'; render(); };
-  });
-  $$('[data-open-soc]').forEach(tr=>tr.onclick=e=>{ if(e.target.closest('button')) return; go('social-detail', tr.dataset.openSoc); });
-  $$('[data-del-soc]').forEach(b=>b.onclick=async e=>{
-    e.stopPropagation();
-    if(!await confirmBox('حذف سفارش سوشال','حذف شود؟')) return;
-    const s=byId(DB.socialOrders,b.dataset.delSoc); s.deleted='1'; upsertLocal('socialOrders',s); render();
-  });
-  const ss=$('#saveSoc'); if(ss) ss.onclick=()=>{
-    const existing = route.page==='social-detail' ? byId(DB.socialOrders,route.id) : {id:uid('soc'),stage:1};
-    const rec=collectSocial(existing);
-    if(!rec.recipientName){ toast('نام گیرنده لازم است',false); return; }
-    upsertLocal('socialOrders',rec); toast('سفارش سوشال ذخیره شد'); go('social');
-  };
-  $$('[data-sst]').forEach(b=>b.onclick=()=>{
-    const s=byId(DB.socialOrders,route.id);
-    const n=Number(b.dataset.sst);
-    if(n<Number(s.stage)){ toast('مرحله فقط جلو می‌رود',false); return; }
-    if(n===5 && !($('#strk').value||'').trim()){ toast('کد پیگیری را وارد کنید',false); return; }
-    s.stage=n; s.trackingCode=$('#strk').value.trim();
-    const rec=collectSocial(s); rec.stage=n; upsertLocal('socialOrders',rec); render();
+    $('#ms').onclick=()=>{ mat.name=$('#mn').value; mat.unit=readUnit('#mu', mat.unit||'عدد'); mat.unitCost=num($('#mc').value); upsertLocal('materials',mat); m.className='modal-bg'; render(); };
   });
 }
 
 async function boot(){
   document.getElementById('appVer').textContent=APP.version;
+  detectPlatform();
+  window.addEventListener('resize', ()=>detectPlatform());
+  window.addEventListener('orientationchange', ()=>setTimeout(detectPlatform, 200));
   setTheme(localStorage.getItem('py_theme')||'light');
   $('#btnTheme').onclick=()=>setTheme(document.documentElement.classList.contains('dark')?'light':'dark');
-  $$('.topbar [data-go]').forEach(el=>el.addEventListener('click',e=>{ e.preventDefault(); go(el.dataset.go, el.dataset.id); }));
+  $$('.topbar [data-go], #mobNav [data-go], #mobSheet [data-go]').forEach(el=>el.addEventListener('click',e=>{
+    e.preventDefault();
+    const sheet=$('#mobSheet'); if(sheet) sheet.classList.remove('open');
+    go(el.dataset.go, el.dataset.id);
+  }));
+  const more=$('#mobMore');
+  if(more) more.onclick=e=>{ e.preventDefault(); $('#mobSheet').classList.toggle('open'); };
   document.addEventListener('submit', ev=>{
     if(ev.target && ev.target.id==='cusAddForm'){
       ev.preventDefault();
@@ -1651,19 +2082,11 @@ async function boot(){
     }
   });
   document.addEventListener('click', ev=>{
-    const btn=ev.target.closest('#saveCus');
-    if(btn){
-      ev.preventDefault();
-      const c=addCustomer($('#nName')&&$('#nName').value, $('#nPhone')&&$('#nPhone').value, $('#nAddr')&&$('#nAddr').value);
-      if(c) render();
-    }
-  });
-  document.addEventListener('click', ev=>{
     if(ev.target.closest('#cSearch') || ev.target.closest('#cSug')) return;
     if(ev.target.closest('#pSearch') || ev.target.closest('#pSug')) return;
-    const cs=$('#cSug'), ps=$('#pSug');
-    if(cs) cs.classList.remove('open');
-    if(ps) ps.classList.remove('open');
+    if(ev.target.closest('#buyName') || ev.target.closest('#buyMatSug') || ev.target.closest('#buyMenu')) return;
+    if(ev.target.closest('#svcTitle') || ev.target.closest('#svcSug') || ev.target.closest('#svcMenu')) return;
+    ['#cSug','#pSug','#buyMatSug','#svcSug'].forEach(id=>{ const el=$(id); if(el) el.classList.remove('open'); });
   });
   tick(); setInterval(tick,1000);
   window.addEventListener('online',()=>{ renderStatus(); if(ready) flush(); });
@@ -1686,5 +2109,5 @@ async function boot(){
 }
 boot();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a1b4d4f9223686',t:'MTc4NjU2MTA1Mg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2a6bd3b3da3d394',t:'MTc4NjYxMzgyNQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
