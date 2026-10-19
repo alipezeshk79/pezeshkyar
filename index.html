@@ -183,6 +183,20 @@ html.dark .stage-box b{color:var(--p3)}
 .set-row .set-meta span{display:block;color:var(--mu);font-size:11px;margin-top:3px;line-height:1.7}
 .svc-table .inp{min-width:0}
 .soc-empty{padding:22px;text-align:center;color:var(--mu)}
+.card h2.h-row,.card h3.h-row{display:flex;align-items:center;gap:8px}
+.card h2.h-row:before,.card h3.h-row:before{margin-left:0}
+.h-row .spacer{flex:1;min-width:0}
+.h-ico{width:32px;height:32px;padding:0;border-radius:10px;border:1px solid var(--ln);background:var(--ps);color:var(--p2);display:grid;place-items:center;font-size:15px;line-height:1;flex:none}
+.h-ico:hover{background:var(--p);color:#fff;border-color:var(--p)}
+.h-ico.lg{width:40px;height:40px;font-size:17px}
+.pl-modal{width:min(720px,100%);max-height:92vh;display:flex;flex-direction:column}
+.pl-modal .table-wrap{flex:1;overflow:auto;min-height:120px}
+.rep-a4 table{width:100%;border-collapse:collapse;font-size:12px}
+.rep-a4 th,.rep-a4 td{border:1px solid #111;padding:6px 7px;text-align:center;vertical-align:top;background:#fff}
+.rep-a4 th{background:#f3f4f6;font-weight:800}
+.rep-a4 td.start{text-align:right}
+.rep-a4 .mat-cell{text-align:right;line-height:2;font-size:10.5px}
+.pl-modal .pl-cb{width:18px;height:18px;accent-color:var(--p)}
 .mat-row:last-child{border-bottom:0}
 .pmeta{margin-top:8px;font-size:13px;color:var(--mu)}
 .pmeta b{color:var(--tx)}
@@ -265,6 +279,8 @@ hr.sep{border:0;border-top:1px solid var(--ln);margin:14px 0}
   .order-bar .btn,.order-bar .cust-ico{min-height:48px}
   .cust-ico{width:48px}
   .btn,.inp,select,textarea{min-height:48px;font-size:16px !important;border-radius:14px}
+  .h-ico{width:48px;height:48px;font-size:18px}
+  .h-ico.lg{width:48px;height:48px;font-size:18px}
   .icon-btn{width:44px;height:44px}
   .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:12px}
   table{min-width:640px}
@@ -309,7 +325,7 @@ html.is-touch .btn:active,html.is-touch .dash-card:active{transform:scale(.98)}
       <img src="logo.png" alt="PezeshkYar" id="brandLogo">
       <div class="brand-meta">
         <b>پزشک‌یار</b>
-        <span class="ver" id="appVer">v.1.1.34</span>
+        <span class="ver" id="appVer">v.1.1.38</span>
       </div>
     </div>
     <div class="top-mid">
@@ -349,7 +365,7 @@ html.is-touch .btn:active,html.is-touch .dash-card:active{transform:scale(.98)}
 const APP = {
   name: 'PezeshkYar',
   nameFa: 'پزشک‌یار',
-  version: 'v.1.1.34',
+  version: 'v.1.1.38',
   SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyUDYfULHdPXBdy_zESpCGCUnnNPpuog7db8CQL-ov1F97nZbbEOfQzTxI-punxopBoWQ/exec',
   SHEET_URL: 'https://docs.google.com/spreadsheets/d/1GGHSNreSBvbgYwhxfQuR8xDjIvGxRNUqynz1Cgytkfs/edit?usp=sharing',
   APP_TOKEN: 'PEZESHKYAR_BACKUP_2026',
@@ -375,6 +391,8 @@ let lastSync = null;
 let lastError = '';
 let queueCount = 0;
 let settingsDirty = false;
+let syncDone = 0;
+let syncTotal = 0;
 
 const $ = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => [...r.querySelectorAll(s)];
@@ -577,28 +595,37 @@ function upsertLocal(col, rec){
   return rec;
 }
 
-async function api(action, payload={}, ms=8000){
-  const ctrl=new AbortController();
-  const timer=setTimeout(()=>ctrl.abort(), ms);
-  try{
-    const res=await fetch(APP.SCRIPT_URL,{
-      method:'POST', redirect:'follow',
-      headers:{'Content-Type':'text/plain;charset=utf-8'},
-      body: JSON.stringify({action, token:APP.APP_TOKEN, ...payload}),
-      signal: ctrl.signal,
-      keepalive: true
-    });
-    if(!res.ok) throw new Error('خطای شبکه '+res.status);
-    return await res.json();
-  }catch(e){
-    if(e && e.name==='AbortError') throw new Error('timeout');
-    throw e;
-  }finally{ clearTimeout(timer); }
+async function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+async function api(action, payload={}, ms=20000, tries=1){
+  let lastErr=null;
+  for(let attempt=0; attempt<=tries; attempt++){
+    const ctrl=new AbortController();
+    const timer=setTimeout(()=>ctrl.abort(), ms);
+    try{
+      const res=await fetch(APP.SCRIPT_URL,{
+        method:'POST', redirect:'follow',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body: JSON.stringify({action, token:APP.APP_TOKEN, ...payload}),
+        signal: ctrl.signal
+      });
+      if(!res.ok) throw new Error('خطای شبکه '+res.status);
+      const txt=await res.text();
+      let json;
+      try{ json=JSON.parse(txt); }
+      catch(e){ throw new Error('پاسخ نامعتبر از سرور'); }
+      return json;
+    }catch(e){
+      lastErr = (e && e.name==='AbortError') ? new Error('زمان درخواست به پایان رسید') : (e instanceof Error ? e : new Error(String(e)));
+      if(attempt<tries) await sleep(1200*(attempt+1));
+    }finally{ clearTimeout(timer); }
+  }
+  throw lastErr;
 }
 
 async function bootstrap(){
-  const data=await api('bootstrap', {}, 9000);
+  const data=await api('bootstrap', {}, 30000, 1);
   if(!data.ok) throw new Error(data.error||'بازیابی ناموفق');
+  if(!data.data) throw new Error('پاسخ بازیابی ناقص است');
   KEYS.forEach(k=>{
     if(!Array.isArray(data.data[k])) return;
     const map=new Map(data.data[k].map(r=>[String(r.id), r]));
@@ -624,28 +651,53 @@ async function bootstrap(){
   persistLocal();
 }
 
-async function flush(){
-  if(syncing || !navigator.onLine) return;
-  const collections={}; let any=false;
+const SYNC_CHUNK=40;
+function syncQueue(){
+  const q=[];
   KEYS.forEach(k=>{
-    if(!dirty[k].size) return;
-    collections[k]=DB[k].filter(r=>dirty[k].has(String(r.id)));
-    if(collections[k].length) any=true;
+    if(!dirty[k] || !dirty[k].size) return;
+    const recs=DB[k].filter(r=>dirty[k].has(String(r.id)));
+    if(recs.length) q.push({key:k, recs});
   });
-  if(!any && !settingsDirty) return;
-  syncing=true; renderStatus();
+  return q;
+}
+async function flush(force){
+  if(syncing || !navigator.onLine) return;
+  const q=syncQueue();
+  const total=q.reduce((n,x)=>n+x.recs.length,0);
+  if(!total && !settingsDirty && !force) return;
+  syncing=true; syncDone=0; syncTotal=total; renderStatus();
+  let settingsSent=false;
   try{
-    const r=await api('sync',{collections, settings:DB.settings});
-    if(!r.ok) throw new Error(r.error||'ذخیره ناموفق');
-    KEYS.forEach(k=>dirty[k].clear());
-    settingsDirty=false;
+    for(const part of q){
+      for(let i=0;i<part.recs.length;i+=SYNC_CHUNK){
+        const slice=part.recs.slice(i, i+SYNC_CHUNK);
+        const collections={}; collections[part.key]=slice;
+        const r=await api('sync',{collections, settings:DB.settings}, 120000, 0);
+        if(!r || !r.ok) throw new Error((r&&r.error)||'ذخیره ناموفق');
+        slice.forEach(rec=>dirty[part.key].delete(String(rec.id)));
+        syncDone+=slice.length;
+        settingsSent=true; settingsDirty=false;
+        persistLocal(); renderStatus();
+      }
+    }
+    if(!settingsSent && settingsDirty){
+      const r=await api('sync',{collections:{}, settings:DB.settings}, 60000, 0);
+      if(!r || !r.ok) throw new Error((r&&r.error)||'ذخیره تنظیمات ناموفق');
+      settingsDirty=false;
+    }
     lastSync=new Date(); lastError='';
     persistLocal();
   }catch(e){
-    lastError=e.message||'خطای بکاپ';
+    lastError=e && e.message ? e.message : 'خطای بکاپ';
   }finally{
-    syncing=false; renderStatus();
+    syncing=false; syncDone=0; syncTotal=0; renderStatus();
   }
+}
+async function fullSync(){
+  KEYS.forEach(k=>DB[k].forEach(r=>{ if(r && r.id) dirty[k].add(String(r.id)); }));
+  settingsDirty=true; persistLocal();
+  await flush(true);
 }
 
 function nextInvoice(){
@@ -654,7 +706,7 @@ function nextInvoice(){
   if(n<invoiceStart()) n=invoiceStart();
   DB.settings.invoiceCounter=n+1;
   persistLocal();
-  api('nextInvoice', {}, 5000).then(r=>{
+  api('nextInvoice', {}, 15000, 0).then(r=>{
     if(r && r.ok && r.invoiceNo && Number(r.invoiceNo)>n){
       DB.settings.invoiceCounter = Number(r.invoiceNo)+1;
       persistLocal();
@@ -667,7 +719,7 @@ function renderStatus(){
   const on=navigator.onLine;
   $('#statusbar').innerHTML=`
     <div class="pill"><span class="dot ${on?'':'off'}"></span> اینترنت: ${on?'متصل':'قطع'}</div>
-    <div class="pill"><span class="dot ${syncing?'warn': lastError?'off':' '}"></span> بکاپ: ${syncing?'در حال ذخیره': lastError?('خطا — '+lastError): lastSync?('ذخیره '+lastSync.toLocaleTimeString('en-GB')):'منتظر'}</div>
+    <div class="pill"><span class="dot ${syncing?'warn': lastError?'off':' '}"></span> بکاپ: ${syncing?('در حال ذخیره'+(syncTotal?(' '+faDigits(syncDone)+' / '+faDigits(syncTotal)):'')): lastError?('خطا — '+lastError): lastSync?('ذخیره '+lastSync.toLocaleTimeString('en-GB')):'منتظر'}</div>
     <div class="pill"><span class="dot ${queueCount?'warn':''}"></span> صف اضطراری: ${queueCount} مورد</div>`;
 }
 
@@ -2050,9 +2102,10 @@ function viewProductsAdd(){
     <div class="row-actions">
       <button type="button" class="btn btn-p" id="savePr">${editing?'ذخیره محصول و فرمول':'ذخیره محصول و فرمول'}</button>
       ${editing?'<button type="button" class="btn btn-g" id="prNew">محصول جدید</button>':''}
+      <button type="button" class="h-ico lg" id="prListBtn2" data-prlist="1" title="دریافت لیست محصولات">▤</button>
     </div>
   </section>
-  <section class="card"><h2>فهرست محصولات</h2>
+  <section class="card"><h2 class="h-row">فهرست محصولات<span class="spacer"></span><button type="button" class="h-ico" id="prListBtn" data-prlist="1" title="دریافت لیست محصولات">▤</button></h2>
     <div class="table-wrap"><table class="cart-table"><thead><tr><th>کد</th><th>نام</th><th>دسته</th><th>قیمت فروش</th><th>قیمت تمام‌شده</th><th>درصد سود</th><th></th></tr></thead><tbody>${prows}</tbody></table></div>
   </section>`;
 }
@@ -2445,6 +2498,14 @@ function viewSettings(){
       <button type="button" class="btn btn-p" id="syncNow">↺ همگام‌سازی</button>
     </div>
     <div class="set-row">
+      <div class="set-meta"><b>همگام‌سازی کامل</b><span>اگر داده‌ای به شیت نرسیده، همهٔ رکوردهای این دستگاه دوباره فرستاده می‌شود</span></div>
+      <button type="button" class="btn btn-g" id="fullSync">⇅ ارسال کامل</button>
+    </div>
+    <div class="set-row">
+      <div class="set-meta"><b>تست اتصال</b><span>بررسی سلامت Web App و سرعت پاسخ</span></div>
+      <button type="button" class="btn btn-g" id="pingApi">✓ تست اتصال</button>
+    </div>
+    <div class="set-row">
       <div class="set-meta"><b>صفحه گسترده</b><span>مشاهدهٔ داده‌ها در گوگل شیت</span></div>
       <a class="btn btn-g" href="${APP.SHEET_URL}" target="_blank" rel="noopener">↗ باز کردن</a>
     </div>
@@ -2483,7 +2544,27 @@ function bindSettings(){
     };
   }
   const sn=$('#syncNow');
-  if(sn) sn.onclick=async()=>{ await flush(); toast(lastError?('خطا: '+lastError):'همگام‌سازی انجام شد', !lastError); render(); };
+  if(sn) sn.onclick=async()=>{ await flush(true); toast(lastError?('خطا: '+lastError):'همگام‌سازی انجام شد', !lastError); render(); };
+  const fsn=$('#fullSync');
+  if(fsn) fsn.onclick=async()=>{
+    if(!await confirmBox('همگام‌سازی کامل','همهٔ داده‌های این دستگاه دوباره به شیت فرستاده می‌شود. ادامه می‌دهید؟')) return;
+    toast('در حال ارسال کامل…');
+    await fullSync();
+    toast(lastError?('خطا: '+lastError):'ارسال کامل انجام شد', !lastError);
+    render();
+  };
+  const pg=$('#pingApi');
+  if(pg) pg.onclick=async()=>{
+    pg.disabled=true; pg.textContent='… در حال بررسی';
+    const t0=Date.now();
+    try{
+      const r=await api('health', {}, 20000, 0);
+      const ms=Date.now()-t0;
+      if(!r.ok) throw new Error(r.error||'پاسخ نامعتبر');
+      toast('اتصال برقرار است — '+faDigits(ms)+' میلی‌ثانیه · نسخه سرور '+(r.version||'—'));
+    }catch(e){ toast('اتصال برقرار نیست: '+(e.message||'خطا'), false); }
+    pg.disabled=false; pg.textContent='✓ تست اتصال';
+  };
   const w=$('#wipeLocal');
   if(w) w.onclick=async()=>{
     if(!await confirmBox('پاک‌سازی داده‌ها','همهٔ داده‌های ذخیره‌شده در این مرورگر حذف شود؟')) return;
@@ -2810,6 +2891,218 @@ function bindSocialNew(){
   };
 }
 
+function productListRows(q){
+  const query=String(q||'').trim();
+  return alive(DB.products)
+    .filter(p=>!query || String(p.code||'').includes(query) || String(p.name||'').includes(query))
+    .sort((a,b)=>String(a.code||'').localeCompare(String(b.code||''),'fa',{numeric:true}));
+}
+function bomLines(p){
+  const rows=alive(DB.productMaterials).filter(b=>b.productId===p.id);
+  if(!rows.length){
+    return num(p.materialCost)>0 ? 'دستی — '+faMoney(p.materialCost)+' تومان' : '—';
+  }
+  return rows.map(b=>{
+    const m=byId(DB.materials,b.materialId);
+    const q=Math.round(num(b.qty)*100)/100;
+    const c=num(m&&m.unitCost);
+    return `${esc(m?(m.name||'—'):'—')}: ${faDigits(String(q))} ${esc((m&&m.unit)||'')} × ${faMoney(c)} = ${faMoney(q*c)}`;
+  }).join('<br>');
+}
+function productReportPages(ids, mode){
+  const list=ids.map(id=>byId(DB.products,id)).filter(Boolean)
+    .sort((a,b)=>String(a.code||'').localeCompare(String(b.code||''),'fa',{numeric:true}));
+  const detail = mode==='detail';
+  const head=`
+    <div class="inv-top">
+      <div><img class="inv-logo" src="logo.png"><div>${detail?'گزارش جزئیات محصولات':'لیست قیمت محصولات'}<br>${esc(sellerName())}</div></div>
+      <div>${esc(shamsiStr())}<br>تعداد: ${faDigits(list.length)}</div>
+    </div>`;
+  const bodyRows=(arr,startIdx)=>arr.map((p,i)=>{
+    const cost=productCost(p), sale=productSale(p), pct=productProfitPct(p,cost);
+    return detail
+      ? `<tr>
+          <td>${faDigits(startIdx+i+1)}</td>
+          <td>${faDigits(p.code||'')}</td>
+          <td class="start">${esc(p.name)}</td>
+          <td class="start mat-cell">${bomLines(p)}</td>
+          <td>${faMoney(cost)}</td>
+          <td>${pctTxt(pct)}</td>
+          <td>${faMoney(sale)}</td>
+         </tr>`
+      : `<tr>
+          <td>${faDigits(startIdx+i+1)}</td>
+          <td>${faDigits(p.code||'')}</td>
+          <td class="start">${esc(p.name)}</td>
+          <td>${faMoney(sale)}</td>
+         </tr>`;
+  }).join('');
+  const cols = detail
+    ? `<th style="width:5%">ردیف</th><th style="width:8%">کد</th><th style="width:20%">نام محصول</th><th>مواد اولیه · میزان · مبلغ</th><th style="width:13%">مبلغ تمام‌شده</th><th style="width:8%">درصد سود</th><th style="width:14%">قیمت فروش</th>`
+    : `<th style="width:8%">ردیف</th><th style="width:18%">کد</th><th>نام محصول</th><th style="width:24%">قیمت فروش</th>`;
+  const first = detail ? 9 : 22;
+  const rest  = detail ? 16 : 28;
+  const chunks=[list.slice(0,first)];
+  for(let i=first;i<list.length;i+=rest) chunks.push(list.slice(i,i+rest));
+  if(!chunks.length) chunks.push([]);
+  let startIdx=0;
+  return chunks.map((ch,i)=>{
+    const rows=bodyRows(ch,startIdx) || `<tr><td colspan="${detail?7:4}">محصولی انتخاب نشده است.</td></tr>`;
+    startIdx+=ch.length;
+    return `<section class="a4 rep-a4 ${detail?'land':''}">
+      ${head}
+      <table><thead><tr>${cols}</tr></thead><tbody>${rows}</tbody></table>
+      <div class="inv-sign"><span>مبالغ به تومان</span><span>صفحه ${faDigits(i+1)} از ${faDigits(chunks.length)}</span></div>
+    </section>`;
+  }).join('');
+}
+async function a4DownloadZip(html, baseName){
+  if(!window.html2canvas){ toast('کتابخانه تصویر در دسترس نیست', false); return; }
+  const hold=document.createElement('div');
+  hold.style.cssText='position:fixed;left:-10000px;top:0;';
+  hold.innerHTML=html;
+  document.body.appendChild(hold);
+  const pages=[...hold.querySelectorAll('.a4')];
+  try{
+    if(window.JSZip && pages.length>1){
+      const zip=new JSZip();
+      for(let i=0;i<pages.length;i++){
+        const canvas=await html2canvas(pages[i],{scale:2,backgroundColor:'#ffffff',useCORS:true});
+        zip.file(`${baseName}-p${i+1}.png`, canvas.toDataURL('image/png').split(',')[1], {base64:true});
+      }
+      const blob=await zip.generateAsync({type:'blob'});
+      const a=document.createElement('a');
+      a.href=URL.createObjectURL(blob); a.download=baseName+'.zip'; a.click();
+      setTimeout(()=>URL.revokeObjectURL(a.href),3000);
+    }else{
+      const canvas=await html2canvas(pages[0],{scale:2,backgroundColor:'#ffffff',useCORS:true});
+      const a=document.createElement('a');
+      a.href=canvas.toDataURL('image/png'); a.download=baseName+'.png'; a.click();
+    }
+    toast('فایل آماده شد');
+  }catch(e){ toast('ساخت تصویر ممکن نشد', false); }
+  hold.remove();
+}
+function showProductReport(ids, mode){
+  const html=productReportPages(ids, mode);
+  const base='PezeshkYar-'+(mode==='detail'?'mahsulat-joziyat':'mahsulat-gheymat')+'-'+shamsiShort().replace(/\//g,'-');
+  const m=$('#modal');
+  m.className='modal-bg show';
+  m.innerHTML=`<div class="modal" style="width:min(1120px,100%);max-height:92vh;overflow:auto">
+    <div class="row-actions" style="margin-bottom:10px">
+      <button class="btn btn-p" id="rptPrint">🖨 چاپ / ذخیره PDF</button>
+      <button class="btn" id="rptImg">⇩ دانلود تصویر</button>
+      <button class="btn btn-g" id="rptCsv">⇩ Excel (CSV)</button>
+      <button class="btn btn-g" id="rptBack">← بازگشت به لیست</button>
+      <button class="btn btn-g" id="rptClose">بستن</button>
+    </div>
+    <div class="a4-stage" id="rptStage">${html}</div>
+  </div>`;
+  $('#rptClose').onclick=()=>m.className='modal-bg';
+  $('#rptBack').onclick=()=>openProductList();
+  $('#rptPrint').onclick=()=>{
+    const pr=$('#print-root');
+    pr.innerHTML=html; pr.classList.remove('hidden');
+    window.print();
+    setTimeout(()=>pr.classList.add('hidden'),300);
+  };
+  $('#rptImg').onclick=()=>a4DownloadZip(html, base);
+  $('#rptCsv').onclick=()=>{
+    const list=ids.map(id=>byId(DB.products,id)).filter(Boolean)
+      .sort((a,b)=>String(a.code||'').localeCompare(String(b.code||''),'fa',{numeric:true}));
+    if(mode==='detail'){
+      downloadCSV(base+'.csv',
+        ['کد','نام محصول','مواد اولیه','مبلغ تمام‌شده','درصد سود','قیمت فروش'],
+        list.map(p=>{
+          const cost=productCost(p);
+          return [p.code||'', p.name,
+            alive(DB.productMaterials).filter(b=>b.productId===p.id).map(b=>{
+              const mm=byId(DB.materials,b.materialId);
+              return (mm?(mm.name||''):'')+' '+b.qty+' '+((mm&&mm.unit)||'')+' × '+num(mm&&mm.unitCost);
+            }).join(' | '),
+            cost, Math.round(productProfitPct(p,cost)*10)/10, productSale(p)];
+        }));
+    }else{
+      downloadCSV(base+'.csv', ['کد','نام محصول','قیمت فروش'], list.map(p=>[p.code||'', p.name, productSale(p)]));
+    }
+  };
+}
+function openProductList(){
+  const m=$('#modal');
+  if(!window._plSel) window._plSel=new Set();
+  m.className='modal-bg show';
+  m.innerHTML=`<div class="modal pl-modal">
+    <div style="display:flex;align-items:center;gap:10px;justify-content:space-between;margin-bottom:12px">
+      <h3 style="margin:0">لیست محصولات</h3>
+      <span class="muted" id="plCount"></span>
+    </div>
+    <input class="inp" id="plQ" placeholder="جستجو بر اساس کد یا نام…" autocomplete="off" style="margin-bottom:10px">
+    <div class="table-wrap"><table class="cart-table"><thead><tr>
+      <th style="width:38px"><input type="checkbox" id="plAll" title="انتخاب همه"></th>
+      <th>کد</th><th>نام محصول</th><th>قیمت فروش</th><th style="width:44px"></th>
+    </tr></thead><tbody id="plBody"></tbody></table></div>
+    <p class="muted" style="margin:10px 0 0">محصولات را تیک بزنید و نوع گزارش را انتخاب کنید.</p>
+    <div class="row-actions" style="justify-content:flex-start;margin-top:12px">
+      <button class="btn btn-p" id="plDetail">▤ گزارش با جزئیات (A4)</button>
+      <button class="btn" id="plPrice">▧ لیست قیمت مشتری (A4)</button>
+      <button class="btn btn-g" id="plCsv">⇩ Excel (CSV)</button>
+      <button class="btn btn-g" id="plClose">بستن</button>
+    </div>
+  </div>`;
+  const q=$('#plQ');
+  const close=()=>{ m.className='modal-bg'; };
+  const selected=()=>{
+    const visible=new Set(productListRows(q.value).map(p=>String(p.id)));
+    return [...window._plSel].filter(id=>visible.has(String(id)));
+  };
+  const paint=()=>{
+    const list=productListRows(q.value);
+    $('#plBody').innerHTML=list.map(p=>`<tr>
+      <td><input type="checkbox" class="pl-cb" data-id="${p.id}" ${window._plSel.has(String(p.id))?'checked':''}></td>
+      <td>${esc(p.code||'—')}</td><td>${esc(p.name)}</td><td>${money(productSale(p))}</td>
+      <td><button type="button" class="h-ico" data-pl-ed="${p.id}" title="ویرایش">✎</button></td>
+    </tr>`).join('')||'<tr><td colspan="5" class="empty">محصولی ثبت نشده است.</td></tr>';
+    $('#plCount').textContent=faDigits(window._plSel.size)+' انتخاب · '+faDigits(list.length)+' محصول';
+    const all=$('#plAll');
+    if(all) all.checked = list.length>0 && list.every(p=>window._plSel.has(String(p.id)));
+    $$('.pl-cb').forEach(cb=>cb.onchange=()=>{
+      if(cb.checked) window._plSel.add(String(cb.dataset.id));
+      else window._plSel.delete(String(cb.dataset.id));
+      paint();
+    });
+    $$('[data-pl-ed]').forEach(b=>b.onclick=()=>{
+      const id=b.dataset.plEd; close();
+      window._editPr=id;
+      if(route.page!=='products-add'){ go('products-add', id); return; }
+      route.id=id; render();
+    });
+  };
+  q.oninput=paint;
+  $('#plClose').onclick=close;
+  m.onclick=ev=>{ if(ev.target===m) close(); };
+  const all=$('#plAll');
+  if(all) all.onchange=()=>{
+    const list=productListRows(q.value);
+    list.forEach(p=>{ if(all.checked) window._plSel.add(String(p.id)); else window._plSel.delete(String(p.id)); });
+    paint();
+  };
+  setTimeout(()=>{ try{ q.focus(); }catch(e){} },30);
+  const need=()=>{
+    const ids=selected();
+    if(!ids.length){ toast('ابتدا محصولات را تیک بزنید', false); return null; }
+    return ids;
+  };
+  $('#plDetail').onclick=()=>{ const ids=need(); if(ids) showProductReport(ids,'detail'); };
+  $('#plPrice').onclick=()=>{ const ids=need(); if(ids) showProductReport(ids,'price'); };
+  $('#plCsv').onclick=()=>{
+    const ids=need(); if(!ids) return;
+    const list=ids.map(id=>byId(DB.products,id)).filter(Boolean)
+      .sort((a,b)=>String(a.code||'').localeCompare(String(b.code||''),'fa',{numeric:true}));
+    downloadCSV('pezeshkyar-mahsulat-'+shamsiShort().replace(/\//g,'-')+'.csv',
+      ['کد','نام محصول','قیمت فروش'], list.map(p=>[p.code||'', p.name, productSale(p)]));
+  };
+  paint();
+}
 function bindGlobal(){
   bindUnitSelects($('#view'));
   $$('#view [data-go]').forEach(el=>el.addEventListener('click',e=>{
@@ -2864,6 +3157,7 @@ function bindGlobal(){
     if(p.customerId) applySettleFlags(p.customerId);
     render();
   });
+  $$('[data-prlist]').forEach(b=>b.onclick=()=>openProductList());
   $$('[data-per]').forEach(b=>b.onclick=()=>{ window._accPer=b.dataset.per; render(); });
   const oc=$('#ordCsv');
   if(oc) oc.onclick=()=>{
@@ -3033,5 +3327,5 @@ async function boot(){
 }
 boot();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4c883cbbd8b340d',t:'MTc5MjMzNjY5OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4cdbfbb493ad398',t:'MTc5MjM5MTU4MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
