@@ -192,11 +192,23 @@ html.dark .stage-box b{color:var(--p3)}
 .h-ico.lg{width:40px;height:40px;font-size:17px}
 .pl-modal{width:min(720px,100%);max-height:92vh;display:flex;flex-direction:column}
 .pl-modal .table-wrap{flex:1;overflow:auto;min-height:120px}
-.rep-a4 table{width:100%;border-collapse:collapse;font-size:12px}
-.rep-a4 th,.rep-a4 td{border:1px solid #111;padding:6px 7px;text-align:center;vertical-align:top;background:#fff}
-.rep-a4 th{background:#f3f4f6;font-weight:800}
-.rep-a4 td.start{text-align:right}
-.rep-a4 .mat-cell{text-align:right;line-height:2;font-size:10.5px}
+.rep-a4{font-family:Vazirmatn,Tahoma,"B Nazanin","B Mitra",Arial,sans-serif}
+.rep-a4 table{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
+.rep-a4 th,.rep-a4 td{border:1px solid #111;padding:7px 9px;text-align:right;vertical-align:middle;background:#fff;line-height:1.7;font-size:12.5px}
+.rep-a4 th{background:#f3f4f6;font-weight:800;text-align:center;font-size:12.5px}
+.rep-a4 .c{text-align:center;font-variant-numeric:tabular-nums}
+.rep-a4 .mat-cell{padding:5px 6px}
+.rep-a4 .mat-sub{width:100%;border-collapse:collapse;font-size:11px}
+.rep-a4 .mat-sub td{border:0;padding:2px 5px;text-align:right;background:transparent;line-height:1.9;font-size:11px}
+.rep-a4 .mat-sub td.q{text-align:center;white-space:nowrap}
+.rep-a4 .mat-sub td.a{text-align:left;white-space:nowrap;font-variant-numeric:tabular-nums}
+.rep-a4 .mat-none{color:#555;font-size:10px}
+@media print{
+  .rep-a4{page-break-after:always;page-break-inside:avoid}
+  .rep-a4:last-child{page-break-after:auto}
+  .rep-a4 thead{display:table-header-group}
+  .rep-a4 tr{page-break-inside:avoid}
+}
 .pl-modal .pl-cb{width:18px;height:18px;accent-color:var(--p)}
 .mat-row:last-child{border-bottom:0}
 .pmeta{margin-top:8px;font-size:13px;color:var(--mu)}
@@ -326,7 +338,7 @@ html.is-touch .btn:active,html.is-touch .dash-card:active{transform:scale(.98)}
       <img src="logo.png" alt="PezeshkYar" id="brandLogo">
       <div class="brand-meta">
         <b>پزشک‌یار</b>
-        <span class="ver" id="appVer">v.1.1.39</span>
+        <span class="ver" id="appVer">v.1.1.42</span>
       </div>
     </div>
     <div class="top-mid">
@@ -366,7 +378,7 @@ html.is-touch .btn:active,html.is-touch .dash-card:active{transform:scale(.98)}
 const APP = {
   name: 'PezeshkYar',
   nameFa: 'پزشک‌یار',
-  version: 'v.1.1.39',
+  version: 'v.1.1.42',
   SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyUDYfULHdPXBdy_zESpCGCUnnNPpuog7db8CQL-ov1F97nZbbEOfQzTxI-punxopBoWQ/exec',
   SHEET_URL: 'https://docs.google.com/spreadsheets/d/1GGHSNreSBvbgYwhxfQuR8xDjIvGxRNUqynz1Cgytkfs/edit?usp=sharing',
   APP_TOKEN: 'PEZESHKYAR_BACKUP_2026',
@@ -2910,18 +2922,22 @@ function productListRows(q){
     .filter(p=>!query || String(p.code||'').includes(query) || String(p.name||'').includes(query))
     .sort((a,b)=>String(a.code||'').localeCompare(String(b.code||''),'fa',{numeric:true}));
 }
-function bomLines(p){
+function bomRows(p){
   const rows=alive(DB.productMaterials).filter(b=>b.productId===p.id);
   if(!rows.length){
-    return num(p.materialCost)>0 ? 'دستی — '+faMoney(p.materialCost)+' تومان' : '—';
+    return {lines:1, html: num(p.materialCost)>0
+      ? '<span class="mat-none">مبلغ دستی ثبت‌شده</span>' : '<span class="mat-none">—</span>'};
   }
-  return rows.map(b=>{
+  const html='<table class="mat-sub"><tbody>'+rows.map(b=>{
     const m=byId(DB.materials,b.materialId);
     const q=Math.round(num(b.qty)*100)/100;
     const c=num(m&&m.unitCost);
-    return `${esc(m?(m.name||'—'):'—')}: ${faDigits(String(q))} ${esc((m&&m.unit)||'')} × ${faMoney(c)} = ${faMoney(q*c)}`;
-  }).join('<br>');
+    return `<tr><td>${esc(m?(m.name||'—'):'—')}</td><td class="q">${faDigits(String(q))} ${esc((m&&m.unit)||'')}</td><td class="a">${faMoney(q*c)}</td></tr>`;
+  }).join('')+'</tbody></table>';
+  return {lines:Math.max(1, rows.length), html};
 }
+/* دو مرحله‌ای: ابتدا همهٔ ردیف‌ها در یک صفحهٔ پنهان اندازه‌گیری می‌شوند،
+   سپس بر اساس ارتفاع واقعی بین صفحه‌های A4 عمودی تقسیم می‌گردد */
 function productReportPages(ids, mode){
   const list=ids.map(id=>byId(DB.products,id)).filter(Boolean)
     .sort((a,b)=>String(a.code||'').localeCompare(String(b.code||''),'fa',{numeric:true}));
@@ -2931,42 +2947,71 @@ function productReportPages(ids, mode){
       <div><img class="inv-logo" src="logo.png"><div>${detail?'گزارش جزئیات محصولات':'لیست قیمت محصولات'}<br>${esc(sellerName())}</div></div>
       <div>${esc(shamsiStr())}<br>تعداد: ${faDigits(list.length)}</div>
     </div>`;
-  const bodyRows=(arr,startIdx)=>arr.map((p,i)=>{
+  const cols = detail
+    ? `<th style="width:4%">ردیف</th><th style="width:7%">کد</th><th style="width:22%">نام محصول</th><th style="width:35%">مواد اولیه · میزان · مبلغ</th><th style="width:11%">مبلغ تمام‌شده</th><th style="width:7%">درصد سود</th><th style="width:14%">قیمت فروش</th>`
+    : `<th style="width:8%">ردیف</th><th style="width:18%">کد</th><th>نام محصول</th><th style="width:24%">قیمت فروش</th>`;
+  const rowHTML=(p,idx)=>{
     const cost=productCost(p), sale=productSale(p), pct=productProfitPct(p,cost);
     return detail
       ? `<tr>
-          <td>${faDigits(startIdx+i+1)}</td>
-          <td>${faDigits(p.code||'')}</td>
-          <td class="start">${esc(p.name)}</td>
-          <td class="start mat-cell">${bomLines(p)}</td>
-          <td>${faMoney(cost)}</td>
-          <td>${pctTxt(pct)}</td>
-          <td>${faMoney(sale)}</td>
+          <td class="c">${faDigits(idx+1)}</td>
+          <td class="c">${faDigits(p.code||'')}</td>
+          <td>${esc(p.name)}</td>
+          <td class="mat-cell">${bomRows(p).html}</td>
+          <td class="c">${faMoney(cost)}</td>
+          <td class="c">${pctTxt(pct)}</td>
+          <td class="c">${faMoney(sale)}</td>
          </tr>`
       : `<tr>
-          <td>${faDigits(startIdx+i+1)}</td>
-          <td>${faDigits(p.code||'')}</td>
-          <td class="start">${esc(p.name)}</td>
-          <td>${faMoney(sale)}</td>
+          <td class="c">${faDigits(idx+1)}</td>
+          <td class="c">${faDigits(p.code||'')}</td>
+          <td>${esc(p.name)}</td>
+          <td class="c">${faMoney(sale)}</td>
          </tr>`;
-  }).join('');
-  const cols = detail
-    ? `<th style="width:5%">ردیف</th><th style="width:8%">کد</th><th style="width:20%">نام محصول</th><th>مواد اولیه · میزان · مبلغ</th><th style="width:13%">مبلغ تمام‌شده</th><th style="width:8%">درصد سود</th><th style="width:14%">قیمت فروش</th>`
-    : `<th style="width:8%">ردیف</th><th style="width:18%">کد</th><th>نام محصول</th><th style="width:24%">قیمت فروش</th>`;
-  const first = detail ? 9 : 22;
-  const rest  = detail ? 16 : 28;
-  const chunks=[list.slice(0,first)];
-  for(let i=first;i<list.length;i+=rest) chunks.push(list.slice(i,i+rest));
+  };
+  const land = detail;
+  const pageOf=(rows, i, total)=>`<section class="a4 rep-a4${land?' land':''}" dir="rtl" lang="fa">
+      ${head}
+      <table><thead><tr>${cols}</tr></thead><tbody>${rows.join('')||`<tr><td colspan="${detail?7:4}">محصولی انتخاب نشده است.</td></tr>`}</tbody></table>
+      <div class="inv-sign"><span>مبالغ به تومان</span><span>صفحه ${faDigits(i+1)} از ${faDigits(total)}</span></div>
+    </section>`;
+
+  if(!list.length) return pageOf([], 0, 1);
+
+  /* ---- مرحله ۱: اندازه‌گیری واقعی ---- */
+  let heights=new Array(list.length).fill(24);
+  let avail=760;
+  try{
+    const stage=document.createElement('div');
+    stage.style.cssText='position:fixed;left:-12000px;top:0;width:'+(land?'297mm':'210mm')+';visibility:hidden;pointer-events:none';
+    stage.innerHTML=pageOf(list.map((p,i)=>rowHTML(p,i)), 0, 1);
+    document.body.appendChild(stage);
+    const sec=stage.firstElementChild;
+    const cs=getComputedStyle(sec);
+    const padT=parseFloat(cs.paddingTop)||0, padB=parseFloat(cs.paddingBottom)||0;
+    const a4H=parseFloat(cs.minHeight)||1123;
+    const h=el=>el?el.getBoundingClientRect().height:0;
+    const chrome=h(sec.querySelector('.inv-top'))+h(sec.querySelector('thead'))+h(sec.querySelector('.inv-sign'));
+    avail=Math.max(200, a4H-padT-padB-chrome-26);  /* حاشیهٔ اطمینان */
+    heights=[...sec.querySelectorAll(':scope > table > tbody > tr')].map(tr=>tr.getBoundingClientRect().height);
+    stage.remove();
+  }catch(e){}
+
+  /* ---- مرحله ۲: تقسیم بین صفحه‌ها ---- */
+  const chunks=[]; let cur=[], used=0;
+  for(let i=0;i<list.length;i++){
+    const rh=heights[i]||24;
+    if(cur.length && used+rh>avail){ chunks.push(cur); cur=[]; used=0; }
+    cur.push(i); used+=rh;
+  }
+  if(cur.length) chunks.push(cur);
   if(!chunks.length) chunks.push([]);
+  const total=chunks.length;
   let startIdx=0;
   return chunks.map((ch,i)=>{
-    const rows=bodyRows(ch,startIdx) || `<tr><td colspan="${detail?7:4}">محصولی انتخاب نشده است.</td></tr>`;
+    const fixed=ch.map((k,j)=>rowHTML(list[k], startIdx+j));
     startIdx+=ch.length;
-    return `<section class="a4 rep-a4 ${detail?'land':''}">
-      ${head}
-      <table><thead><tr>${cols}</tr></thead><tbody>${rows}</tbody></table>
-      <div class="inv-sign"><span>مبالغ به تومان</span><span>صفحه ${faDigits(i+1)} از ${faDigits(chunks.length)}</span></div>
-    </section>`;
+    return pageOf(fixed, i, total);
   }).join('');
 }
 async function a4DownloadZip(html, baseName){
@@ -2996,6 +3041,15 @@ async function a4DownloadZip(html, baseName){
   }catch(e){ toast('ساخت تصویر ممکن نشد', false); }
   hold.remove();
 }
+function printPages(html, portrait){
+  const pr=$('#print-root');
+  pr.innerHTML=html; pr.classList.remove('hidden');
+  let st=document.getElementById('printPageStyle');
+  if(!st){ st=document.createElement('style'); st.id='printPageStyle'; document.head.appendChild(st); }
+  st.textContent='@page{size:A4 '+(portrait?'portrait':'landscape')+';margin:0}';
+  window.print();
+  setTimeout(()=>{ pr.classList.add('hidden'); if(st) st.textContent=''; },400);
+}
 function showProductReport(ids, mode){
   const html=productReportPages(ids, mode);
   const base='PezeshkYar-'+(mode==='detail'?'mahsulat-joziyat':'mahsulat-gheymat')+'-'+shamsiShort().replace(/\//g,'-');
@@ -3013,12 +3067,7 @@ function showProductReport(ids, mode){
   </div>`;
   $('#rptClose').onclick=()=>m.className='modal-bg';
   $('#rptBack').onclick=()=>openProductList();
-  $('#rptPrint').onclick=()=>{
-    const pr=$('#print-root');
-    pr.innerHTML=html; pr.classList.remove('hidden');
-    window.print();
-    setTimeout(()=>pr.classList.add('hidden'),300);
-  };
+  $('#rptPrint').onclick=()=>printPages(html, mode!=='detail');
   $('#rptImg').onclick=()=>a4DownloadZip(html, base);
   $('#rptCsv').onclick=()=>{
     const list=ids.map(id=>byId(DB.products,id)).filter(Boolean)
@@ -3341,5 +3390,5 @@ async function boot(){
 }
 boot();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4cfff3bfdd4d38c',t:'MTc5MjQxNTE1NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4d12b56bf9ed2d2',t:'MTc5MjQyNzQ0Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
