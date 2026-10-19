@@ -161,6 +161,7 @@ html.dark .stage-box b{color:var(--p3)}
 .hub-ico b{font-size:15px}
 .hub-ico span{font-size:12px;color:var(--mu);text-align:center;line-height:1.5}
 @media (max-width:700px){.hub{grid-template-columns:1fr;max-width:280px}}
+.mat-note{font-size:11px;line-height:1.8;color:var(--mu);max-width:320px}
 .mat-list{border:1px solid var(--ln);border-radius:14px;max-height:320px;overflow:auto;background:var(--sf2)}
 .mat-row{display:grid;grid-template-columns:28px 1fr auto 90px;gap:8px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--ln);margin:0;font-size:13px}
 .bom-table{min-width:640px}
@@ -325,7 +326,7 @@ html.is-touch .btn:active,html.is-touch .dash-card:active{transform:scale(.98)}
       <img src="logo.png" alt="PezeshkYar" id="brandLogo">
       <div class="brand-meta">
         <b>پزشک‌یار</b>
-        <span class="ver" id="appVer">v.1.1.38</span>
+        <span class="ver" id="appVer">v.1.1.39</span>
       </div>
     </div>
     <div class="top-mid">
@@ -365,7 +366,7 @@ html.is-touch .btn:active,html.is-touch .dash-card:active{transform:scale(.98)}
 const APP = {
   name: 'PezeshkYar',
   nameFa: 'پزشک‌یار',
-  version: 'v.1.1.38',
+  version: 'v.1.1.39',
   SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyUDYfULHdPXBdy_zESpCGCUnnNPpuog7db8CQL-ov1F97nZbbEOfQzTxI-punxopBoWQ/exec',
   SHEET_URL: 'https://docs.google.com/spreadsheets/d/1GGHSNreSBvbgYwhxfQuR8xDjIvGxRNUqynz1Cgytkfs/edit?usp=sharing',
   APP_TOKEN: 'PEZESHKYAR_BACKUP_2026',
@@ -1606,8 +1607,9 @@ function parseJsonArr(raw){
 function normalizeSvcList(arr){
   if(!Array.isArray(arr)) return [];
   return arr.map(x=>{
-    if(typeof x==='string') return {name:String(x).trim(), unit:'عدد', price:0};
-    return {name:String(x&&x.name||'').trim(), unit:String(x&&x.unit||'عدد').trim()||'عدد', price:num(x&&x.price)};
+    if(typeof x==='string') return {name:String(x).trim(), unit:'عدد', price:0, note:''};
+    return {name:String(x&&x.name||'').trim(), unit:String(x&&x.unit||'عدد').trim()||'عدد',
+            price:num(x&&x.price), note:String(x&&x.note||'')};
   }).filter(x=>x.name);
 }
 function mergeSvcLists(a,b){
@@ -1618,7 +1620,8 @@ function mergeSvcLists(a,b){
     map.set(s.name, {
       name:s.name,
       unit:(s.unit && s.unit!=='عدد') ? s.unit : (prev.unit||'عدد'),
-      price:num(s.price)||num(prev.price)
+      price:num(s.price)||num(prev.price),
+      note:s.note || prev.note || ''
     });
   });
   return [...map.values()];
@@ -1859,7 +1862,7 @@ function bindPurchases(){
     name:m.name, unit:m.unit||'عدد', id:m.id
   }));
   const svcItems=()=>serviceCatalog().map(t=>({
-    label:t.name+(t.unit?' — '+t.unit:'')+(num(t.price)?' · '+money(t.price):''),
+    label:t.name+(t.unit?' — '+t.unit:'')+(num(t.price)?' · '+money(t.price):'')+(t.note?' · '+t.note:''),
     name:t.name, unit:t.unit||'عدد', price:num(t.price)
   }));
   const pickMat=it=>{
@@ -2047,7 +2050,7 @@ function viewProducts(){
   <div class="pf-head"><button class="btn btn-g" data-go="dashboard">⌂ صفحه اصلی</button><div class="pf-head-meta"><h1>مدیریت محصولات و مواد اولیه</h1><p>ثبت کالا، مواد و بهای تمام‌شده</p></div></div>
   <div class="hub">
     ${ico('products-add','<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8M8 12h8"/></svg>','افزودن محصول','ثبت کالا، فرمول و فهرست')}
-    ${ico('materials','<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2"/></svg>','مواد اولیه','نام، واحد و قیمت مواد')}
+    ${ico('materials','<svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h10"/><circle cx="18" cy="17" r="2"/></svg>','مواد اولیه و خدمات','نام، واحد، قیمت و جزئیات')}
   </div>`;
 }
 function viewProductsAdd(){
@@ -2111,19 +2114,27 @@ function viewProductsAdd(){
 }
 function viewMaterials(){
   const mrows=alive(DB.materials).map(m=>`<tr>
-    <td>${esc(m.name)}</td><td>${esc(m.unit||'عدد')}</td><td>${money(m.unitCost)}</td>
+    <td>${esc(m.name)}</td>
+    <td>${esc(m.unit||'عدد')}</td>
+    <td>${money(m.unitCost)}</td>
+    <td class="mat-note">${m.notes?esc(m.notes).replace(/\n/g,'<br>'):'<span class="muted">—</span>'}</td>
     <td><button class="btn" data-ed-mat="${m.id}">ویرایش</button> <button class="btn btn-d" data-del-mat="${m.id}">حذف</button></td>
-  </tr>`).join('')||'<tr><td colspan="4" class="empty">ماده اولیه‌ای نیست.</td></tr>';
-  return `<div class="pf-head"><button class="btn btn-g" data-go="products">← مدیریت محصولات</button><div class="pf-head-meta"><h1>مواد اولیه</h1><p>نام، واحد و قیمت مواد</p></div></div>
-  <div class="card">
+  </tr>`).join('')||'<tr><td colspan="5" class="empty">ماده یا خدمتی ثبت نشده است.</td></tr>';
+  return `<div class="pf-head"><button class="btn btn-g" data-go="products">← مدیریت محصولات</button><div class="pf-head-meta"><h1>مواد اولیه و خدمات</h1><p>نام، واحد، قیمت و جزئیات هر ماده یا خدمت</p></div></div>
+  <section class="card">
+    <h3>ثبت ماده اولیه یا خدمت</h3>
     <div class="grid-3">
-      <div class="field"><label>نام ماده</label><input class="inp" id="mName"></div>
+      <div class="field"><label>نام ماده / خدمت</label><input class="inp" id="mName" autocomplete="off"></div>
       <div class="field"><label>واحد</label>${unitSelectHTML('mUnit','عدد')}</div>
-      <div class="field"><label>قیمت واحد</label><input class="inp" id="mCost" type="number"></div>
+      <div class="field"><label>قیمت واحد (تومان)</label><input class="inp" id="mCost" type="number" min="0"></div>
     </div>
-    <button class="btn btn-p" id="saveMat">ذخیره ماده اولیه</button>
-  </div>
-  <div class="card" style="margin-top:12px"><div class="table-wrap"><table><thead><tr><th>نام</th><th>واحد</th><th>قیمت</th><th></th></tr></thead><tbody>${mrows}</tbody></table></div></div>`;
+    <div class="field"><label>جزئیات و توضیحات</label><textarea class="inp" id="mNotes" rows="2" placeholder="مثلاً: هر کیلو از این ماده ۳ متر است"></textarea></div>
+    <button class="btn btn-p" id="saveMat">ذخیره ماده / خدمت</button>
+  </section>
+  <section class="card" style="margin-top:12px">
+    <h3>فهرست مواد اولیه و خدمات</h3>
+    <div class="table-wrap"><table class="cart-table"><thead><tr><th>نام</th><th>واحد</th><th>قیمت واحد</th><th>جزئیات</th><th></th></tr></thead><tbody>${mrows}</tbody></table></div>
+  </section>`;
 }
 function viewFormula(){
   const products=alive(DB.products);
@@ -2588,11 +2599,12 @@ function viewServices(){
     <td><input class="inp svc-n" data-si="${i}" value="${esc(s.name)}" autocomplete="off" list="svcProdNames"></td>
     <td>${unitSelectHTML('svcU'+i, s.unit||'عدد')}</td>
     <td><input class="inp svc-p" data-si="${i}" type="number" min="0" value="${num(s.price)}"></td>
+    <td><input class="inp svc-t" data-si="${i}" value="${esc(s.note||'')}" autocomplete="off" placeholder="مثلاً: هر کیلو ۳ متر"></td>
     <td><div class="row-actions"><button type="button" class="btn btn-p" data-save-svc="${i}">ذخیره</button><button type="button" class="btn btn-d" data-del-svc="${i}">حذف</button></div></td>
-  </tr>`).join('')||'<tr><td colspan="4" class="empty">خدمتی ثبت نشده است.</td></tr>';
+  </tr>`).join('')||'<tr><td colspan="5" class="empty">خدمتی ثبت نشده است.</td></tr>';
   return `<div class="pf-head">
     <button class="btn btn-g" data-go="dashboard">⌂ صفحه اصلی</button>
-    <div class="pf-head-meta"><h1>خدمات و نرخنامه</h1><p>عنوان خدمت، واحد و نرخ پیش‌فرض</p></div>
+    <div class="pf-head-meta"><h1>خدمات و نرخنامه</h1><p>عنوان خدمت، واحد، نرخ پیش‌فرض و جزئیات</p></div>
   </div>
   <datalist id="svcProdNames">${prodOpts}</datalist>
   <section class="card">
@@ -2602,11 +2614,12 @@ function viewServices(){
       <div class="field"><label>واحد</label>${unitSelectHTML('svcNewUnit','عدد')}</div>
       <div class="field"><label>نرخ پیش‌فرض (تومان)</label><input class="inp" id="svcNewPrice" type="number" min="0"></div>
     </div>
+    <div class="field"><label>جزئیات و توضیحات</label><input class="inp" id="svcNewNote" autocomplete="off" placeholder="مثلاً: هر کیلو از این ماده ۳ متر است"></div>
     <button type="button" class="btn btn-p" id="addSvc">＋ افزودن خدمت</button>
   </section>
   <section class="card">
     <h3>نرخنامه</h3>
-    <div class="table-wrap"><table class="cart-table svc-table"><thead><tr><th>عنوان خدمت</th><th>واحد</th><th>نرخ پیش‌فرض</th><th>عملیات</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <div class="table-wrap"><table class="cart-table svc-table"><thead><tr><th>عنوان خدمت</th><th>واحد</th><th>نرخ پیش‌فرض</th><th>جزئیات</th><th>عملیات</th></tr></thead><tbody>${rows}</tbody></table></div>
   </section>`;
 }
 function bindServices(){
@@ -2617,7 +2630,7 @@ function bindServices(){
     const unit=readUnit('#svcNewUnit','عدد');
     const list=svcRaw();
     const i=list.findIndex(x=>x.name===name);
-    const rec={name:name, unit:unit, price:num($('#svcNewPrice').value)};
+    const rec={name:name, unit:unit, price:num($('#svcNewPrice').value), note:($('#svcNewNote')&&$('#svcNewNote').value||'').trim()};
     if(i>=0) list[i]=rec; else list.push(rec);
     svcSaveList(list);
     toast('خدمت ثبت شد'); render();
@@ -2625,11 +2638,11 @@ function bindServices(){
   $$('[data-save-svc]').forEach(b=>b.onclick=()=>{
     const i=+b.dataset.saveSvc;
     const list=svcRaw(); const old=list[i]; if(!old) return;
-    const nameEl=$('.svc-n[data-si="'+i+'"]'), priceEl=$('.svc-p[data-si="'+i+'"]');
+    const nameEl=$('.svc-n[data-si="'+i+'"]'), priceEl=$('.svc-p[data-si="'+i+'"]'), noteEl=$('.svc-t[data-si="'+i+'"]');
     const name=((nameEl&&nameEl.value)||'').trim();
     if(!name){ toast('عنوان خدمت را بنویسید', false); return; }
     const unit=readUnit('#svcU'+i, old.unit||'عدد');
-    list[i]={name:name, unit:unit, price:num(priceEl&&priceEl.value)};
+    list[i]={name:name, unit:unit, price:num(priceEl&&priceEl.value), note:((noteEl&&noteEl.value)||'').trim()};
     svcSaveList(list);
     toast('نرخنامه به‌روز شد'); render();
   });
@@ -3229,9 +3242,9 @@ function bindGlobal(){
   };
   if($('#prNew')) $('#prNew').onclick=()=>{ window._editPr=''; route.id=null; render(); };
   const sm=$('#saveMat'); if(sm) sm.onclick=()=>{
-    const name=$('#mName').value.trim(); if(!name){ toast('نام ماده لازم است',false); return; }
-    upsertLocal('materials',{id:uid('mat'),name,unit:readUnit('#mUnit','عدد'),unitCost:num($('#mCost').value),notes:'',deleted:'0'});
-    toast('ماده اولیه ذخیره شد'); render();
+    const name=$('#mName').value.trim(); if(!name){ toast('نام ماده یا خدمت لازم است',false); return; }
+    upsertLocal('materials',{id:uid('mat'),name,unit:readUnit('#mUnit','عدد'),unitCost:num($('#mCost').value),notes:($('#mNotes')&&$('#mNotes').value||'').trim(),deleted:'0'});
+    toast('ماده / خدمت ذخیره شد'); render();
   };
   if($('#matList')) bindFormulaLive();
   const sb=$('#saveBom'); if(sb) sb.onclick=()=>{
@@ -3272,14 +3285,15 @@ function bindGlobal(){
   $$('[data-ed-mat]').forEach(b=>b.onclick=()=>{
     const mat=byId(DB.materials,b.dataset.edMat);
     const m=$('#modal'); m.className='modal-bg show';
-    m.innerHTML=`<div class="modal"><h3>ویرایش ماده</h3>
-      <div class="field"><label>نام</label><input class="inp" id="mn" value="${esc(mat.name)}"></div>
+    m.innerHTML=`<div class="modal"><h3>ویرایش ماده / خدمت</h3>
+      <div class="field"><label>نام ماده / خدمت</label><input class="inp" id="mn" value="${esc(mat.name)}" autocomplete="off"></div>
       <div class="field"><label>واحد</label>${unitSelectHTML('mu', mat.unit||'عدد')}</div>
-      <div class="field"><label>قیمت</label><input class="inp" id="mc" type="number" value="${num(mat.unitCost)}"></div>
+      <div class="field"><label>قیمت واحد (تومان)</label><input class="inp" id="mc" type="number" min="0" value="${num(mat.unitCost)}"></div>
+      <div class="field"><label>جزئیات و توضیحات</label><textarea class="inp" id="mnote" rows="3" placeholder="مثلاً: هر کیلو از این ماده ۳ متر است">${esc(mat.notes||'')}</textarea></div>
       <div class="row-actions"><button class="btn btn-g" id="mx">بستن</button><button class="btn btn-p" id="ms">ذخیره</button></div></div>`;
     bindUnitSelects(m);
     $('#mx').onclick=()=>m.className='modal-bg';
-    $('#ms').onclick=()=>{ mat.name=$('#mn').value; mat.unit=readUnit('#mu', mat.unit||'عدد'); mat.unitCost=num($('#mc').value); upsertLocal('materials',mat); m.className='modal-bg'; render(); };
+    $('#ms').onclick=()=>{ mat.name=$('#mn').value; mat.unit=readUnit('#mu', mat.unit||'عدد'); mat.unitCost=num($('#mc').value); mat.notes=($('#mnote').value||'').trim(); upsertLocal('materials',mat); m.className='modal-bg'; render(); };
   });
 }
 
@@ -3327,5 +3341,5 @@ async function boot(){
 }
 boot();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4cdbfbb493ad398',t:'MTc5MjM5MTU4MQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4cfff3bfdd4d38c',t:'MTc5MjQxNTE1NA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
