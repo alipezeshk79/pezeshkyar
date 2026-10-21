@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>پزشک‌یار | مدیریت سفارش</title>
-<link rel="icon" href="logo.png">
+<link rel="icon" href="logo-brand.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
 <style>
 :root{
@@ -257,6 +257,8 @@ html.dark .badge{color:#ecfdf5}
 .inv-head{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:12px;margin-bottom:6px}
 .inv-brand{display:flex;align-items:center;gap:10px;justify-self:start}
 .inv-meta{direction:rtl}
+.bl{text-align:right;line-height:1.9;font-size:12px;white-space:nowrap}
+.bl .pl{font-weight:700}
 .im-row{display:flex;justify-content:flex-start;align-items:baseline;gap:3px;font-size:13px;font-weight:800;line-height:1.9;white-space:nowrap}
 .pl{font-weight:700;white-space:nowrap}
 .pv{font-weight:400;unicode-bidi:isolate;white-space:nowrap}
@@ -269,8 +271,8 @@ html.dark .badge{color:#ecfdf5}
 .inv-sheet th,.inv-sheet td{border:1px solid #111 !important;padding:5px 6px !important;background:#fff !important;color:#111 !important;text-align:center;font-size:12px;font-weight:400}
 .inv-sheet th.sec{font-weight:800;font-size:13px}
 .inv-sheet td.start{text-align:right}
-.inv-sheet .name-col{width:28%}
-.inv-sheet .num-col{width:16%}
+.inv-sheet .name-col{width:44%}
+.inv-sheet .num-col{width:19%}
 .inv-sign{display:flex;justify-content:space-between;margin-top:16px;padding:0 8px;font-size:13px}
 .kv{border:0 !important;width:auto;margin:0;table-layout:auto}
 .kv td{border:0 !important;padding:1px 0 !important;background:transparent !important;color:#111 !important;
@@ -358,10 +360,10 @@ html.is-touch .btn:active,html.is-touch .dash-card:active{transform:scale(.98)}
 <div class="app">
   <header class="topbar">
     <div class="brand" data-go="dashboard" style="cursor:pointer">
-      <img src="logo.png" alt="PezeshkYar" id="brandLogo" data-logo="1">
+      <img src="logo-brand.png" alt="PezeshkYar" id="brandLogo" data-logo="1">
       <div class="brand-meta">
         <b>پزشک‌یار</b>
-        <span class="ver" id="appVer">v.1.1.54</span>
+        <span class="ver" id="appVer">v.1.1.57</span>
       </div>
     </div>
     <div class="top-mid">
@@ -403,7 +405,7 @@ html.is-touch .btn:active,html.is-touch .dash-card:active{transform:scale(.98)}
 const APP = {
   name: 'PezeshkYar',
   nameFa: 'پزشک‌یار',
-  version: 'v.1.1.54',
+  version: 'v.1.1.57',
   SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbyUDYfULHdPXBdy_zESpCGCUnnNPpuog7db8CQL-ov1F97nZbbEOfQzTxI-punxopBoWQ/exec',
   SHEET_URL: 'https://docs.google.com/spreadsheets/d/1GGHSNreSBvbgYwhxfQuR8xDjIvGxRNUqynz1Cgytkfs/edit?usp=sharing',
   APP_TOKEN: 'PEZESHKYAR_BACKUP_2026',
@@ -2250,7 +2252,7 @@ function prevDebt(order){
 function invoiceHead(order, pageNo){
   return `<div class="inv-head">
     <div class="inv-brand">
-      <img class="inv-logo-py" src="${logoUrl('logo-py.png')}" alt="PezeshkYar" onerror="this.src='${logoUrl('logo.png')}'">
+      <img class="inv-logo-py" src="${logoUrl('logo-factor.png')}" alt="PezeshkYar" onerror="this.src='${logoUrl('logo-brand.png')}'">
     </div>
     <div class="inv-title">فاکتور فروش</div>
     <div class="inv-meta">
@@ -2259,6 +2261,11 @@ function invoiceHead(order, pageNo){
       ${pageNo>1?`<div class="im-row"><span class="pl">صفحه:</span><span class="pv">${faDigits(pageNo)}</span></div>`:''}
     </div>
   </div>`;
+}
+/* شماره کارت: هر گروه چهاررقمی جدا و LTR تا ترتیب گروه‌ها به‌هم نریزد */
+function cardGroupsHTML(card){
+  const groups=String(card||'').trim().split(/\s+/).filter(Boolean);
+  return groups.map(g=>`<span dir="ltr" style="display:inline-block">${faDigits(g)}</span>`).join('<span> </span>');
 }
 function invoicePagesHTML(order){
   const items=orderItems(order.id);
@@ -2300,10 +2307,10 @@ function invoicePagesHTML(order){
       </tr>` : '';
     const goodsHead = `<tr><th class="sec" colspan="6">مشخصات کالا</th></tr>
       <tr>
-        <th style="width:7%">ردیف</th>
-        <th style="width:10%">کد کالا</th>
-        <th class="name-col">شرح کالا</th>
-        <th style="width:8%">تعداد</th>
+        <th style="width:5%">ردیف</th>
+        <th style="width:7%">کد کالا</th>
+        <th class="name-col">نام کالا</th>
+        <th style="width:6%">تعداد</th>
         <th class="num-col">مبلغ واحد(ریال)</th>
         <th class="num-col">مبلغ کل (ریال)</th>
       </tr>`;
@@ -2316,12 +2323,10 @@ function invoicePagesHTML(order){
       <tr>
         <td style="font-weight:800;width:12%">توضیحات:</td>
         <td class="start" colspan="5">
-          <table class="kv">
-            <tr><td class="lb">شماره شبا:</td><td class="vl">${ltrNum(esc(bankIban()))}</td></tr>
-            <tr><td class="lb">شماره کارت:</td><td class="vl">${ltrNum(faDigits(bankCard()))}</td></tr>
-            <tr><td class="lb">به نام:</td><td class="vl">${esc(bankAccount())}</td></tr>
-            ${debt>0.5?`<tr><td class="lb">بدهی پیشین مشتری:</td><td class="vl">${faMoney(debt)} ریال</td></tr>`:''}
-          </table>
+          <div class="bl"><span class="pl">شماره شبا:</span> <bdi dir="ltr" class="pv">${esc(bankIban())}</bdi></div>
+          <div class="bl"><span class="pl">شماره کارت:</span> <span class="pv">${cardGroupsHTML(bankCard())}</span></div>
+          <div class="bl"><span class="pl">به نام:</span> <span class="pv">${esc(bankAccount())}</span></div>
+          ${debt>0.5?`<div class="bl"><span class="pl">بدهی پیشین مشتری:</span> <span class="pv">${faMoney(debt)} ریال</span></div>`:''}
           ${noteLines.length?`<div style="margin-top:8px;font-weight:800">توضیحات سفارش:</div><div style="line-height:1.9">${noteLines.map(n=>'• '+esc(n)).join('<br>')}</div>`:''}
         </td>
       </tr>` : more;
@@ -2329,6 +2334,7 @@ function invoicePagesHTML(order){
     return `<section class="a4 land" data-page="${idx+1}">
       ${invoiceHead(order, idx+1)}
       <table class="inv-sheet">
+        <colgroup><col style="width:5%"><col style="width:7%"><col style="width:44%"><col style="width:6%"><col style="width:19%"><col style="width:19%"></colgroup>
         ${parties}
         ${goodsHead}
         ${rows}
@@ -2364,15 +2370,15 @@ function imgToData(src){
 }
 async function ensureLogoData(){
   if(LOGO_DATA && LOGO_PY_DATA) return;
-  const [a,b]=await Promise.all([imgToData(logoUrl('logo.png')), imgToData(logoUrl('logo-py.png'))]);
+  const [a,b]=await Promise.all([imgToData(logoUrl('logo-brand.png')), imgToData(logoUrl('logo-factor.png'))]);
   if(a) LOGO_DATA=a;
   if(b) LOGO_PY_DATA=b;
 }
 function inlineLogos(root){
   $$('img', root||document).forEach(img=>{
     const src=String(img.getAttribute('src')||'').split('?')[0];
-    if(src==='logo.png' && LOGO_DATA) img.src=LOGO_DATA;
-    else if(src==='logo-py.png' && LOGO_PY_DATA) img.src=LOGO_PY_DATA;
+    if(src==='logo-brand.png' && LOGO_DATA) img.src=LOGO_DATA;
+    else if(src==='logo-factor.png' && LOGO_PY_DATA) img.src=LOGO_PY_DATA;
   });
 }
 /* هر خروجیِ canvas ابتدا روی زمینهٔ سفید ترکیب می‌شود؛
@@ -2515,7 +2521,7 @@ function operatorHTML(o){
   const items=orderItems(o.id);
   const rows=items.map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.productCode)}</td><td>${esc(it.productName)}</td><td>${it.qty}</td><td>${it.producedQty||0}</td><td>${Math.max(0,num(it.qty)-num(it.producedQty||0))}</td></tr>`).join('');
   return `<section class="a4">
-    <div class="inv-top"><div><img class="inv-logo" src="${logoUrl('logo.png')}"><div>لیست اپراتور</div></div>
+    <div class="inv-top"><div><img class="inv-logo" src="${logoUrl('logo-brand.png')}"><div>لیست اپراتور</div></div>
     <div><table class="kv">
       <tr><td class="lb">شماره سفارش:</td><td class="vl">${faDigits(o.invoiceNo)}</td></tr>
       <tr><td class="lb">تاریخ:</td><td class="vl">${faDigits(shamsiOf(o))}</td></tr>
@@ -3174,7 +3180,7 @@ function productReportPages(ids, mode){
   const detail = mode==='detail';
   const head=`
     <div class="inv-top">
-      <div><img class="inv-logo" src="${logoUrl('logo.png')}"><div>${detail?'گزارش جزئیات محصولات':'لیست قیمت محصولات'}<br>${esc(sellerName())}</div></div>
+      <div><img class="inv-logo" src="${logoUrl('logo-brand.png')}"><div>${detail?'گزارش جزئیات محصولات':'لیست قیمت محصولات'}<br>${esc(sellerName())}</div></div>
       <div class="rep-meta"><table class="kv">
         <tr><td class="lb">تاریخ:</td><td class="vl">${esc(shamsiStr())}</td></tr>
         <tr><td class="lb">تعداد:</td><td class="vl">${faDigits(list.length)}</td></tr>
@@ -3590,8 +3596,8 @@ async function boot(){
   $('#btnTheme').onclick=()=>setTheme(document.documentElement.classList.contains('dark')?'light':'dark');
   const bl=$('#brandLogo');
   if(bl){
-    bl.src=logoUrl('logo.png');
-    bl.onerror=()=>{ bl.onerror=null; bl.src=logoUrl('logo-py.png'); };
+    bl.src=logoUrl('logo-brand.png');
+    bl.onerror=()=>{ bl.onerror=null; bl.src=logoUrl('logo-factor.png'); };
   }
   $$('.topbar [data-go], #mobNav [data-go], #mobSheet [data-go]').forEach(el=>el.addEventListener('click',e=>{
     e.preventDefault();
@@ -3631,5 +3637,5 @@ async function boot(){
 }
 boot();
 </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4e15e4b2eac99b5',t:'MTc5MjU5NzMwNg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4e16cf36c7b99b5',t:'MTc5MjU5NzkwNg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
