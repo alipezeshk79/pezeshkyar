@@ -3235,7 +3235,7 @@ function productReportPages(ids, mode, pct){
   const cols = detail
     ? `<th style="width:4%">ردیف</th><th style="width:7%">کد</th><th style="width:22%">نام محصول</th><th style="width:35%">مواد اولیه · میزان · مبلغ</th><th style="width:11%">مبلغ تمام‌شده</th><th style="width:7%">درصد سود</th><th style="width:14%">قیمت فروش</th>`
     : suggest
-      ? `<th style="width:8%">ردیف</th><th style="width:14%">کد کالا</th><th>نام کالا</th><th style="width:20%">قیمت محصول</th><th style="width:22%">قیمت پیشنهادی (+${faDigits(String(pctN))}٪)</th>`
+      ? `<th style="width:8%">ردیف</th><th style="width:14%">کد کالا</th><th>نام کالا</th><th style="width:20%">قیمت محصول</th><th style="width:22%">پیشنهادی مصرف کننده</th>`
       : `<th style="width:8%">ردیف</th><th style="width:18%">کد</th><th>نام محصول</th><th style="width:24%">قیمت فروش</th>`;
   const rowHTML=(p,idx)=>{
     const cost=productCost(p), sale=productSale(p), pct=productProfitPct(p,cost);
@@ -3783,5 +3783,5 @@ async function boot(){
 }
 boot();
 </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a5089ae548093662',t:'MTc5MzAwODczMw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
